@@ -1,0 +1,52 @@
+// region Register - login
+    .single-form .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+        border-radius: 10px;
+        background-color: $blanc;
+        .btn {
+            width: 100%;
+            margin-top: 40px;
+        }
+        p {
+            text-align: center;
+        }
+    }
+// endregion Register - login
+
+
+// region Account
+    .profile {
+        section:first-child .container {
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                .profile-picture img {
+                    width: 100%;
+                    max-width: 120px;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+                &#informations {
+                    .list-group-item :first-child {
+                        min-width: 200px;
+                        @include max980 {
+                            min-width: 120px;
+                        }
+                    }
+                }
+                &:not(#social-medias) {
+                    .list-group-item {
+                        & > *:first-child {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+// endregion Account

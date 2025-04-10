@@ -1,0 +1,271 @@
+html body {
+    background-color: $couleur_fond_clair;
+    margin: 0;
+    font-family: 'montserrat';
+    font-size: 17px;
+    @include max980 {
+        font-size: 15px;
+    }
+    @include max767 {
+        font-size: 14px;
+    }
+    @include max479 {
+        font-size: 13px;
+    }
+}
+
+main {
+    min-height: 85vh;
+}
+
+section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    @include max767 {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    &.main_section {
+        min-height: 70vh;
+        @include max980 {
+            min-height: 50vh;
+        }
+        @include max767 {
+            padding-top: 55px;
+            padding-bottom: 55px;
+        }
+    }
+    .container {
+        gap: 20px;
+    }
+}
+
+h1 {
+    font-size: 40px;
+    text-align: center;
+    @include max980 {
+        font-size: 32px;
+    }
+    @include max767 {
+        font-size: 28px;
+    }
+    @include max479 {
+        font-size: 24px;
+    }
+    span {
+        margin-top: 10px;
+    }
+}
+
+h2 {
+    margin-bottom: 0;
+    font-size: 30px;
+    font-weight: 700;
+    @include max980 {
+        font-size: 27px;
+    }
+    @include max767 {
+        font-size: 24px;
+    }
+    @include max479 {
+        font-size: 21px;
+    }
+}
+
+h1, h2 {
+    font-family: $font_title;
+    font-weight: bold;
+    text-transform: uppercase;
+    span {
+        display: block;
+        font-size: 75%;
+        color: $couleur_fond_fonce;
+        text-transform: none;
+        font-weight: normal;
+    }
+}
+
+h3 {
+    font-size: 22px;
+    @include max980 {
+        font-size: 19px;
+    }
+    @include max767 {
+        font-size: 17px;
+    }
+    @include max479 {
+        font-size: 15px;
+    }
+}
+
+h4 {
+    font-size: 19px;
+    @include max980 {
+        font-size: 16px;
+    }
+    @include max767 {
+        font-size: 14px;
+    }
+    @include max479 {
+        font-size: 13px;
+    }
+}
+
+
+p {
+    margin: 0;
+}
+
+span {
+    &.subtext {
+        opacity: 0.85;
+    }
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    &.ul-icons {
+        li {
+            position: relative;
+            margin-bottom: 10px;
+            svg {
+                margin-right: 10px;
+                width: 30px;
+                &, path {
+                    fill: $couleur_secondaire;
+                }
+            }
+        }
+    }
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    &.avatar {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+    }
+}
+
+.icon {
+    height: 25px;
+    width: 25px;
+}
+
+.body .btn {
+    display: block;
+    position: relative;
+    width: fit-content;
+    padding: 12px 18px;
+    border-radius: 5px;
+    background-color: $couleur_fond_fonce;
+    color: $blanc;
+    font-weight: 600;
+    transition: .4s ease-in-out;
+    letter-spacing: 1.2px;
+    z-index: 0;
+    border: none;
+    @include max767 {
+        padding: 9px 15px;
+        font-size: 14px;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 0;
+        width: 100%;
+        background-color: $couleur_secondaire;
+        border-radius: inherit;
+        z-index: -1;
+        transition: inherit;
+    }
+    &:hover, &:focus, &:focus-visible, &:active {
+        color: $blanc;
+        background-color: $couleur_fond_fonce;
+        &::before {
+            height: 100%;
+        }
+    }
+}
+
+svg {
+    path {
+        fill: inherit;
+    }
+    &.x {
+        fill: #1DA1F2;
+    }
+    &.facebook {
+        fill: #1877F2;
+    }
+    &.instagram {
+        fill: #E1306C;
+    }
+    &.linkedin {
+        fill: #0A66C2;
+    }
+    &.github {
+        fill: #181717;
+    }
+}
+
+form {
+    label {
+        &.required::after {
+            content: "*";
+            color: red;
+        }
+    }
+}
+
+#flash-messages {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%); 
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 1000; 
+    .flash-messages-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 750px;
+        width: 100%;
+        margin: 0 15px;
+        .flash-message {
+            display: none;
+            position: relative;
+            overflow: hidden;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                animation: 5.2s linear width100to0 forwards;
+            }
+            &.alert-success::after {
+                background-color: green;
+            }
+            &.alert-warning::after {
+                background-color: orange;
+            }
+            &.alert-danger::after {
+                background-color: red;
+            }
+        }
+    }
+}

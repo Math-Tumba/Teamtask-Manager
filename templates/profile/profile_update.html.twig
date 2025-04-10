@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil{% endblock %}
+
+{% block classBody %}profile{% endblock %}
+{% block body %}
+    <section>
+        <div class="container col-12 col-lg-8 col-xl-6">
+            {{ form_start(editProfileForm, {'attr': {'class': 'd-flex flex-column gap-4'}}) }}
+            <div class="card gap-2 py-5 px-4 rounded-4">
+                <h2 class="text-center">Informations personnelles</h2>
+                    {{ form_row(editProfileForm.profilePicture) }}
+                    {{ form_row(editProfileForm.name) }}
+                    {{ form_row(editProfileForm.surname) }}
+                    {{ form_row(editProfileForm.email) }}
+                    {{ form_row(editProfileForm.country) }}
+            </div>
+            <div class="card gap-2 py-5 px-4 rounded-4">
+                    <h2 class="text-center">Liens externes</h2>
+                    {{ form_row(editProfileForm.website) }}
+                    {{ form_row(editProfileForm.github) }}
+                    {{ form_row(editProfileForm.linkedin) }}
+            </div>
+            <button type="submit" class="btn my-3 w-100">Sauvegarder les modifications</button>
+            {{ form_end(editProfileForm) }}
+        </div>
+    </section>
+{% endblock %} 

@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ user.username }}{% endblock %}
+
+{% block classBody %}profile{% endblock %}
+
+{% block ajaxAPI %}
+    <script type="module" src={{ asset('js/ajax/users/sendFriendRequest.js') }}></script>
+{% endblock %} 
+
+{% block body %}
+    <section>
+        <div class="container">
+            <div class="row g-3">
+                <div class="col-12 col-lg-4">
+                    <div class="card">
+                        <div id="user" class="card-body text-center align-items-center">
+                            <div class="profile-picture">
+                                <img src={{ user.profilePicture }} alt="Photo de profil">
+                            </div>
+                            <h2>{{ user.username }}</h2>
+                            <span class="subtext">{{ user.country }}</span>
+                            <div class="d-flex gap-2">
+                                {% if not isSelf %}
+                                    <a class="btn send-friend-request" href="" data-user-id={{ user.id }}>Ajouter</a>
+                                    <a class="btn" href="">Inviter</a>
+                                {% else %}
+                                    <a class="btn" href={{ path('app_profile_update') }}>Modifier le profil</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if hasSocialLinks %}
+                        <div class="card mt-3">
+                            <div id="social-medias" class="card-body p-0">
+                                <ul class="list-group list-group-flush">
+                                    {% if user.website %}
+                                        <li class="list-group-item d-flex gap-3">
+                                            <a class="d-flex gap-3" href={{ socialLinks.website[0] }} target="_blank">
+                                                {{ ux_icon('bi:window', {'aria-hidden': true, class: 'icon website'}) }}
+                                                <p>{{ socialLinks.website[1] }}</p>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if user.github %}
+                                        <li class="list-group-item d-flex gap-3">
+                                            <a class="d-flex gap-3" href={{ socialLinks.github }} target="_blank">
+                                                {{ ux_icon('bi:github', {'aria-hidden': true, class: 'icon github'}) }}
+                                                <p>Github</p>
+                                            </a>
+                                        </li>
+                                    {% endif %} 
+
+                                    {% if user.linkedin %}
+                                        <li class="list-group-item d-flex gap-3">
+                                            <a class="d-flex gap-3" href={{ socialLinks.linkedin }} target="_blank">
+                                                {{ ux_icon('bi:linkedin', {'aria-hidden': true, class: 'icon linkedin'}) }}
+                                                <p>LinkedIn</p>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-lg-8">
+                    <div class="card">
+                        <div id="informations" class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex flex-column flex-sm-row py-3">
+                                    <p>Nom</p>
+                                    <p>{{ user.name }} {{ user.surname }}</p>
+                                </li>
+                                <li class="list-group-item d-flex flex-column flex-sm-row py-3">
+                                    <p>E-mail</p>
+                                    <p>{{ user.email }}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %} 

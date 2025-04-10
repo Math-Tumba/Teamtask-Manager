@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TeamTask Manager{% endblock %}
+
+{% block classBody %}home{% endblock %}
+{% block body %}
+
+    <section id="home_section" class="main_section">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-12 col-lg-6 d-flex flex-column justify-content-center gap-3">
+                    <h1>
+                        TeamTask Manager
+                        <span>To-do lists collaboratives</span>
+                    </h1>
+
+                    <p>Rejoignez une ou plusieurs équipes et gérez vos tâches communes.</p>
+
+                    <div class="d-flex justify-content-center justify-content-lg-start gap-5">
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href={{ path('app_login') }} class="btn">Se connecter</a>
+                            <a href={{ path('app_register') }} class="btn">S'inscrire</a>
+                        {% endif %}
+                    </div>
+
+                </div>
+                <div class="col-10 col-md-8 col-lg-6">
+                    {{ ux_icon('home:todo-list') }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-10 col-md-6 col-lg-6 d-none d-md-block">
+                    {{ ux_icon('home:tableau') }}
+                </div>
+                <div class="col-12 col-lg-6 d-flex flex-column justify-content-center gap-3 order-first order-lg-last">
+                    <h2>To-do lists</h2>
+                    <p>Créez des to-do lists adaptées à chaque projet, assignez des tâches spécifiques à vos coéquipiers et suivez leur avancement</p>
+                    {% set taskAttributes = [
+                        'Délai',
+                        'Type de tâche',
+                        'Statut',
+                        'Niveau de priorité'
+                    ] %}
+                    
+                    <ul class="row ul-icons">
+                        {% for attribute in taskAttributes %}
+                            <li class="col-6 col-lg-12">{{ ux_icon('bi:check-square-fill') }}{{ attribute }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipes-collaboratives">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-4">
+                <div class="col-12 col-lg-6 d-flex flex-column justify-content-center gap-3">
+                    <h2>Équipes</h2>
+                    <p>Créez une équipe ou rejoignez vos collaborateurs afin de visualiser et traiter les tâches communes de vos projets.</p>
+                </div>
+                <div class="col-10 col-md-8 col-lg-6 d-none d-md-block">
+                    {{ ux_icon('home:gestion-projet') }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

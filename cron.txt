@@ -1,0 +1,4 @@
+Cron à activer :
+
+- Supprime tous les refresh token expirés de la bdd 
+0 0 * * * {chemin vers php} {chemin vers bin/console de l'app} gesdinet:jwt:clear

@@ -1,0 +1,29 @@
+footer {
+    padding: 5%;
+    background-color: $couleur_fond_fonce;
+    color: $blanc;
+    @include max767 {
+        padding: 40px 20px;
+    }
+    @include max479 {
+        text-align: center;
+    }
+    .container > .row .d-flex {
+        @include max767 {
+            text-align: center;
+        }
+        .logo {
+            width: fit-content; 
+            @include max767 {
+                margin: auto;
+            }
+            img {
+                height: 120px;
+                object-fit: contain;
+                @include max1200 {
+                    height: 80px;
+                }
+            }
+        }
+    }
+}
