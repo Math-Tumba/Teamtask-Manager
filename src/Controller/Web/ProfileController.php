@@ -2,14 +2,13 @@
 
 namespace App\Controller\Web;
 
-use App\DTO\Users\UserUpdateDTO;
 use App\Entity\User;
-use App\Service\UrlHelper;
-use App\Form\EditProfileType;
 use App\Service\ApiHelper;
+use App\Service\UrlHelper;
 use App\Service\ArrayHelper;
+use App\Form\EditProfileType;
+use App\DTO\Users\UserUpdateDTO;
 use App\Service\Users\UsersService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,10 +30,9 @@ class ProfileController extends AbstractController
         int $id,
         UrlHelper $urlHelper, 
         ArrayHelper $arrayHelper,
-        UsersService $usersService
+        UsersService $usersService,
     ): Response {
 
-        // dd($entityManager->getRepository(User::class)->findByFriendRequestReceived($id));
         $currentUser = $this->getUser();
 
         $user = $usersService->verifyUserExists($id);

@@ -5,7 +5,8 @@ namespace App\Entity;
 use App\Enum\TeamRole;
 use App\Repository\UserInTeamRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Id;
+
+// TO-DO : Revoir la classe
 
 #[ORM\Entity(repositoryClass: UserInTeamRepository::class)]
 class UserInTeam

@@ -87,26 +87,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $userInTeams;
 
     /**
-     * @var Collection<int, self>
+     * @var Collection<int, FriendRequest>
      */
-    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: "friendRequestsSent")]
-    private Collection $friendRequestsReceived;
-    
-    /**
-     * @var Collection<int, self>
-     */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: "friendRequestsReceived")]
-    #[ORM\JoinTable(name: "user_friend_requests")]
-    private Collection $friendRequestsSent;
+    #[ORM\OneToMany(targetEntity: FriendRequest::class, mappedBy: 'userSender')]
+    private Collection $friendRequestSent;
 
+    /**
+     * @var Collection<int, FriendRequest>
+     */
+    #[ORM\OneToMany(targetEntity: FriendRequest::class, mappedBy: 'userReceiver')]
+    private Collection $friendRequestReceived;
+    
     /**
      */
     #[ORM\ManyToMany(targetEntity: self::class, inversedBy: "friendsWithMe")]
-    #[ORM\JoinTable(name: "user_friends")]
+    #[ORM\JoinTable(name: "user_friend")]
     private Collection $friends;
 
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: "friends")]
     private Collection $friendsWithMe;
+
 
     public function __construct()
     {
@@ -114,10 +114,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profilePicture = self::getDefaultProfilePicturePath();
 
         $this->userInTeams = new ArrayCollection();
-        $this->friendRequestsSent = new ArrayCollection();
-        $this->friendRequestsReceived = new ArrayCollection();
         $this->friends = new ArrayCollection();
         $this->friendsWithMe = new ArrayCollection();
+        $this->friendRequestSent = new ArrayCollection();
+        $this->friendRequestReceived = new ArrayCollection();
     }
 
     public static function getDefaultProfilePicturePath() {
@@ -332,13 +332,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getFriendRequestsSent(): Collection
     {
-        return $this->friendRequestsSent;
+        return $this->friendRequestSent;
     }
 
     public function sendFriendRequest(self $receiver): static
     {
-        if (!$this->friendRequestsSent->contains($receiver)) {
-            $this->friendRequestsSent->add($receiver);
+        if (!$this->friendRequestSent->contains($receiver)) {
+            $this->friendRequestSent->add($receiver);
         }
 
         return $this; 
@@ -346,7 +346,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function cancelFriendRequest(self $receiver): static
     {
-        $this->friendRequestsSent->removeElement($receiver);
+        $this->friendRequestSent->removeElement($receiver);
 
         return $this;
     }
@@ -356,7 +356,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getFriendRequestsReceived(): Collection
     {
-        return $this->friendRequestsReceived;
+        return $this->friendRequestReceived;
     }
 
     /**
@@ -386,4 +386,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    // public function addFriendRequestSent(FriendRequest $friendRequestSent): static
+    // {
+    //     if (!$this->friendRequestSent->contains($friendRequestSent)) {
+    //         $this->friendRequestSent->add($friendRequestSent);
+    //         $friendRequestSent->setUserSender($this);
+    //     }
+
+    //     return $this;
+    // }
+ 
+    // public function removeFriendRequestSent(FriendRequest $friendRequestSent): static
+    // {
+    //     if ($this->friendRequestSent->removeElement($friendRequestSent)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($friendRequestSent->getUserSender() === $this) {
+    //             $friendRequestSent->setUserSender(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function addFriendRequestReceived(FriendRequest $friendRequestReceived): static
+    // {
+    //     if (!$this->friendRequestReceived->contains($friendRequestReceived)) {
+    //         $this->friendRequestReceived->add($friendRequestReceived);
+    //         $friendRequestReceived->setUserReceiver($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeFriendRequestReceived(FriendRequest $friendRequestReceived): static
+    // {
+    //     if ($this->friendRequestReceived->removeElement($friendRequestReceived)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($friendRequestReceived->getUserReceiver() === $this) {
+    //             $friendRequestReceived->setUserReceiver(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 }

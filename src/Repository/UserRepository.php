@@ -32,22 +32,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-
-    // public function findByFriendRequestReceived(int $id) : array {
-    //     return $this->createQueryBuilder('u')
-    //         ->setParameter($id, ":id")
-    //         ->select('NEW App\\DTO\\Users\\UserPreviewDTO(u.id, u.username, u.country, u.profilePicture)')
-    //         ->innerJoin('u.friendRequestsReceived', 'ufr')
-    //         ->where('ufr.user_target = :id')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
-
-    // public function findByFriendRequestSent() : array {
-        
-    // }
-    
-    // public function findAllFriends() : array {
-
-    // }
 }

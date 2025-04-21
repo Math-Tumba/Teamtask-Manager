@@ -5,6 +5,8 @@ namespace App\Service\Users;
 use App\Entity\User;
 use App\DTO\Users\UserCreateDTO;
 use App\DTO\Users\UserUpdateDTO;
+use App\Entity\FriendRequest;
+use App\Repository\FriendRequestRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Validator\FilePicture\FilePicture;
@@ -22,6 +24,7 @@ class UsersService
 {
     public function __construct(
         private UserRepository $userRepository,
+        private FriendRequestRepository $friendRequestRepository,
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $userPasswordHasher,
         private ValidatorInterface $validator,
@@ -47,18 +50,46 @@ class UsersService
 
 
 
-    public function verifySameUsers(User $targetedUser, User $loggedInUser) : void {
+    public function verifySameUsers(User $targetedUser, User $loggedInUser) : bool {
         if ($targetedUser !== $loggedInUser && !$this->security->isGranted('ROLE_ADMIN')) {
             throw new HttpException(Response::HTTP_FORBIDDEN, "Vous n'êtes pas autorisé à effectuer cette action.");
         }
+
+        return true;
     }
 
 
 
-    public function verifyNotSameUsers(User $user1, User $user2) : void {
+    public function verifyNotSameUsers(User $user1, User $user2) : bool {
         if ($user1 === $user2) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, "Vous ne pouvez pas effectuer cette action sur vous-même.");
         }
+
+        return true;
+    }
+
+
+
+    public function verifyFriendRequestExists(User $userSender, User $userReceiver) : FriendRequest {
+        $friendRequest = $this->friendRequestRepository->findOneBy([
+            'userSender' => $userSender,
+            'userReceiver' => $userReceiver
+        ]);
+        if (!$friendRequest) {
+            throw new HttpException(Response::HTTP_BAD_REQUEST, "Il n'y a pas de demande d'ajout en attente avec cet utilisateur.");
+        }
+
+        return $friendRequest;
+    }
+ 
+
+
+    public function verifyFriendRequestNotPending(User $userSender, User $userReceiver) : bool {
+        if ($this->friendRequestRepository->relationExists($userSender, $userReceiver)) {
+            throw new HttpException(Response::HTTP_BAD_REQUEST, "Une demande d'ajout est déjà en attente.");
+        }
+
+        return true;
     }
 
 
@@ -165,6 +196,7 @@ class UsersService
                 $this->filesystem->remove($file);
             }
         }
+        
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
@@ -178,10 +210,12 @@ class UsersService
         $userReceiver = $this->verifyUserExists($id);
         $this->verifyNotSameUsers($userSender, $userReceiver);
 
-        $userSender->sendFriendRequest($userReceiver);
-
-        $this->entityManager->persist($userSender);
-        $this->entityManager->flush();
+        if($this->verifyFriendRequestNotPending($userSender, $userReceiver)) {
+            $friendRequest = new FriendRequest($userSender, $userReceiver);
+            
+            $this->entityManager->persist($friendRequest);
+            $this->entityManager->flush();
+        }
     }
 
 
@@ -193,9 +227,10 @@ class UsersService
         $userReceiver = $this->verifyUserExists($id);
         $this->verifyNotSameUsers($userSender, $userReceiver);
 
-        $userSender->cancelFriendRequest($userReceiver);
-
-        $this->entityManager->persist($userSender);
-        $this->entityManager->flush();
+        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+        if($friendRequest) {
+            $this->entityManager->remove($friendRequest);
+            $this->entityManager->flush();
+        }
     }
 }
