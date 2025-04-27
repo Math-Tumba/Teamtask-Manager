@@ -13,6 +13,15 @@ final class FilePictureValidator extends ConstraintValidator
     private const MAX_SIZE_MO = 3;
     private const MAX_SIZE_BYTES = self::MAX_SIZE_MO * 1024 * 1024;
 
+    /**
+     * Validates uploaded files based on FilePicture constraint.
+     * 
+     * @param mixed $value
+     * @param Constraint $constraint
+     * 
+     * @throws HttpException if the function is called with a different constraint type than FilePicture
+     *                       if $value is not an UploadedFile
+     */
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof FilePicture) {
@@ -28,7 +37,7 @@ final class FilePictureValidator extends ConstraintValidator
         }
 
         $mimeTypes = [
-            'png' => 'image/png', 
+            'png' => 'image/png',  
             'jpeg' => 'image/jpeg', 
             'webp' => 'image/webp'
         ];

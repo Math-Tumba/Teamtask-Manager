@@ -114,10 +114,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profilePicture = self::getDefaultProfilePicturePath();
 
         $this->userInTeams = new ArrayCollection();
-        $this->friends = new ArrayCollection();
-        $this->friendsWithMe = new ArrayCollection();
         $this->friendRequestSent = new ArrayCollection();
         $this->friendRequestReceived = new ArrayCollection();
+        $this->friends = new ArrayCollection();
+        $this->friendsWithMe = new ArrayCollection();
     }
 
     public static function getDefaultProfilePicturePath() {
@@ -386,48 +386,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    // public function addFriendRequestSent(FriendRequest $friendRequestSent): static
-    // {
-    //     if (!$this->friendRequestSent->contains($friendRequestSent)) {
-    //         $this->friendRequestSent->add($friendRequestSent);
-    //         $friendRequestSent->setUserSender($this);
-    //     }
-
-    //     return $this;
-    // }
- 
-    // public function removeFriendRequestSent(FriendRequest $friendRequestSent): static
-    // {
-    //     if ($this->friendRequestSent->removeElement($friendRequestSent)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($friendRequestSent->getUserSender() === $this) {
-    //             $friendRequestSent->setUserSender(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function addFriendRequestReceived(FriendRequest $friendRequestReceived): static
-    // {
-    //     if (!$this->friendRequestReceived->contains($friendRequestReceived)) {
-    //         $this->friendRequestReceived->add($friendRequestReceived);
-    //         $friendRequestReceived->setUserReceiver($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeFriendRequestReceived(FriendRequest $friendRequestReceived): static
-    // {
-    //     if ($this->friendRequestReceived->removeElement($friendRequestReceived)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($friendRequestReceived->getUserReceiver() === $this) {
-    //             $friendRequestReceived->setUserReceiver(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
 }

@@ -17,6 +17,14 @@ class FriendRequestRepository extends ServiceEntityRepository
         parent::__construct($registry, FriendRequest::class);
     }
 
+    /**
+     * Verifies if a friend request is already pending between two users.
+     * 
+     * @param User $userSender
+     * @param User $userReceiver
+     * 
+     * @return bool 
+     */
     public function relationExists(User $userSender, User $userReceiver) : bool {
         return (bool) $this->createQueryBuilder('ufr')
             ->select('1')
@@ -31,6 +39,15 @@ class FriendRequestRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * Retrieve users who sent a friend request to a specific user.
+     * 
+     * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending 
+     * friend requests received.
+     * @param int $id the user who received the requests
+     * 
+     * @return array
+     */
     public function findByFriendRequestReceived(int $id) : array {
         return $this->createQueryBuilder('ufr')
             ->innerJoin('ufr.userSender', 'u')
@@ -41,6 +58,15 @@ class FriendRequestRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Retrieve users who received a friend request from a specific user.
+     * 
+     * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending 
+     * friend requests sent.
+     * @param int $id the user who sent the requests
+     * 
+     * @return array
+     */
     public function findByFriendRequestSent(int $id) : array {
         return $this->createQueryBuilder('ufr')
             ->innerJoin('ufr.userReceiver', 'u')

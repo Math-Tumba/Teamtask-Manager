@@ -39,6 +39,15 @@ class UsersService
 
 
 
+    /**
+     * Returns user if exists.
+     *
+     * @param int $id
+     *
+     * @throws HttpException if the targeted user doesn't exist.
+     * 
+     * @return User
+     */
     public function verifyUserExists(int $id) : User {
         $user = $this->userRepository->find($id);
         if (!$user) {
@@ -50,6 +59,14 @@ class UsersService
 
 
 
+    /**
+     * @param User $targetedUser
+     * @param User $loggedInUser
+     *
+     * @throws HttpException if the logged-in user is not the targeted one, unless he has admin permissions.
+     * 
+     * @return bool
+     */
     public function verifySameUsers(User $targetedUser, User $loggedInUser) : bool {
         if ($targetedUser !== $loggedInUser && !$this->security->isGranted('ROLE_ADMIN')) {
             throw new HttpException(Response::HTTP_FORBIDDEN, "Vous n'êtes pas autorisé à effectuer cette action.");
@@ -60,6 +77,14 @@ class UsersService
 
 
 
+    /**
+     * @param User $user1
+     * @param User $user2
+     *
+     * @throws HttpException if user1 and user2 are the same user.
+     * 
+     * @return bool
+     */
     public function verifyNotSameUsers(User $user1, User $user2) : bool {
         if ($user1 === $user2) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, "Vous ne pouvez pas effectuer cette action sur vous-même.");
@@ -70,6 +95,16 @@ class UsersService
 
 
 
+    /**
+     * Returns a friend request if exists.
+     *
+     * @param User $userSender
+     * @param User $userReceiver
+     *
+     * @throws HttpException if no friend request exists between each others.
+     * 
+     * @return FriendRequest [sender - receiver]
+     */
     public function verifyFriendRequestExists(User $userSender, User $userReceiver) : FriendRequest {
         $friendRequest = $this->friendRequestRepository->findOneBy([
             'userSender' => $userSender,
@@ -84,6 +119,14 @@ class UsersService
  
 
 
+    /**
+     * @param User $userSender
+     * @param User $userReceiver
+     *
+     * @throws HttpException if a friend request exists already and is pending.
+     * 
+     * @return bool
+     */
     public function verifyFriendRequestNotPending(User $userSender, User $userReceiver) : bool {
         if ($this->friendRequestRepository->relationExists($userSender, $userReceiver)) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, "Une demande d'ajout est déjà en attente.");
@@ -94,6 +137,13 @@ class UsersService
 
 
 
+    /**
+     * Register a user based on UserCreateDTO data.
+     * 
+     * @param UserCreateDTO $userDTO
+     * 
+     * @return User the user registered.
+     */
     public function register(UserCreateDTO $userDTO): User
     {
         $user = new User();
@@ -118,12 +168,29 @@ class UsersService
 
 
 
+    /**
+     * Gets user by ID.
+     *
+     * @param int $id
+     *
+     * @throws HttpException if the user doesn't exist (from verifyUserExists()).
+     *
+     * @return User
+     */
     public function get(int $id) : User {
         return $this->verifyUserExists($id);
     }
 
 
 
+    /**
+     * Updates targeted user by id based on UserUpdateDTO data.
+     *
+     * @param int $id
+     *
+     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
+     */
     public function update(int $id, UserUpdateDTO $userDTO): void
     {
         /** @var User $user */
@@ -147,7 +214,21 @@ class UsersService
 
 
 
-    public function uploadProfilePicture(int $id, UploadedFile $file) {
+    /**
+     * Uploads profile picture and updates targeted user by id.
+     *
+     * This function handles profile picture uploads by deleting the old one if it exists, saving the new one and updating
+     * profile picture path from $user data.
+     * @param int $id
+     * @param UploadedFile $file the new profile picture.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
+     *                       if the uploaded file fails the validation constraints.
+     * 
+     * @return User
+     */
+    public function uploadProfilePicture(int $id, UploadedFile $file) : User {
         $loggedInUser = $this->security->getUser();
 
         $user = $this->verifyUserExists($id);
@@ -183,7 +264,15 @@ class UsersService
 
 
 
-    public function delete(int $id) {
+    /**
+     * Delete targeted user by id and his data, linked files included.
+     *
+     * @param int $id
+     *
+     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
+     */
+    public function delete(int $id) : void {
         $loggedInUser = $this->security->getUser();
 
         $user = $this->verifyUserExists($id);
@@ -203,7 +292,15 @@ class UsersService
 
     
 
-    public function sendFriendRequest(int $id) {
+    /**
+     * Send a friend request to another user.
+     *
+     * @param int $id the id of the receiver.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user sends a request to himself (from verifyNotSameUsers()).
+     */
+    public function sendFriendRequest(int $id) : void {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 
 
@@ -219,7 +316,14 @@ class UsersService
     }
 
 
-
+    /**
+     * Cancel a friend request previously sent.
+     *
+     * @param int $id the id of the receiver.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user cancels a request to himself (from verifyNotSameUsers()).
+     */
     public function cancelFriendRequest(int $id) {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 

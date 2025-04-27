@@ -3,10 +3,7 @@
 namespace App\Controller\Web;
 
 use App\DTO\Users\UserCreateDTO;
-use App\Service\ApiHelper;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
-use App\Service\MapperDTO;
 use App\Service\Users\UsersService;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +18,6 @@ class AuthenticationController extends AbstractController
 {
     public function __construct(
         private HttpClientInterface $client,
-        private ApiHelper $apiHelper
     ) {}
 
 

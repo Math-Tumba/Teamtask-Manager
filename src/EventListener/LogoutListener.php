@@ -15,6 +15,13 @@ final class LogoutListener
     ) {
     }
 
+    /**
+     * Logout listener
+     * 
+     * After a user logouts, it will delete JWT and refresh tokens
+     * from cookies. The refresh token is also removed from the database.
+     * @param LogoutEvent $event
+     */
     #[AsEventListener(event: LogoutEvent::class)]
     public function onLogoutEvent(LogoutEvent $event): void
     {

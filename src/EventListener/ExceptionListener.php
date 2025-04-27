@@ -10,6 +10,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class ExceptionListener
 {
+    /**
+     * API Exception listener
+     * 
+     * Intercepts exceptions and set both status and message based on exception data
+     * if it comes from a HTTP one. It sets a default message if not.
+     * @param ExceptionEvent $event
+     */
     #[AsEventListener(event: KernelEvents::EXCEPTION)]
     public function onKernelException(ExceptionEvent $event): void
     {
@@ -22,10 +29,11 @@ final class ExceptionListener
     
         if ($exception instanceof HttpException) {
             $data['status'] = $exception->getStatusCode();
+            $data['message'] = $exception->getMessage();
         } else {
             $data['status'] = 500;
+            $data['message'] = "Une erreur est survenue. Veuillez contacter le support si elle persiste.";
         }
-        $data['message'] = $exception->getMessage();
 
         $event->setResponse(new JsonResponse($data));
     }

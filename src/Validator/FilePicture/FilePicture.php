@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraint;
 final class FilePicture extends Constraint
 {
     public string $messageAllowedMimesTypes = "Le format du fichier est invalide. (Formats autorisés : {{ allowedMimeTypes }}).";
-    public string $messageMaxSize = "La taille du fichier est trop élevée.";
+    public string $messageMaxSize = "La taille du fichier est trop élevée et doit être inférieure à {{ limit }}.";
 
     // You can use #[HasNamedArguments] to make some constraint options required.
     // All configurable options must be passed to the constructor.

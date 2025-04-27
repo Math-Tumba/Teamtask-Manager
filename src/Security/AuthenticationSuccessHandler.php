@@ -24,6 +24,16 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
     ){
     }
 
+    /**
+     * Handles success authentication event.
+     * 
+     * Creates JWT cookies (BEARER and refresh_token) and saves the newly created refresh token
+     * in database.
+     * @param Request $request
+     * @param TokenInterface $token
+     * 
+     * @return RedirectResponse $response including JWT cookies.
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
         $user = $token->getUser();

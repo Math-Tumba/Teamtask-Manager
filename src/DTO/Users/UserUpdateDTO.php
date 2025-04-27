@@ -6,22 +6,14 @@ use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+
+/**
+ * User DTO used to update an user.
+ * 
+ * Fields : id, email, name, surname, country, website, github, linkedin
+ */
 #[UniqueEntity(fields: ['email'], entityClass: User::class, message: "Cet email est déjà utilisé.", identifierFieldNames: ['id' => 'id'],)]
 class UserUpdateDTO {
-
-    public function __construct(?User $user = null)
-    {
-        if ($user) {
-            $this->id = $user->getId();
-            $this->email = $user->getEmail();
-            $this->name = $user->getName();
-            $this->surname = $user->getSurname();
-            $this->country = $user->getCountry();
-            $this->website = $user->getWebsite();
-            $this->github = $user->getGithub();
-            $this->linkedin = $user->getLinkedin();
-        }
-    }
 
     #[Assert\NotBlank(
         message: "L'ID est requis.",
@@ -90,4 +82,18 @@ class UserUpdateDTO {
         message: "L'URL doit être un lien valide vers LinkedIn (ex : https://www.linkedin.com/in/utilisateur)",
     )]
     public ?string $linkedin = null;
+
+    public function __construct(?User $user = null)
+    {
+        if ($user) {
+            $this->id = $user->getId();
+            $this->email = $user->getEmail();
+            $this->name = $user->getName();
+            $this->surname = $user->getSurname();
+            $this->country = $user->getCountry();
+            $this->website = $user->getWebsite();
+            $this->github = $user->getGithub();
+            $this->linkedin = $user->getLinkedin();
+        }
+    }
 }

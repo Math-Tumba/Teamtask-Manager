@@ -1,11 +1,14 @@
 import ky from 'ky';
 import { FlashMessage } from 'components';
 
-/*
-Variable ky agissant comme un intercepteur
- - Récupère, si la réponse existe, le message d'erreur renvoyé
- - Appelle la route du refresh_token et relance la requête
-*/
+/**
+ * Ky variable acting as an interceptor.
+ * 
+ * Hooks
+ * - beforeError : Retrieves, if exists, the message contained in the response's error.
+ * - afterResponse : If the response corresponds to a 401 error due to JWT expired BEARER token, it calls the
+ *                   refresh token route so a newly JWT can be stored and used without disconnecting the user.
+ */
 const api = ky.create({
     prefixUrl: '/api',
     headers: {

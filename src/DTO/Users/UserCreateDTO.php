@@ -6,6 +6,11 @@ use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * User DTO used to create a new user.
+ * 
+ * Fields : username, email, plainPassword, name, surname, country
+ */
 #[UniqueEntity(fields: ['username'], entityClass: User::class, message: "Ce nom d'utilisateur est déjà utilisé.")]
 #[UniqueEntity(fields: ['email'], entityClass: User::class, message: "Cet email est déjà utilisé.")]
 class UserCreateDTO {

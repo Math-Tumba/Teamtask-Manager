@@ -4,7 +4,6 @@ import './js/components/modalFlash.js'
 
 import '../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js'
 
-// import './vendor/ky/ky.index.js'
 /*
  * Welcome to your app's main JavaScript file!
  *

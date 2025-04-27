@@ -3,10 +3,9 @@
 namespace App\Controller\Web;
 
 use App\Entity\User;
-use App\Service\ApiHelper;
 use App\Service\UrlHelper;
 use App\Service\ArrayHelper;
-use App\Form\EditProfileType;
+use App\Form\EditProfileFormType;
 use App\DTO\Users\UserUpdateDTO;
 use App\Service\Users\UsersService;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,6 @@ class ProfileController extends AbstractController
 
     public function __construct(
         private HttpClientInterface $client,
-        private ApiHelper $apiHelper,
     ) {
     }
 
@@ -67,7 +65,7 @@ class ProfileController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $userDTO = new UserUpdateDTO($user);
-        $form = $this->createForm(EditProfileType::class, $userDTO);
+        $form = $this->createForm(EditProfileFormType::class, $userDTO);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
