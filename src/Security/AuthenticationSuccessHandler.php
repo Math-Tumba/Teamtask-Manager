@@ -49,7 +49,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
             Cookie::create('BEARER')
                 ->withValue($jwt)
                 ->withExpires(time()+900) // 15 minutes
-                ->withSameSite("strict")
+                ->withSameSite('strict')
                 ->withPath('/')
                 ->withDomain(null)
                 ->withSecure(true)
@@ -60,7 +60,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
             Cookie::create('refresh_token')
                 ->withValue($refreshToken)
                 ->withExpires(time()+$ttl)
-                ->withSameSite("strict")
+                ->withSameSite('strict')
                 ->withPath('/')
                 ->withDomain(null)
                 ->withSecure(true)

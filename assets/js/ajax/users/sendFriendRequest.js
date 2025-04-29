@@ -2,9 +2,9 @@ import api from 'api'
 import { FlashMessage } from 'components';
 
 $(() => {
-    $(".send-friend-request").on("click", async function(event) {
+    $('.send-friend-request').on('click', async function(event) {
         event.preventDefault();
-        const id = $(this).attr("data-user-id");
+        const id = $(this).attr('data-user-id');
 
         try {
             await api.post(`users/friend-request/${id}`).json();
@@ -13,4 +13,4 @@ $(() => {
             new FlashMessage(error.message, FlashMessage.Types.ERROR);
         }
     });
-})
+}) 

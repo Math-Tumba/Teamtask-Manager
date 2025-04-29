@@ -69,7 +69,7 @@ class UsersService
      */
     public function verifySameUsers(User $targetedUser, User $loggedInUser) : bool {
         if ($targetedUser !== $loggedInUser && !$this->security->isGranted('ROLE_ADMIN')) {
-            throw new HttpException(Response::HTTP_FORBIDDEN, "Vous n'êtes pas autorisé à effectuer cette action.");
+            throw new HttpException(Response::HTTP_FORBIDDEN, 'Vous n\'êtes pas autorisé à effectuer cette action.');
         }
 
         return true;
@@ -87,7 +87,7 @@ class UsersService
      */
     public function verifyNotSameUsers(User $user1, User $user2) : bool {
         if ($user1 === $user2) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, "Vous ne pouvez pas effectuer cette action sur vous-même.");
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Vous ne pouvez pas effectuer cette action sur vous-même.');
         }
 
         return true;
@@ -111,7 +111,7 @@ class UsersService
             'userReceiver' => $userReceiver
         ]);
         if (!$friendRequest) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, "Il n'y a pas de demande d'ajout en attente avec cet utilisateur.");
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Il n\'y a pas de demande d\'ajout en attente avec cet utilisateur.');
         }
 
         return $friendRequest;
@@ -129,7 +129,7 @@ class UsersService
      */
     public function verifyFriendRequestNotPending(User $userSender, User $userReceiver) : bool {
         if ($this->friendRequestRepository->relationExists($userSender, $userReceiver)) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, "Une demande d'ajout est déjà en attente.");
+            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Une demande d\'ajout est déjà en attente.');
         }
 
         return true;
@@ -245,7 +245,7 @@ class UsersService
 
         $oldProfilePicture = $user->getProfilePicture();
         if ($oldProfilePicture) {
-            $oldFilePath = $this->public . "/" . $oldProfilePicture;
+            $oldFilePath = $this->public . '/' . $oldProfilePicture;
             if ($this->filesystem->exists($oldFilePath) && $oldFilePath !== User::getDefaultProfilePicturePath()) { 
                 $this->filesystem->remove($oldFilePath);
             }

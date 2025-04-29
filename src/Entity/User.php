@@ -12,26 +12,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: "`user`")]
-#[UniqueEntity(fields: ["username"], message: "Ce nom d'utilisateur est déjà utilisé.")]
-#[UniqueEntity(fields: ["email"], message: "Cet email est déjà utilisé.")]
+#[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['username'], message: 'Ce nom d\'utilisateur est déjà utilisé.')]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    private const PROFILE_PICTURES_PATH = "/uploads/profile-pictures";
-    private const DEFAULT_PROFILE_PICTURE_PATH = self::PROFILE_PICTURES_PATH . "/default.png";
+    private const PROFILE_PICTURES_PATH = '/uploads/profile-pictures';
+    private const DEFAULT_PROFILE_PICTURE_PATH = self::PROFILE_PICTURES_PATH . '/default.png';
 
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "SEQUENCE")]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column()]
-    #[Groups(["users.index"])]
+    #[Groups(['users.index'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50, unique: true)]
-    #[Groups(["users.index", "users.detail"])]
+    #[Groups(['users.index', 'users.detail'])]
     private ?string $username = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $email = null;
 
     /**
@@ -43,35 +43,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The temporary password
      */
-    // #[Groups(["users.temp_credentials"])]
+    // #[Groups(['users.temp_credentials'])]
     // private ?string $plainPassword = null;
 
     #[ORM\Column(length: 127)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 127)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $surname = null;
 
     #[ORM\Column(length: 3)]
-    #[Groups(["users.index", "users.detail"])]
+    #[Groups(['users.index', 'users.detail'])]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $website = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $github = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["users.detail"])]
+    #[Groups(['users.detail'])]
     private ?string $linkedin = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["users.index", "users.detail"])]
+    #[Groups(['users.index', 'users.detail'])]
     private ?string $profilePicture = null;
 
     /**
@@ -83,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, UserInTeam>
      */
-    #[ORM\OneToMany(targetEntity: UserInTeam::class, mappedBy: "userId", orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserInTeam::class, mappedBy: 'userId', orphanRemoval: true)]
     private Collection $userInTeams;
 
     /**
@@ -100,17 +100,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     /**
      */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: "friendsWithMe")]
-    #[ORM\JoinTable(name: "user_friend")]
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'friendsWithMe')]
+    #[ORM\JoinTable(name: 'user_friend')]
     private Collection $friends;
 
-    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: "friends")]
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'friends')]
     private Collection $friendsWithMe;
 
 
     public function __construct()
     {
-        $this->roles = ["ROLE_USER"];
+        $this->roles = ['ROLE_USER'];
         $this->profilePicture = self::getDefaultProfilePicturePath();
 
         $this->userInTeams = new ArrayCollection();
@@ -260,7 +260,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = "ROLE_USER";
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

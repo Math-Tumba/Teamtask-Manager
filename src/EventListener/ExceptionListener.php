@@ -32,7 +32,7 @@ final class ExceptionListener
             $data['message'] = $exception->getMessage();
         } else {
             $data['status'] = 500;
-            $data['message'] = "Une erreur est survenue. Veuillez contacter le support si elle persiste.";
+            $data['message'] = 'Une erreur est survenue. Veuillez contacter le support si elle persiste.';
         }
 
         $event->setResponse(new JsonResponse($data));

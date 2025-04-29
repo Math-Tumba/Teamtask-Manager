@@ -6,7 +6,7 @@ use App\Repository\FriendRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FriendRequestRepository::class)]
-#[ORM\Table(name: "user_friend_request")]
+#[ORM\Table(name: 'user_friend_request')]
 class FriendRequest
 {
     

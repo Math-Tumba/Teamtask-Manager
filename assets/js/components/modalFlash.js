@@ -26,7 +26,7 @@ export class FlashMessage {
         FLASHMESSAGES.append(this.element);
         this.element.fadeIn(500);
 
-        this.element.on("click", () => this.removeMessage());
+        this.element.on('click', () => this.removeMessage());
 
         setTimeout(() => this.removeMessage(), DELAY);
     }
