@@ -1,3 +1,4 @@
+// CONTAINERS
 $container-max-widths: (
   sm: 479px,
   md: 767px,
@@ -14,3 +15,7 @@ $grid-breakpoints: (
   xl: 1200px,
   xxl: 1405px
 );
+
+// COLORS
+$primary: #526d82;
+$secondary: #dd5661;

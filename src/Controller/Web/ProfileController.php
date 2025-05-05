@@ -86,4 +86,12 @@ class ProfileController extends AbstractController
             'editProfileForm' => $form->createView(),
         ]);
     }
+
+    #[Route('/friend-requests', name: 'app_profile_friend_requests')]
+    public function showFriendRequests() : Response {
+
+        return $this->render('profile/profile_friend_requests.html.twig', [
+            
+        ]);
+    }
 }

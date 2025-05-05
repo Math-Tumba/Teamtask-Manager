@@ -49,4 +49,11 @@
             }
         }
     }
+
+    .friend-requests.accordion-collapse .card {
+        img {
+            height: 100px;
+            object-fit: contain;
+        }
+    }
 // endregion Account

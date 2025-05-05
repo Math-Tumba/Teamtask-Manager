@@ -44,7 +44,7 @@ section {
     }
 }
 
-h1 {
+h1, .h1 {
     font-size: 40px;
     text-align: center;
     @include max980 {
@@ -61,7 +61,7 @@ h1 {
     }
 }
 
-h2 {
+h2, .h2 {
     margin-bottom: 0;
     font-size: 30px;
     font-weight: 700;
@@ -76,7 +76,7 @@ h2 {
     }
 }
 
-h1, h2 {
+h1, .h1, h2, .h2 {
     font-family: $font_title;
     font-weight: bold;
     text-transform: uppercase;
@@ -89,7 +89,7 @@ h1, h2 {
     }
 }
 
-h3 {
+h3, .h3 {
     font-size: 22px;
     @include max980 {
         font-size: 19px;
@@ -102,7 +102,7 @@ h3 {
     }
 }
 
-h4 {
+h4, .h4 {
     font-size: 19px;
     @include max980 {
         font-size: 16px;
@@ -176,6 +176,11 @@ img {
         padding: 9px 15px;
         font-size: 14px;
     }
+    &:hover, &:focus, &:focus-visible, &:active {
+        &::before {
+            height: 100%;
+        }
+    }
     &::before {
         content: '';
         position: absolute;
@@ -188,11 +193,16 @@ img {
         z-index: -1;
         transition: inherit;
     }
-    &:hover, &:focus, &:focus-visible, &:active {
-        color: $blanc;
-        background-color: $couleur_fond_fonce;
+    &.btn-success {
+        background-color: green;
         &::before {
-            height: 100%;
+            background-color: darken(green, 5%) !important;   
+        }
+    }
+    &.btn-danger {
+        background-color: red;
+        &::before {
+            background-color: darken(red, 5%) !important;   
         }
     }
 }
