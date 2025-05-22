@@ -1,0 +1,97 @@
+body {
+    font-size: 17px;
+    font-family: 'montserrat';
+    @include max980 {
+        font-size: 15px;
+    }
+    @include max767 {
+        font-size: 14px;
+    }
+    @include max479 {
+        font-size: 13px;
+    }
+}
+
+h1, .h1 {
+    margin-bottom: 0;
+    text-align: center;
+    font-size: 40px;
+    @include max980 {
+        font-size: 32px;
+    }
+    @include max767 {
+        font-size: 28px;
+    }
+    @include max479 {
+        font-size: 24px;
+    }
+    span {
+        margin-top: 10px;
+    }
+}
+
+h2, .h2 {
+    margin-bottom: 0;
+    font-size: 30px;
+    font-weight: 700;
+    @include max980 {
+        font-size: 27px;
+    }
+    @include max767 {
+        font-size: 24px;
+    }
+    @include max479 {
+        font-size: 21px;
+    }
+}
+
+h1, .h1, h2, .h2 {
+    font-family: $font_title;
+    font-weight: bold;
+    text-transform: uppercase;
+    span {
+        display: block;
+        font-size: 75%;
+        color: $background_color_dark;
+        text-transform: none;
+        font-weight: normal;
+    }
+}
+
+h3, .h3 {
+    font-size: 22px;
+    @include max980 {
+        font-size: 19px;
+    }
+    @include max767 {
+        font-size: 17px;
+    }
+    @include max479 {
+        font-size: 15px;
+    }
+}
+
+h4, .h4 {
+    font-size: 19px;
+    @include max980 {
+        font-size: 16px;
+    }
+    @include max767 {
+        font-size: 14px;
+    }
+    @include max479 {
+        font-size: 13px;
+    }
+}
+
+p {
+    margin: 0;
+}
+
+span.subtext {
+    opacity: 0.85;
+}
+
+.bold {
+    font-weight: bold;
+}

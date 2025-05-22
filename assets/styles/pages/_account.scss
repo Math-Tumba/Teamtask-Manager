@@ -1,0 +1,45 @@
+body.profile {
+
+    #profile-infos {
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            &#informations {
+                .list-group-item :first-child {
+                    min-width: 200px;
+                    @include max980 {
+                        min-width: 120px;
+                    }
+                }
+            }
+            &:not(#social-medias) {
+                .list-group-item {
+                    & > *:first-child {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+
+    .friends .card {
+        @include max479 {
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        .infos {
+            @include max479 {
+                align-items: center;
+                text-align: center;
+                flex-direction: column;
+            }
+        }
+        .actions {
+            align-items: center;
+            @include max479 {
+                
+            }
+        }
+    }
+}

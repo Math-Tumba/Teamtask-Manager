@@ -40,14 +40,15 @@
                 <div class="col-12 col-lg-6 d-flex flex-column justify-content-center gap-3 order-first order-lg-last">
                     <h2>To-do lists</h2>
                     <p>Créez des to-do lists adaptées à chaque projet, assignez des tâches spécifiques à vos coéquipiers et suivez leur avancement</p>
-                    {% set taskAttributes = [
-                        'Délai',
-                        'Type de tâche',
-                        'Statut',
-                        'Niveau de priorité'
-                    ] %}
-                    
-                    <ul class="row ul-icons">
+                    {% 
+                        set taskAttributes = [
+                            'Délai',
+                            'Type de tâche',
+                            'Statut',
+                            'Niveau de priorité'
+                        ] 
+                    %}
+                    <ul class="icons-list">
                         {% for attribute in taskAttributes %}
                             <li class="col-6 col-lg-12">{{ ux_icon('bi:check-square-fill') }}{{ attribute }}</li>
                         {% endfor %}
@@ -57,7 +58,7 @@
         </div>
     </section>
 
-    <section id="equipes-collaboratives">
+    <section id="team">
         <div class="container">
             <div class="row justify-content-center align-items-center g-4">
                 <div class="col-12 col-lg-6 d-flex flex-column justify-content-center gap-3">

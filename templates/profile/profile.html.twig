@@ -9,14 +9,14 @@
 {% endblock %} 
 
 {% block body %}
-    <section>
+    <section id="profile-infos">
         <div class="container">
             <div class="row g-3">
                 <div class="col-12 col-lg-4">
                     <div class="card">
                         <div id="user" class="card-body align-items-center text-center">
                             <div class="profile-picture">
-                                <img src={{ user.profilePicture }} alt="Photo de profil">
+                                <img class="avatar avatar-2" src={{ user.profilePicture }} alt="Photo de profil">
                             </div>
                             <h2>{{ user.username }}</h2>
                             <span class="subtext">{{ user.country }}</span>
@@ -36,7 +36,7 @@
                                 <ul class="list-group list-group-flush">
                                     {% if user.website %}
                                         <li class="list-group-item d-flex gap-3">
-                                            <a class="d-flex gap-3" href={{ socialLinks.website[0] }} target="_blank">
+                                            <a class="d-flex gap-3 text-cut-container" href={{ socialLinks.website[0] }} target="_blank">
                                                 {{ ux_icon('bi:window', {'aria-hidden': true, class: 'icon website'}) }}
                                                 <p>{{ socialLinks.website[1] }}</p>
                                             </a>
@@ -69,11 +69,11 @@
                     <div class="card">
                         <div id="informations" class="card-body">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex flex-column flex-sm-row py-3">
+                                <li class="list-group-item d-flex flex-column flex-sm-row text-cut-container">
                                     <p>Nom</p>
                                     <p>{{ user.name }} {{ user.surname }}</p>
                                 </li>
-                                <li class="list-group-item d-flex flex-column flex-sm-row py-3">
+                                <li class="list-group-item d-flex flex-column flex-sm-row text-cut-container">
                                     <p>E-mail</p>
                                     <p>{{ user.email }}</p>
                                 </li>

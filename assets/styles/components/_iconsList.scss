@@ -1,0 +1,13 @@
+ul.icons-list {
+    li {
+        position: relative;
+        margin-bottom: 10px;
+        svg {
+            margin-right: 10px;
+            height: 30px;
+            &, path {
+                fill: $secondary_color;
+            }
+        }
+    }
+}

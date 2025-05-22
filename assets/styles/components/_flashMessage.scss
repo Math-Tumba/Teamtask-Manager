@@ -1,0 +1,40 @@
+#flash-messages {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%); 
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    z-index: 1000; 
+    .flash-messages-container {
+        position: relative;
+        max-width: 750px;
+        width: 100%;
+        margin: 0 15px;
+        .flash-message {
+            display: none;
+            position: relative;
+            margin: 10px 15px;
+            overflow: hidden;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                animation: 5.2s linear width100to0 forwards;
+            }
+            &.alert-success::after {
+                background-color: $green;
+            }
+            &.alert-warning::after {
+                background-color: $orange;
+            }
+            &.alert-danger::after {
+                background-color: $red;
+            }
+        }
+    }
+}

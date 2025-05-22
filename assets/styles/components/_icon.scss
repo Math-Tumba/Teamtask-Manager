@@ -1,0 +1,24 @@
+.icon {
+    height: 25px;
+    width: 25px;
+    min-height: 25px;
+    min-width: 25px;
+}
+
+svg {
+    &.x {
+        fill: #1DA1F2;
+    }
+    &.facebook {
+        fill: #1877F2;
+    }
+    &.instagram {
+        fill: #E1306C;
+    }
+    &.linkedin {
+        fill: #0A66C2;
+    }
+    &.github {
+        fill: #181717;
+    }
+}

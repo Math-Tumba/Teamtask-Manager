@@ -4,12 +4,11 @@
 
 {% block body %}
     <section>
-        <div class="container col-12 col-12 col-md-8 col-lg-6 col-xl-4">
-            <div class="card gap-4 py-5 px-4 rounded-4">
+        <div class="container col-12 col-md-8 col-lg-6 col-xl-4">
+            <div class="card card-full">
                 <h1>Inscription</h1>
-
                 {{ form_errors(registrationForm) }}
-
+                
                 {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm.email) }}
                     <div class="row">
@@ -36,11 +35,10 @@
                     {{ form_row(registrationForm.agreeTerms, {
                         label: 'Accepter la politique de confidentialité'
                     }) }}
-
-                    <button type="submit" class="btn my-4 w-100">S'inscrire</button>
+                    <button type="submit" class="btn">S'inscrire</button>
                 {{ form_end(registrationForm) }}
-
-                <p class="text-center">Déjà inscrit ? <a href={{ path('app_login') }}>Connectez-vous</a></p>
+                
+                <p class="text-center">Déjà inscrit ? <a href={{ path('app_login') }} class="bold">Connectez-vous</a></p>
             </div>
         </div>
     </section>

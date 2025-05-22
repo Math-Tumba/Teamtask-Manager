@@ -1,7 +1,7 @@
 footer {
     padding: 5%;
-    background-color: $couleur_fond_fonce;
-    color: $blanc;
+    background-color: $background_color_dark;
+    color: $white;
     @include max767 {
         padding: 40px 20px;
     }

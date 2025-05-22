@@ -1,0 +1,18 @@
+$avatarWidth: (
+    1: 60px,
+    2: 120px,
+    3: 180px
+);
+
+img.avatar {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    
+    @each $key, $size in $avatarWidth {
+        &-#{$key} {
+            max-width: $size;
+        }
+    }
+}

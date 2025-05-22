@@ -16,38 +16,38 @@
                                      Demandes d'ami reçues ({# résultat total #})
                                 </button>
                             </h2>
-                            <div id="friend-requests-received-body" class="friend-requests accordion-collapse collapse show" aria-labelledby="friend-requests-received-header">
+                            <div id="friend-requests-received-body" class="friends accordion-collapse collapse show" aria-labelledby="friend-requests-received-header">
                                 <div class="accordion-body">
                                     {# Liste des demandes reçues (avec pagination) et DTO preview pour chaque utilisateur #}
                                     <div class="row g-3">
                                         <div class="col-12 col-sm-6 col-md-12">
                                             <div class="card">
-                                                <div class="card-body flex-column flex-md-row justify-content-between p-2 mr-5">
-                                                    <div class="d-flex flex-column flex-md-row gap-4">
-                                                        <img src={{ app.user.profilePicture }} alt="">
-                                                        <div class="">
-                                                            <h3>{{ app.user.username }}</h3>
+                                                <div class="card-body flex-column flex-md-row justify-content-between">
+                                                    <div class="infos d-flex gap-4">
+                                                        <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
+                                                        <div class="text-cut-container">
+                                                            <p class="h3">{{ app.user.username }}</p>
                                                             <span class="subtext">{{ app.user.country }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex justify-content-center align-items-center gap-3 mx-3">
+                                                    <div class="actions d-flex gap-3">
                                                         <button class="btn btn-success" type="button">Accepter</button>
                                                         <button class="btn btn-danger" type="button">Décliner</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12 col-sm-6 col-md-12">
                                             <div class="card">
-                                                <div class="card-body flex-md-row flex-column justify-content-between p-2 mr-5">
-                                                    <div class="d-flex flex-md-row flex-column gap-4">
-                                                        <img src={{ app.user.profilePicture }} alt="">
-                                                        <div class="">
-                                                            <h3>{{ app.user.username }}</h3>
+                                                <div class="card-body flex-md-row flex-column justify-content-between">
+                                                    <div class="infos d-flex gap-4">
+                                                        <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
+                                                        <div class="text-cut-container">
+                                                            <p class="h3">{{ app.user.username }}</p>
                                                             <span class="subtext">{{ app.user.country }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex justify-content-center align-items-center gap-3 mx-3">
+                                                    <div class="actions d-flex gap-3">
                                                         <button class="btn btn-success" type="button">Accepter</button>
                                                         <button class="btn btn-danger" type="button">Décliner</button>
                                                     </div>
@@ -64,19 +64,19 @@
                                     Demandes d'ami envoyées ({# résultat total #})
                                 </button>
                             </h2>
-                            <div id="friend-requests-sent-body" class="friend-requests accordion-collapse collapse" aria-labelledby="friend-requests-sent-header">
+                            <div id="friend-requests-sent-body" class="friends accordion-collapse collapse" aria-labelledby="friend-requests-sent-header">
                                 <div class="accordion-body">
                                     {# Liste des demandes envoyées (avec pagination) et DTO preview pour chaque utilisateur #}
                                     <div class="card">
-                                        <div class="card-body flex-row justify-content-between p-2 mr-5">
-                                            <div class="d-flex gap-4">
-                                                <img src={{ app.user.profilePicture }} alt="">
-                                                <div class="">
-                                                    <h3>{{ app.user.username }}</h3>
+                                        <div class="card-body flex-row justify-content-between">
+                                            <div class="infos d-flex gap-4">
+                                                <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
+                                                <div class="text-cut-container">
+                                                    <p class="h3">{{ app.user.username }}</p>
                                                     <span class="subtext">{{ app.user.country }}</span>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center gap-3 mx-3">
+                                            <div class="actions d-flex gap-3">
                                                 <button class="btn btn-danger" type="button">Annuler</button>
                                             </div>
                                         </div>

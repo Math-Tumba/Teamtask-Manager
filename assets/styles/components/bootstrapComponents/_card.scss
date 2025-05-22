@@ -1,0 +1,16 @@
+.body .card {
+    &.card-full {
+        padding: 40px 20px;
+        gap: 20px;
+        border-radius: 25px;
+        @include max767 {
+            padding: 25px 15px;
+        }
+    }
+    .card-body {
+        border-radius: inherit;
+        .list-group-flush {
+            border-radius: inherit;
+        }
+    }
+}

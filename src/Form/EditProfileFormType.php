@@ -22,6 +22,7 @@ class EditProfileFormType extends AbstractType
                 'help' => ' Formats acceptés : .jpg, .png; Taille maximum : 3Mo',
                 'label' => 'Photo de profil',
                 'required' => false,
+                'row_attr' => ['class' => 'form-group'],
                 'constraints' => [
                     new File([
                         'maxSize' => '3072k',
@@ -36,40 +37,41 @@ class EditProfileFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => 'Nom',
+                'row_attr' => ['class' => 'form-group'],
             ])
             ->add('surname', TextType::class, [
                 'label' => 'Prénom',
+                'row_attr' => ['class' => 'form-group'],
             ])
             ->add('country', CountryType::class, [
                 'preferred_choices' => ['FR'],
                 'label' => 'Nationalité',
+                'row_attr' => ['class' => 'form-group'],
             ])
             ->add('email', TextType::class, [
                 'label' => 'Email',
+                'row_attr' => ['class' => 'form-group'],
             ])
             ->add('website', UrlType::class, [
                 'label' => 'Site web',
                 'required' => false,
                 'default_protocol' => null,
-                'attr' => [
-                    'placeholder' => 'https://nom-de-domaine',
-                ],
+                'attr' => ['placeholder' => 'https://nom-de-domaine'],
+                'row_attr' => ['class' => 'form-group'],
             ])
             ->add('github', UrlType::class, [
                 'label' => 'GitHub',
                 'required' => false,
                 'default_protocol' => null,
-                'attr' => [
-                    'placeholder' => 'https://github.com/utilisateur/',
-                ],
+                'attr' => ['placeholder' => 'https://github.com/utilisateur/'],
+                'row_attr' => ['class' => 'form-group'],
             ]) 
             ->add('linkedin', UrlType::class, [
                 'label' => 'LinkedIn',
                 'required' => false,
                 'default_protocol' => null,
-                'attr' => [
-                    'placeholder' => 'https://www.linkedin.com/in/utilisateur/',
-                ],
+                'attr' => ['placeholder' => 'https://www.linkedin.com/in/utilisateur/'],
+                'row_attr' => ['class' => 'form-group'],
             ])
         ;
     }

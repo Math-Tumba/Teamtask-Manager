@@ -1,0 +1,25 @@
+section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    @include max767 {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    &.main_section {
+        min-height: 70vh;
+        @include max980 {
+            min-height: 50vh;
+        }
+        @include max767 {
+            padding-top: 55px;
+            padding-bottom: 55px;
+        }
+    }
+    .container {
+        gap: 20px;
+    }
+}

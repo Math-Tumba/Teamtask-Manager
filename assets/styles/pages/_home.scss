@@ -1,0 +1,45 @@
+body.home {
+    
+    #home_section {
+        @include max980 {
+            text-align: center;
+        }
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 65%;
+            background-color: darken($background_color_light, 5%);
+            z-index: -1;
+            clip-path: polygon(0 0, 90% 0%, 100% 100%, 0% 100%);
+            @include max767 {
+                clip-path: polygon(0 0, 75% 0%, 100% 100%, 0% 100%);
+            }
+        }
+        h1 {
+            text-align: left;
+            @include max980 {
+                text-align: center;
+            }
+        }
+    }
+
+    #team {
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 65%;
+            background-color: darken($background_color_light, 5%);
+            z-index: -1;
+            clip-path: polygon(10% 0, 100% 0%, 100% 100%, 0% 100%);
+            @include max767 {
+                clip-path: polygon(25% 0, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+    }
+}

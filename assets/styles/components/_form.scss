@@ -1,0 +1,25 @@
+.body form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    label.required::after {
+        content: "*";
+        color: $red;
+    }
+    .btn[type="submit"] {
+        width: 100%;
+    }
+    .form-check {
+        padding-left: 0;
+        .form-check-input {
+            margin-left: 0;
+        }
+        label {
+            margin-left: 10px;
+        }
+    }
+    :is(.form-control, .form-check-input):focus {
+        box-shadow: none;
+        border-color: $primary_color;
+    }
+}

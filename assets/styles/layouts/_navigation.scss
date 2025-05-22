@@ -1,0 +1,24 @@
+body > nav {
+    background-color: $white;
+    .navbar-brand {
+        width: fit-content;
+        img {
+            height: 65px;
+            object-fit: contain;
+            @include max479 {
+                height: 35px;
+            }
+        }
+    }
+    .nav-item {
+        .nav-link {
+            color: $black;
+        }
+        &.dropdown {
+            .dropdown-menu {
+                min-width: 320px;
+                padding: 10px;
+            }
+        }
+    }
+}

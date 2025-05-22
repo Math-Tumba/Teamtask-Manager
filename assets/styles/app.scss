@@ -1,14 +1,43 @@
-@import './bootstrapVariables';
-@import './bootstrapComponents';
+// Utils
+@import './utils/bootstrapVariables';
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
+@import './utils/keyframes';
+@import './utils/mixins';
+@import './utils/variables';
 
-@import './variables';
-@import './responsive';
-@import './default';
-@import './keyframes';
-@import './admin/admin';
-@import './header/header';
-@import './footer/footer';
-@import './body/global';
-@import './body/home';
-@import './body/users';
+
+// Vendor
+
+
+// Base
+@import './base/normalize';
+@import './base/typography';
+
+
+// Layouts
+@import './layouts/footer';
+@import './layouts/main';
+@import './layouts/navigation';
+@import './layouts/section';
+
+
+// Pages
+@import './pages/account';
+@import './pages/home';
+
+
+// Components
+//// Bootstrap components
+@import './components/bootstrapComponents/accordion';
+@import './components/bootstrapComponents/button'; 
+@import './components/bootstrapComponents/card';
+//// Custom components
+@import './components/avatar';
+@import './components/flashMessage';
+@import './components/form';
+@import './components/icon';
+@import './components/iconsList';
+@import './components/textCutContainer';
+
+
+// Themes
