@@ -28,17 +28,21 @@ body.profile {
             max-width: 250px;
             margin: 0 auto;
         }
-        .infos {
-            @include max479 {
-                align-items: center;
-                text-align: center;
+        .card-body {
+            justify-content: space-between;
+            @include max767 {
                 flex-direction: column;
             }
-        }
-        .actions {
-            align-items: center;
-            @include max479 {
-                
+            .infos {
+                @include max767 {
+                    align-items: center;
+                    text-align: center;
+                    flex-direction: column;
+                }
+            }
+            .actions {
+                align-items: center;
+                justify-content: center;
             }
         }
     }

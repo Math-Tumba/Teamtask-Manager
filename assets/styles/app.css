@@ -12124,16 +12124,26 @@ body.profile #profile-infos .card-body:not(#social-medias) .list-group-item > *:
     margin: 0 auto;
   }
 }
-@media (max-width: 479px) {
-  body.profile .friends .card .infos {
+body.profile .friends .card .card-body {
+  justify-content: space-between;
+}
+@media (max-width: 767px) {
+  body.profile .friends .card .card-body {
+    flex-direction: column;
+  }
+}
+@media (max-width: 767px) {
+  body.profile .friends .card .card-body .infos {
     align-items: center;
     text-align: center;
     flex-direction: column;
   }
 }
-body.profile .friends .card .actions {
+body.profile .friends .card .card-body .actions {
   align-items: center;
+  justify-content: center;
 }
+
 @media (max-width: 980px) {
   body.home #home_section {
     text-align: center;
