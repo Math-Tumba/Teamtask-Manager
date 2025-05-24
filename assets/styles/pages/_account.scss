@@ -8,8 +8,8 @@ body.profile {
             &#informations {
                 .list-group-item :first-child {
                     min-width: 200px;
-                    @include max980 {
-                        min-width: 120px;
+                    @include max1200 {
+                        min-width: 140px;
                     }
                 }
             }

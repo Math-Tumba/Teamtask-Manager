@@ -32,45 +32,65 @@
             </div>
         </aside>
 
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container d-flex justify-content-between">
                 <a class="navbar-brand logo" href={{ path('app_home') }}>
                     <img src={{ asset('images/static/logo-TTM-fonce.png') }} alt="Logo">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeaderToggler" aria-controls="navbarHeaderToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeaderToggler" aria-controls="navbarHeaderToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse flex-grow-0" id="navbarHeaderToggler">
-                    <div>
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link d-flex flex-column align-items-center" href="#" role="button" id="dropdownMenuAccount" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ ux_icon('bi:person', {height: '50px', width: '50px', 'aria-hidden': true}) }}
-                                    <p>Compte</p>
-                                </a>
+                    <ul class="navbar-nav">
 
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                        <li id="nav-menu-desktop" class="nav-item dropdown d-none d-md-block">
+                            <button class="nav-link d-flex" type="button" id="dropdownMenuAccount" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ ux_icon('bi:person', {height: '50px', width: '50px', 'aria-hidden': true}) }}
+                                <p>Compte</p>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <li><a class="dropdown-item" href={{ path('app_register') }}>S'inscrire</a></li>
+                                    <li><a class="dropdown-item" href={{ path('app_login') }}>Se connecter</a></li>
+                                {% else %}
+                                    <li class="dropdown-header d-flex align-items-center gap-3">
+                                        <img class="avatar avatar-1" src={{ app.user.profilePicture }} alt="Photo de profil">
+                                        <strong>{{ app.user.username }}</strong>
+                                    </li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href={{ path('app_profile', { id: app.user.id }) }}>Voir mon profil</a></li>
+                                    <li><a class="dropdown-item" href={{ path('app_profile_update')}}>Modifier mon profil</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href={{ path('app_profile', { id: app.user.id }) }}>Contact</a></li>
+                                    <li><a class="dropdown-item" href={{ path('app_profile_friend_requests') }}>Demandes</a></li>
+                                    <div class="dropdown-divider"></div>
+                                    <li><a class="dropdown-item" href={{ path('app_logout') }}>Se déconnecter</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+
+                        <li id="nav-menu-mobile" class="nav-item d-md-none">
+                            <button class="nav-link d-flex" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMenuToggler" aria-expanded="false" aria-controls="collapseMenuToggler">
+                                {{ ux_icon('bi:person', {height: '50px', width: '50px', 'aria-hidden': true}) }}
+                                <p>Compte</p>
+                            </button>
+                            <div class="collapse" id="collapseMenuToggler">
+                                <ul class="navbar-nav flex-column">
                                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-                                        <li><a class="dropdown-item" href={{ path('app_register') }}>S'inscrire</a></li>
-                                        <li><a class="dropdown-item" href={{ path('app_login') }}>Se connecter</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_register') }}>S'inscrire</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_login') }}>Se connecter</a></li>
                                     {% else %}
-                                        <li class="dropdown-header d-flex align-items-center gap-3">
-                                            <img class="avatar avatar-1" src={{ app.user.profilePicture }} alt="Photo de profil">
-                                            <strong>{{ app.user.username }}</strong>
-                                        </li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item" href={{ path('app_profile', { id: app.user.id }) }}>Voir mon profil</a></li>
-                                        <li><a class="dropdown-item" href={{ path('app_profile_update')}}>Modifier mon profil</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item" href={{ path('app_profile', { id: app.user.id }) }}>Contact</a></li>
-                                        <li><a class="dropdown-item" href={{ path('app_profile_friend_requests') }}>Demandes</a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a class="dropdown-item" href={{ path('app_logout') }}>Se déconnecter</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile', { id: app.user.id }) }}>Voir mon profil</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile_update')}}>Modifier mon profil</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile', { id: app.user.id }) }}>Contact</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile_friend_requests') }}>Demandes</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_logout') }}>Se déconnecter</a></li>
                                     {% endif %}
                                 </ul>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </nav>

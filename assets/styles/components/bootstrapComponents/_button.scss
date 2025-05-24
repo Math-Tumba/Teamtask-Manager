@@ -1,48 +1,53 @@
-.body .btn {
-    display: block;
-    position: relative;
-    width: fit-content;
-    padding: 12px 18px;
-    background-color: $background_color_dark;
-    color: $white;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    border: none;
-    border-radius: 5px;
-    z-index: 0;
-    transition: .4s ease-in-out;
-    @include max767 {
-        padding: 6px 10px;
-        font-size: 13px;
+.body :is(button, a) {
+    &:focus, &:hover {
+        box-shadow: none;
     }
-    &:hover, &:focus, &:focus-visible, &:active {
+    &.btn {
+        display: block;
+        position: relative;
+        width: fit-content;
+        padding: 12px 18px;
+        background-color: $background_color_dark;
         color: $white;
-        &::before {
-            height: 100%;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        border: none;
+        border-radius: 5px;
+        z-index: 0;
+        transition: .4s ease-in-out;
+        @include max767 {
+            padding: 6px 10px;
+            font-size: 13px;
         }
-    }
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 0;
-        width: 100%;
-        background-color: $secondary_color;
-        border-radius: inherit;
-        z-index: -1;
-        transition: inherit;
-    }
-    &.btn-success {
-        background-color: $green;
-        &::before {
-            background-color: darken($green, 5%) !important;   
+        &:hover, &:focus, &:focus-visible, &:active {
+            color: $white;
+            &::before {
+                height: 100%;
+            }
         }
-    }
-    &.btn-danger {
-        background-color: $red;
         &::before {
-            background-color: darken($red, 5%) !important;   
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 100%;
+            background-color: $secondary_color;
+            border-radius: inherit;
+            z-index: -1;
+            transition: inherit;
+        }
+        &.btn-success {
+            background-color: $green;
+            &::before {
+                background-color: darken($green, 5%) !important;   
+            }
+        }
+        &.btn-danger {
+            background-color: $red;
+            &::before {
+                background-color: darken($red, 5%) !important;   
+            }
         }
     }
 }

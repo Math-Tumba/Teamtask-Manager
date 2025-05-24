@@ -1,5 +1,13 @@
-body > nav {
+body > .navbar {
+    padding: 0;
     background-color: $white;
+    .container {
+        position: relative;
+        @include max767 {
+            max-width: 100%;
+            padding: 10px;
+        }
+    }
     .navbar-brand {
         width: fit-content;
         img {
@@ -10,14 +18,50 @@ body > nav {
             }
         }
     }
-    .nav-item {
-        .nav-link {
-            color: $black;
+    .navbar-collapse {
+        @include max767 {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: $white;
         }
-        &.dropdown {
-            .dropdown-menu {
-                min-width: 320px;
-                padding: 10px;
+        .nav-item {
+            .nav-link {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                color: $black;
+            }
+            &#nav-menu-desktop {
+                .dropdown-menu {
+                    min-width: 320px;
+                    padding: 10px;
+                }
+            }
+            &#nav-menu-mobile {
+                .nav-link {
+                    flex-direction: row;
+                    gap: 10px;
+                    font-size: 15px;
+                    font-weight: 500;
+                    background-color: darken($white, 2%);
+                    &.nav-link-child {
+                        font-size: 13px;
+                        font-weight: initial;
+                        text-align: center;
+                        background-color: darken($white, 4%);
+                        &:hover {
+                            background-color: darken($white, 6%);
+                        }
+                    }
+                }
+                svg {
+                    width: 30px;
+                    height: 30px;
+                }
             }
         }
     }
