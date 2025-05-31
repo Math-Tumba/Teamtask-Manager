@@ -5,7 +5,6 @@ namespace App\Service\Users;
 use App\Entity\User;
 use App\DTO\Users\UserCreateDTO;
 use App\DTO\Users\UserUpdateDTO;
-use App\Entity\FriendRequest;
 use App\Repository\FriendRequestRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -88,48 +87,6 @@ class UsersService
     public function verifyNotSameUsers(User $user1, User $user2) : bool {
         if ($user1 === $user2) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'Vous ne pouvez pas effectuer cette action sur vous-même.');
-        }
-
-        return true;
-    }
-
-
-
-    /**
-     * Returns a friend request if exists.
-     *
-     * @param User $userSender
-     * @param User $userReceiver
-     *
-     * @throws HttpException if no friend request exists between each others.
-     * 
-     * @return FriendRequest [sender - receiver]
-     */
-    public function verifyFriendRequestExists(User $userSender, User $userReceiver) : FriendRequest {
-        $friendRequest = $this->friendRequestRepository->findOneBy([
-            'userSender' => $userSender,
-            'userReceiver' => $userReceiver
-        ]);
-        if (!$friendRequest) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Il n\'y a pas de demande d\'ajout en attente avec cet utilisateur.');
-        }
-
-        return $friendRequest;
-    }
- 
-
-
-    /**
-     * @param User $userSender
-     * @param User $userReceiver
-     *
-     * @throws HttpException if a friend request exists already and is pending.
-     * 
-     * @return bool
-     */
-    public function verifyFriendRequestNotPending(User $userSender, User $userReceiver) : bool {
-        if ($this->friendRequestRepository->relationExists($userSender, $userReceiver)) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Une demande d\'ajout est déjà en attente.');
         }
 
         return true;
@@ -288,53 +245,5 @@ class UsersService
         
         $this->entityManager->remove($user);
         $this->entityManager->flush();
-    }
-
-    
-
-    /**
-     * Send a friend request to another user.
-     *
-     * @param int $id the id of the receiver.
-     *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user sends a request to himself (from verifyNotSameUsers()).
-     */
-    public function sendFriendRequest(int $id) : void {
-        /** @var User $userSender */
-        $userSender = $this->security->getUser(); 
-
-        $userReceiver = $this->verifyUserExists($id);
-        $this->verifyNotSameUsers($userSender, $userReceiver);
-
-        if($this->verifyFriendRequestNotPending($userSender, $userReceiver)) {
-            $friendRequest = new FriendRequest($userSender, $userReceiver);
-            
-            $this->entityManager->persist($friendRequest);
-            $this->entityManager->flush();
-        }
-    }
-
-
-    /**
-     * Cancel a friend request previously sent.
-     *
-     * @param int $id the id of the receiver.
-     *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user cancels a request to himself (from verifyNotSameUsers()).
-     */
-    public function cancelFriendRequest(int $id) {
-        /** @var User $userSender */
-        $userSender = $this->security->getUser(); 
-
-        $userReceiver = $this->verifyUserExists($id);
-        $this->verifyNotSameUsers($userSender, $userReceiver);
-
-        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
-        if($friendRequest) {
-            $this->entityManager->remove($friendRequest);
-            $this->entityManager->flush();
-        }
     }
 }

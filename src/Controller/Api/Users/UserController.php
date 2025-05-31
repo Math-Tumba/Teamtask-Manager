@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\Users;
 
 use App\DTO\Users\UserCreateDTO;
 use App\DTO\Users\UserUpdateDTO;
@@ -91,30 +91,6 @@ class UserController extends AbstractController {
     ) : JsonResponse {
         
         $usersService->delete($id); 
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
-    }
-
-
-
-    #[Route(path: '/friend-request/{id}', name: 'api_send_friend_request', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
-    public function sendFriendRequest (
-        int $id,
-        UsersService $usersService, 
-    ) : JsonResponse {
-
-        $usersService->sendFriendRequest($id);
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
-    }
-
-
-
-    #[Route(path: '/friend-request/{id}', name: 'api_cancel_friend_request', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
-    public function cancelFriendRequest (
-        int $id,
-        UsersService $usersService, 
-    ) : JsonResponse {
-
-        $usersService->cancelFriendRequest($id);
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 }

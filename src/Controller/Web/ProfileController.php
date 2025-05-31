@@ -87,11 +87,15 @@ class ProfileController extends AbstractController
         ]);
     }
 
+    
+
     #[Route('/friend-requests', name: 'app_profile_friend_requests')]
-    public function showFriendRequests() : Response {
+    public function showFriendRequests(Request $request) : Response {
+        $page = $request->query->getInt('page', 1);
+        // $friendRequestsReceived =  
 
         return $this->render('profile/profile_friend_requests.html.twig', [
-            
+            // 'friendRequestsReceived' => $friendRequestsReceived,
         ]);
     }
 }
