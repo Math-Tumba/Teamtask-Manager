@@ -64,6 +64,20 @@ class FriendRequestsService {
 
 
 
+    public function getFriendRequestsReceived(int $id, int $page) {
+        $user = $this->usersService->verifyUserExists($id);
+        return $this->friendRequestRepository->PaginateFriendRequestReceived($user, $page);
+    }
+
+
+
+    public function getFriendRequestsSent(int $id, int $page) {
+        $user = $this->usersService->verifyUserExists($id);
+        return $this->friendRequestRepository->PaginateFriendRequestSent($user, $page);
+    }
+
+
+
     /**
      * Send a friend request to another user.
      *

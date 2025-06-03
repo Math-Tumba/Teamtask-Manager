@@ -13,47 +13,34 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="friend-requests-received-header">
                                 <button class="accordion-button h2" type="button" data-bs-toggle="collapse" data-bs-target="#friend-requests-received-body" aria-expanded="true" aria-controls="friend-requests-received-body">
-                                     Demandes d'ami reçues ({# résultat total #})
+                                     Demandes d'ami reçues ({{ friendRequestsReceived.getTotalItemCount }})
                                 </button>
                             </h2>
                             <div id="friend-requests-received-body" class="friends accordion-collapse collapse show" aria-labelledby="friend-requests-received-header">
                                 <div class="accordion-body">
-                                    {# Liste des demandes reçues (avec pagination) et DTO preview pour chaque utilisateur #}
                                     <div class="row g-3">
-                                        <div class="col-12 col-sm-6 col-md-12">
-                                            <div class="card">
-                                                <div class="card-body d-flex gap-3">
-                                                    <div class="infos d-flex gap-4">
-                                                        <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
-                                                        <div class="text-cut-container">
-                                                            <p class="h3">{{ app.user.username }}</p>
-                                                            <span class="subtext">{{ app.user.country }}</span>
+                                        {% for friendRequest in friendRequestsReceived %}
+                                            <div class="col-12 col-sm-6 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body d-flex gap-3">
+                                                        <div class="infos d-flex gap-4">
+                                                            <img class="avatar avatar-2" src={{ friendRequest.profilePicture }} alt="">
+                                                            <div class="text-cut-container">
+                                                                <p class="h3">{{ friendRequest.username }}</p>
+                                                                <span class="subtext">{{ friendRequest.country }}</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="actions d-flex gap-3">
-                                                        <button class="btn btn-success" type="button">Accepter</button>
-                                                        <button class="btn btn-danger" type="button">Décliner</button>
+                                                        <div class="actions d-flex gap-3">
+                                                            <button class="btn btn-success" type="button">Accepter</button>
+                                                            <button class="btn btn-danger" type="button">Décliner</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6 col-md-12">
-                                            <div class="card">
-                                                <div class="card-body d-flex gap-3">
-                                                    <div class="infos d-flex gap-4">
-                                                        <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
-                                                        <div class="text-cut-container">
-                                                            <p class="h3">{{ app.user.username }}</p>
-                                                            <span class="subtext">{{ app.user.country }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="actions d-flex gap-3">
-                                                        <button class="btn btn-success" type="button">Accepter</button>
-                                                        <button class="btn btn-danger" type="button">Décliner</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {% else %}
+                                            <p>Vous n'avez reçu aucune demande d'ami.</p>
+                                        {% endfor %}
+                                        {{ knp_pagination_render(friendRequestsReceived) }}
                                     </div>
                                 </div>
                             </div>
@@ -61,25 +48,31 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="friend-requests-sent-header">
                                 <button class="accordion-button h2" type="button" data-bs-toggle="collapse" data-bs-target="#friend-requests-sent-body" aria-expanded="true" aria-controls="friend-requests-sent-body">
-                                    Demandes d'ami envoyées ({# résultat total #})
+                                    Demandes d'ami envoyées ({{ friendRequestsSent.getTotalItemCount }})
                                 </button>
                             </h2>
                             <div id="friend-requests-sent-body" class="friends accordion-collapse collapse" aria-labelledby="friend-requests-sent-header">
                                 <div class="accordion-body">
-                                    {# Liste des demandes envoyées (avec pagination) et DTO preview pour chaque utilisateur #}
-                                    <div class="card">
-                                        <div class="card-body d-flex gap-3">
-                                            <div class="infos d-flex gap-4">
-                                                <img class="avatar avatar-2" src={{ app.user.profilePicture }} alt="">
-                                                <div class="text-cut-container">
-                                                    <p class="h3">{{ app.user.username }}</p>
-                                                    <span class="subtext">{{ app.user.country }}</span>
+                                    <div class="row g-3">
+                                        {% for friendRequest in friendRequestsSent %}
+                                            <div class="card">
+                                                <div class="card-body d-flex gap-3">
+                                                    <div class="infos d-flex gap-4">
+                                                        <img class="avatar avatar-2" src={{ friendRequest.profilePicture }} alt="">
+                                                        <div class="text-cut-container">
+                                                            <p class="h3">{{ friendRequest.username }}</p>
+                                                            <span class="subtext">{{ friendRequest.country }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="actions d-flex gap-3">
+                                                        <button class="btn btn-danger" type="button">Annuler</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="actions d-flex gap-3">
-                                                <button class="btn btn-danger" type="button">Annuler</button>
-                                            </div>
-                                        </div>
+                                        {% else %}
+                                            <p>Vous n'avez aucune demande envoyée en attente.</p>
+                                        {% endfor %}
+                                        {{ knp_pagination_render(friendRequestsSent) }}
                                     </div>
                                 </div>
                             </div>

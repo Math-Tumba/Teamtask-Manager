@@ -7,6 +7,7 @@ use App\Service\UrlHelper;
 use App\Service\ArrayHelper;
 use App\Form\EditProfileFormType;
 use App\DTO\Users\UserUpdateDTO;
+use App\Service\Users\FriendRequestsService;
 use App\Service\Users\UsersService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,12 +91,21 @@ class ProfileController extends AbstractController
     
 
     #[Route('/friend-requests', name: 'app_profile_friend_requests')]
-    public function showFriendRequests(Request $request) : Response {
-        $page = $request->query->getInt('page', 1);
-        // $friendRequestsReceived =  
+    public function showFriendRequests(
+        Request $request,
+        FriendRequestsService $friendRequestsService,
+    ) : Response {
+        /** @var User $user */
+        $user = $this->getUser();
+        $userId = $user->getId(); 
+        $page_friend_request_received = $request->query->getInt('page_fr_received', 1);
+        $page_friend_request_sent = $request->query->getInt('page_fr_sent', 1);
+        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($userId, $page_friend_request_received);
+        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($userId, $page_friend_request_sent);
 
         return $this->render('profile/profile_friend_requests.html.twig', [
-            // 'friendRequestsReceived' => $friendRequestsReceived,
+            'friendRequestsReceived' => $friendRequestsReceived,
+            'friendRequestsSent' => $friendRequestsSent,
         ]);
     }
 }
