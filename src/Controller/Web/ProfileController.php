@@ -107,5 +107,5 @@ class ProfileController extends AbstractController
             'friendRequestsReceived' => $friendRequestsReceived,
             'friendRequestsSent' => $friendRequestsSent,
         ]);
-    }
+    } 
 }

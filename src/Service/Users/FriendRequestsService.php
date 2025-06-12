@@ -102,20 +102,45 @@ class FriendRequestsService {
     }
 
 
-    /**
-     * Cancel a friend request previously sent.
-     *
-     * @param int $id the id of the receiver.
-     *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user cancels a request to himself (from verifyNotSameUsers()).
-     */
+
     public function cancelFriendRequest(int $id) {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 
 
         $userReceiver = $this->usersService->verifyUserExists($id);
-        $this->usersService->verifyNotSameUsers($userSender, $userReceiver);
+
+        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+
+        if($friendRequest) {            
+            $this->entityManager->remove($friendRequest);
+            $this->entityManager->flush();
+        }
+    }
+
+
+
+    public function acceptFriendRequest(int $id) {
+        /** @var User $userSender */
+        $userReceiver = $this->security->getUser(); 
+
+        $userSender = $this->usersService->verifyUserExists($id);
+
+        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+        if($friendRequest) {
+            $userSender->addFriend($userReceiver);
+            $this->friendRequestRepository->deleteFriendRequestBothSides($userSender, $userReceiver);
+            $this->entityManager->persist($userSender);
+            $this->entityManager->flush();
+        }
+    }
+
+
+
+    public function declineFriendRequest(int $id) {
+        /** @var User $userReceiver */
+        $userReceiver = $this->security->getUser(); 
+
+        $userSender = $this->usersService->verifyUserExists($id);
 
         $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
         if($friendRequest) {

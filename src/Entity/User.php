@@ -335,22 +335,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->friendRequestSent;
     }
 
-    public function sendFriendRequest(self $receiver): static
-    {
-        if (!$this->friendRequestSent->contains($receiver)) {
-            $this->friendRequestSent->add($receiver);
-        }
-
-        return $this; 
-    }
-
-    public function cancelFriendRequest(self $receiver): static
-    {
-        $this->friendRequestSent->removeElement($receiver);
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, self>
      */
@@ -369,13 +353,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addFriend(self $newFriend) : static 
     {
-        // FAIRE DES TESTS POUR VOIR COMMENT EST FAIT LA TABLE
         $this->friends->add($newFriend);
-        // $newFriend->friends->add($this);
-
-        $this->cancelFriendRequest($newFriend);
-        // $newFriend->cancelFriendRequest($this);
-
+        $newFriend->friends->add($this);
+        
         return $this;
     }
 

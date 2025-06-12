@@ -2,12 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\FriendRequest;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\FriendRequest;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<FriendRequests>
@@ -95,22 +97,16 @@ class FriendRequestRepository extends ServiceEntityRepository
         );
     }
 
-    /**
-     * Retrieve users who received a friend request from a specific user.
-     * 
-     * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending 
-     * friend requests sent.
-     * @param int $id the user who sent the requests
-     * 
-     * @return array
-     */
-    public function findByFriendRequestSent(int $id) : array {
+    public function deleteFriendRequestBothSides(User $user1, User $user2) {
         return $this->createQueryBuilder('ufr')
-            ->innerJoin('ufr.userReceiver', 'u')
-            ->select('NEW App\\DTO\\Users\\UserPreviewDTO(u.id, u.username, u.country, u.profilePicture)')
-            ->where('ufr.userSender = :id')
+            ->delete()
+            ->where('(ufr.userSender = :user1 AND ufr.userReceiver = :user2)')
+            ->orWhere('(ufr.userSender = :user2 AND ufr.userReceiver = :user1)')
+            ->setParameters(new ArrayCollection(array(
+                new Parameter(':user1', $user1),
+                new Parameter(':user2', $user2)
+            )))
             ->getQuery()
-            ->setParameter(':id', $id)
-            ->getResult();
+            ->execute();
     }
 }

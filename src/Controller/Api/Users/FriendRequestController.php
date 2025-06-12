@@ -32,4 +32,28 @@ class FriendRequestController extends AbstractController {
         $friendRequestsService->cancelFriendRequest($id);
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
+
+
+
+    #[Route(path: '/{id}/accept', name: 'api_accept_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
+    public function acceptFriendRequest (
+        int $id,
+        FriendRequestsService $friendRequestsService,
+    ) : JsonResponse {
+
+        $friendRequestsService->acceptFriendRequest($id);
+        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+    }
+
+
+
+    #[Route(path: '/{id}/decline', name: 'api_decline_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
+    public function declineFriendRequest (
+        int $id,
+        FriendRequestsService $friendRequestsService,
+    ) : JsonResponse {
+
+        $friendRequestsService->declineFriendRequest($id);
+        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+    }
 }

@@ -4,6 +4,12 @@
 
 {% block classBody %}profile{% endblock %}
 
+{% block ajaxAPI %}
+    <script type="module" src={{ asset('js/ajax/users/acceptFriendRequest.js') }}></script>
+    <script type="module" src={{ asset('js/ajax/users/declineFriendRequest.js') }}></script>
+    <script type="module" src={{ asset('js/ajax/users/cancelFriendRequest.js') }}></script>
+{% endblock %} 
+
 {% block body %}
     <section>
         <div class="container">
@@ -31,8 +37,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="actions d-flex gap-3">
-                                                            <button class="btn btn-success" type="button">Accepter</button>
-                                                            <button class="btn btn-danger" type="button">Décliner</button>
+                                                            <button class="btn btn-success accept-friend-request" type="button" data-user-id={{ friendRequest.id }}>Accepter</button>
+                                                            <button class="btn btn-danger decline-friend-request" type="button" data-user-id={{ friendRequest.id }}>Décliner</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -65,7 +71,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="actions d-flex gap-3">
-                                                        <button class="btn btn-danger" type="button">Annuler</button>
+                                                        <button class="btn btn-danger cancel-friend-request" type="button" data-user-id={{ friendRequest.id }}>Annuler</button>
                                                     </div>
                                                 </div>
                                             </div>
