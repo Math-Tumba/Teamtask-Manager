@@ -37,8 +37,8 @@ return [
     'api' => [
         'path' => './assets/js/utils/kyManager.js'
     ],
-    'components' => [
-        'path' => './assets/js/components/components.js'
+    'components/flashMessage' => [
+        'path' => './assets/js/components/flashMessage.js'
     ],
     'ajax/api/acceptFriendRequest' => [
         'path' => './assets/js/ajax/api/users/acceptFriendRequest.js'

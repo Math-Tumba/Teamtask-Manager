@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { FlashMessage } from 'components';
+import { FlashMessage } from 'components/flashMessage';
 
 /**
  * Ky variable acting as an interceptor.

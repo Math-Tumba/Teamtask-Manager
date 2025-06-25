@@ -1,6 +1,6 @@
 import './js/utils/globalJquery.js'
 import './js/utils/kyManager.js'
-import './js/components/modalFlash.js'
+import './js/components/flashMessage.js'
 
 import '../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js'
 

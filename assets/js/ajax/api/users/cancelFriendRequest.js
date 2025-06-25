@@ -1,5 +1,5 @@
 import api from 'api'
-import { FlashMessage } from 'components';
+import { FlashMessage } from 'components/flashMessage';
 import { reloadPaginationFriendRequestsSent } from './../../ui/pagination/reloadPaginationFriendRequests.js';
 
 $(() => {

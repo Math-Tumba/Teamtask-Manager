@@ -1,5 +1,5 @@
 import ky from 'ky';
-import { FlashMessage } from 'components';
+import { FlashMessage } from 'components/flashMessage';
 
 export async function reloadPaginationFriendRequestsReceived() {
     const pagination = $('#friend-requests-received-pagination');
