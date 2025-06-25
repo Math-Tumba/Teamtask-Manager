@@ -40,4 +40,16 @@ return [
     'components' => [
         'path' => './assets/js/components/components.js'
     ],
+    'ajax/api/acceptFriendRequest' => [
+        'path' => './assets/js/ajax/api/users/acceptFriendRequest.js'
+    ],
+    'ajax/api/declineFriendRequest' => [
+        'path' => './assets/js/ajax/api/users/declineFriendRequest.js'
+    ],
+    'ajax/api/cancelFriendRequest' => [
+        'path' => './assets/js/ajax/api/users/cancelFriendRequest.js'
+    ],
+    'ajax/api/sendFriendRequest' => [
+        'path' => './assets/js/ajax/api/users/sendFriendRequest.js'
+    ],
 ];

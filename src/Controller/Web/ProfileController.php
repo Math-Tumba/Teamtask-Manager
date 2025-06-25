@@ -91,7 +91,15 @@ class ProfileController extends AbstractController
     
 
     #[Route('/friend-requests', name: 'app_profile_friend_requests')]
-    public function showFriendRequests(
+    public function showFriendRequests() : Response {
+        return $this->render('profile/profile_friend_requests.html.twig', [
+        ]);
+    }
+
+
+
+    #[Route('/friend-requests/components/pagination-friend-requests-received', name: 'component_pagination_friend_requests_received')]
+    public function componentPaginationFriendRequestsReceived(
         Request $request,
         FriendRequestsService $friendRequestsService,
     ) : Response {
@@ -99,13 +107,28 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
         $userId = $user->getId(); 
         $page_friend_request_received = $request->query->getInt('page_fr_received', 1);
-        $page_friend_request_sent = $request->query->getInt('page_fr_sent', 1);
         $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($userId, $page_friend_request_received);
-        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($userId, $page_friend_request_sent);
 
-        return $this->render('profile/profile_friend_requests.html.twig', [
+        return $this->render('components/_pagination_friend_requests_received.html.twig', [
             'friendRequestsReceived' => $friendRequestsReceived,
-            'friendRequestsSent' => $friendRequestsSent,
+        ]);
+    } 
+
+
+
+    #[Route('/friend-requests/components/pagination-friend-requests-sent', name: 'component_pagination_friend_requests_sent')]
+    public function componentPaginationFriendRequestsSent(
+        Request $request,
+        FriendRequestsService $friendRequestsService,
+    ) : Response {
+        /** @var User $user */
+        $user = $this->getUser();
+        $userId = $user->getId(); 
+        $page_friend_request_sent = $request->query->getInt('page_fr_sent', 1);
+        $friendRequestssent = $friendRequestsService->getFriendRequestsSent($userId, $page_friend_request_sent);
+
+        return $this->render('components/_pagination_friend_requests_sent.html.twig', [
+            'friendRequestsSent' => $friendRequestssent,
         ]);
     } 
 }

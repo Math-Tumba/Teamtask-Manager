@@ -64,7 +64,7 @@ class FriendRequestRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->setParameter(':userReceiver', $userReceiver),
             $page,
-            10,
+            2,
             array(
                 'pageParameterName' => 'page_fr_received',
             )

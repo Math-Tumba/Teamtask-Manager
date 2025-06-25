@@ -6,3 +6,12 @@
         width: 0;
     }
 }
+
+@keyframes loadingOverlay {
+    from {
+        background-color: transparentize($black, 0.95)
+    }
+    to {
+        background-color: transparentize($black, 0.75)
+    }
+}
