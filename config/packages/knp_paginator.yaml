@@ -1,4 +1,6 @@
 knp_paginator:
+  default_options:
+    distinct: false
   template:
     pagination: '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'
     sortable: '@KnpPaginator/Pagination/bootstrap_v5_bi_sortable_link.html.twig'
