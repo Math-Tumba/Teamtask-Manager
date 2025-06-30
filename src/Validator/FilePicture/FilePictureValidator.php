@@ -14,7 +14,7 @@ final class FilePictureValidator extends ConstraintValidator
     private const MAX_SIZE_BYTES = self::MAX_SIZE_MO * 1024 * 1024;
 
     /**
-     * Validates uploaded files based on FilePicture constraint.
+     * Validate uploaded files based on FilePicture constraint.
      * 
      * @param mixed $value
      * @param Constraint $constraint

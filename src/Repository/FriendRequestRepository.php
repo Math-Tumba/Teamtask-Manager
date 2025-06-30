@@ -24,7 +24,7 @@ class FriendRequestRepository extends ServiceEntityRepository
     }
 
     /**
-     * Verifies if a friend request is already pending between two users.
+     * Verify if a friend request is already pending between two users.
      * 
      * @param User $userSender
      * @param User $userReceiver
@@ -64,7 +64,7 @@ class FriendRequestRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->setParameter(':userReceiver', $userReceiver),
             $page,
-            2,
+            10,
             array(
                 'pageParameterName' => 'page_fr_received',
             )
@@ -97,6 +97,12 @@ class FriendRequestRepository extends ServiceEntityRepository
         );
     }
 
+    /**
+     * Delete mutual friend requests between 2 users.
+     * 
+     * @param User $user1
+     * @param User $user2
+     */
     public function deleteFriendRequestBothSides(User $user1, User $user2) {
         return $this->createQueryBuilder('ufr')
             ->delete()

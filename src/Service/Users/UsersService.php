@@ -39,7 +39,7 @@ class UsersService
 
 
     /**
-     * Returns user if exists.
+     * Return user if exists.
      *
      * @param int $id
      *
@@ -101,8 +101,7 @@ class UsersService
      * 
      * @return User the user registered.
      */
-    public function register(UserCreateDTO $userDTO): User
-    {
+    public function register(UserCreateDTO $userDTO): User {
         $user = new User();
         $user
             ->setUsername($userDTO->username)
@@ -126,7 +125,7 @@ class UsersService
 
 
     /**
-     * Gets user by ID.
+     * Get user by ID.
      *
      * @param int $id
      *
@@ -141,19 +140,18 @@ class UsersService
 
 
     /**
-     * Updates targeted user by id based on UserUpdateDTO data.
+     * Update targeted user by id based on UserUpdateDTO data.
      *
      * @param int $id
      *
      * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
      *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
      */
-    public function update(int $id, UserUpdateDTO $userDTO): void
-    {
+    public function update(int $id, UserUpdateDTO $userDTO): void {
         /** @var User $user */
         $loggedInUser = $this->security->getUser();
         
-        $user = $this->verifyUserExists($id);
+        $user = $this->get($id);
         $this->verifySameUsers($user, $loggedInUser);
 
         $user
@@ -172,7 +170,7 @@ class UsersService
 
 
     /**
-     * Uploads profile picture and updates targeted user by id.
+     * Upload profile picture and updates targeted user by id.
      *
      * This function handles profile picture uploads by deleting the old one if it exists, saving the new one and updating
      * profile picture path from $user data.
@@ -188,7 +186,7 @@ class UsersService
     public function uploadProfilePicture(int $id, UploadedFile $file) : User {
         $loggedInUser = $this->security->getUser();
 
-        $user = $this->verifyUserExists($id);
+        $user = $this->get($id);
         $this->verifySameUsers($user, $loggedInUser);
 
         $violations = $this->validator->validate($file, new FilePicture());
@@ -226,13 +224,13 @@ class UsersService
      *
      * @param int $id
      *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
+     * @throws HttpException if the targeted user doesn't exist (from get()).
      *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
      */
     public function delete(int $id) : void {
         $loggedInUser = $this->security->getUser();
 
-        $user = $this->verifyUserExists($id);
+        $user = $this->get($id);
         $this->verifySameUsers($user, $loggedInUser);
 
         if ($user->getProfilePicture() !== User::getDefaultProfilePicturePath()) {

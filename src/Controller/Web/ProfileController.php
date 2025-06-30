@@ -12,17 +12,11 @@ use App\Service\Users\UsersService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/user/profile')] 
 class ProfileController extends AbstractController
 {
-
-    public function __construct(
-        private HttpClientInterface $client,
-    ) {
-    }
 
     #[Route('/{id}', name: 'app_profile', requirements: ['id' => '\d+'])]
     public function show(
@@ -33,8 +27,7 @@ class ProfileController extends AbstractController
     ): Response {
 
         $currentUser = $this->getUser();
-
-        $user = $usersService->verifyUserExists($id);
+        $user = $usersService->get($id);
 
         $socialLinks = [
             'website' => [
@@ -92,8 +85,7 @@ class ProfileController extends AbstractController
 
     #[Route('/friend-requests', name: 'app_profile_friend_requests')]
     public function showFriendRequests() : Response {
-        return $this->render('profile/profile_friend_requests.html.twig', [
-        ]);
+        return $this->render('profile/profile_friend_requests.html.twig', []);
     }
 
 
@@ -103,11 +95,12 @@ class ProfileController extends AbstractController
         Request $request,
         FriendRequestsService $friendRequestsService,
     ) : Response {
+
         /** @var User $user */
         $user = $this->getUser();
         $userId = $user->getId(); 
-        $page_friend_request_received = $request->query->getInt('page_fr_received', 1);
-        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($userId, $page_friend_request_received);
+        $pageFriendRequestReceived = $request->query->getInt('page_fr_received', 1);
+        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($userId, $pageFriendRequestReceived);
 
         return $this->render('components/_pagination_friend_requests_received.html.twig', [
             'friendRequestsReceived' => $friendRequestsReceived,
@@ -121,14 +114,15 @@ class ProfileController extends AbstractController
         Request $request,
         FriendRequestsService $friendRequestsService,
     ) : Response {
+
         /** @var User $user */
         $user = $this->getUser();
         $userId = $user->getId(); 
-        $page_friend_request_sent = $request->query->getInt('page_fr_sent', 1);
-        $friendRequestssent = $friendRequestsService->getFriendRequestsSent($userId, $page_friend_request_sent);
+        $pageFriendRequestSent = $request->query->getInt('page_fr_sent', 1);
+        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($userId, $pageFriendRequestSent);
 
         return $this->render('components/_pagination_friend_requests_sent.html.twig', [
-            'friendRequestsSent' => $friendRequestssent,
+            'friendRequestsSent' => $friendRequestsSent,
         ]);
     } 
 }

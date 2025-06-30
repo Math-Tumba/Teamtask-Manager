@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\FriendRequestRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class FriendRequestsService {
@@ -22,8 +23,9 @@ class FriendRequestsService {
     }
 
     
+
     /**
-     * Returns a friend request if exists.
+     * Return a friend request if exists.
      *
      * @param User $userSender
      * @param User $userReceiver
@@ -64,15 +66,54 @@ class FriendRequestsService {
 
 
 
-    public function getFriendRequestsReceived(int $id, int $page) {
-        $user = $this->usersService->verifyUserExists($id);
+    /**
+     * Get friendRequest by ID.
+     *
+     * @param int $id
+     *
+     * @throws HttpException if the user doesn't exist (from verifyFriendRequestExists()).
+     *
+     * @return FriendRequest
+     */
+    public function get(User $userSender, User $userReceiver) : FriendRequest {
+        return $this->verifyFriendRequestExists($userSender, $userReceiver);
+    }
+
+
+
+    /**
+     * Get a few friend request received based on user's ID and page.
+     *
+     * @param int $id
+     * @param int $page
+     *
+     * @throws HttpException if the user doesn't exist (from usersService->get()).
+     *
+     * @return PaginationInterface
+     * 
+     * @see FriendRequestRepository::PaginateFriendRequestReceived()
+     */
+    public function getFriendRequestsReceived(int $id, int $page) : PaginationInterface {
+        $user = $this->usersService->get($id);
         return $this->friendRequestRepository->PaginateFriendRequestReceived($user, $page);
     }
 
 
 
-    public function getFriendRequestsSent(int $id, int $page) {
-        $user = $this->usersService->verifyUserExists($id);
+    /**
+     * Get a few friend request sent based on user's ID and page.
+     *
+     * @param int $id
+     * @param int $page
+     *
+     * @throws HttpException if the user doesn't exist (from usersService->get()).
+     *
+     * @return PaginationInterface
+     * 
+     * @see FriendRequestRepository::PaginateFriendRequestSent()
+     */
+    public function getFriendRequestsSent(int $id, int $page) : PaginationInterface {
+        $user = $this->usersService->get($id);
         return $this->friendRequestRepository->PaginateFriendRequestSent($user, $page);
     }
 
@@ -103,13 +144,21 @@ class FriendRequestsService {
 
 
 
-    public function cancelFriendRequest(int $id) {
+    /**
+     * Cancel a friend request previously sent.
+     *
+     * @param int $id the id of the receiver.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
+     *                       if the friend request doesn't exist (from get())
+     */
+    public function cancelFriendRequest(int $id) : void {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 
 
-        $userReceiver = $this->usersService->verifyUserExists($id);
+        $userReceiver = $this->usersService->get($id);
 
-        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+        $friendRequest = $this->get($userSender, $userReceiver);
 
         if($friendRequest) {            
             $this->entityManager->remove($friendRequest);
@@ -119,13 +168,21 @@ class FriendRequestsService {
 
 
 
-    public function acceptFriendRequest(int $id) {
+    /**
+     * Accept a friend request previously received.
+     *
+     * @param int $id the id of the sender.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
+     *                       if the friend request doesn't exist (from get())
+     */
+    public function acceptFriendRequest(int $id) : void {
         /** @var User $userSender */
         $userReceiver = $this->security->getUser(); 
 
-        $userSender = $this->usersService->verifyUserExists($id);
+        $userSender = $this->usersService->get($id);
 
-        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+        $friendRequest = $this->get($userSender, $userReceiver);
         if($friendRequest) {
             $userSender->addFriend($userReceiver);
             $this->friendRequestRepository->deleteFriendRequestBothSides($userSender, $userReceiver);
@@ -136,13 +193,21 @@ class FriendRequestsService {
 
 
 
-    public function declineFriendRequest(int $id) {
+    /**
+     * Decline a friend request previously received.
+     *
+     * @param int $id the id of the sender.
+     *
+     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
+     *                       if the friend request doesn't exist (from get())
+     */
+    public function declineFriendRequest(int $id) : void {
         /** @var User $userReceiver */
         $userReceiver = $this->security->getUser(); 
 
-        $userSender = $this->usersService->verifyUserExists($id);
+        $userSender = $this->usersService->get($id);
 
-        $friendRequest = $this->verifyFriendRequestExists($userSender, $userReceiver);
+        $friendRequest = $this->get($userSender, $userReceiver);
         if($friendRequest) {
             $this->entityManager->remove($friendRequest);
             $this->entityManager->flush();

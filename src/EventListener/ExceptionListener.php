@@ -13,7 +13,7 @@ final class ExceptionListener
     /**
      * API Exception listener
      * 
-     * Intercepts exceptions and set both status and message based on exception data
+     * Intercept exceptions and set both status and message based on exception data
      * if it comes from a HTTP one. It sets a default message if not.
      * @param ExceptionEvent $event
      */
