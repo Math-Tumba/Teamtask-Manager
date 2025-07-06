@@ -96,11 +96,8 @@ class ProfileController extends AbstractController
         FriendRequestsService $friendRequestsService,
     ) : Response {
 
-        /** @var User $user */
-        $user = $this->getUser();
-        $userId = $user->getId(); 
         $pageFriendRequestReceived = $request->query->getInt('page_fr_received', 1);
-        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($userId, $pageFriendRequestReceived);
+        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($pageFriendRequestReceived);
 
         return $this->render('components/_pagination_friend_requests_received.html.twig', [
             'friendRequestsReceived' => $friendRequestsReceived,
@@ -115,11 +112,8 @@ class ProfileController extends AbstractController
         FriendRequestsService $friendRequestsService,
     ) : Response {
 
-        /** @var User $user */
-        $user = $this->getUser();
-        $userId = $user->getId(); 
         $pageFriendRequestSent = $request->query->getInt('page_fr_sent', 1);
-        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($userId, $pageFriendRequestSent);
+        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($pageFriendRequestSent);
 
         return $this->render('components/_pagination_friend_requests_sent.html.twig', [
             'friendRequestsSent' => $friendRequestsSent,

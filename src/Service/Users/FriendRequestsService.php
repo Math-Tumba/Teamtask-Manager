@@ -82,39 +82,37 @@ class FriendRequestsService {
 
 
     /**
-     * Get a few friend request received based on user's ID and page.
+     * Get a few friend request received page.
      *
-     * @param int $id
      * @param int $page
-     *
-     * @throws HttpException if the user doesn't exist (from usersService->get()).
      *
      * @return PaginationInterface
      * 
      * @see FriendRequestRepository::PaginateFriendRequestReceived()
      */
-    public function getFriendRequestsReceived(int $id, int $page) : PaginationInterface {
-        $user = $this->usersService->get($id);
-        return $this->friendRequestRepository->PaginateFriendRequestReceived($user, $page);
+    public function getFriendRequestsReceived(int $page) : PaginationInterface {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $this->friendRequestRepository->PaginateFriendRequestsReceived($user, $page);
     }
 
 
 
     /**
-     * Get a few friend request sent based on user's ID and page.
+     * Get a few friend request sent based page.
      *
-     * @param int $id
      * @param int $page
-     *
-     * @throws HttpException if the user doesn't exist (from usersService->get()).
      *
      * @return PaginationInterface
      * 
      * @see FriendRequestRepository::PaginateFriendRequestSent()
      */
-    public function getFriendRequestsSent(int $id, int $page) : PaginationInterface {
-        $user = $this->usersService->get($id);
-        return $this->friendRequestRepository->PaginateFriendRequestSent($user, $page);
+    public function getFriendRequestsSent(int $page) : PaginationInterface {
+        /** @var User $user */
+        $user = $this->security->getUser();
+
+        return $this->friendRequestRepository->PaginateFriendRequestsSent($user, $page);
     }
 
 
