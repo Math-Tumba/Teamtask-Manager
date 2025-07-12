@@ -1,0 +1,60 @@
+{% macro pagination(pageCount, currentPageNumber, pageRange, queryPageName = 'page') %}
+
+    {% set query = queryPageName %}
+    {% if not (query starts with '?') %}
+        {% set query = '?' ~ query %}
+    {% endif %}
+    {% if not (query ends with '=') %}
+        {% set query = query ~ '=' %}
+    {% endif %}
+
+    {% if pageCount > 1 %}
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link {% if currentPageNumber == 1 %}disabled{% endif %}" rel="prev" href="{{ (query ~ (currentPageNumber-1)) }}">« Précédent</a>
+                </li>
+
+                {% if (currentPageNumber - pageRange) > 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ (query ~ 1) }}">1</a>
+                    </li>
+                    {% if (currentPageNumber - pageRange) > 2 %}
+                        <li class="page-item">
+                            <span class="page-link">...</span>
+                        </li>
+                    {% endif %}
+                {% endif %}
+
+                {% for i in (currentPageNumber-pageRange)..(currentPageNumber+pageRange) %}
+                    {% if i > 0 and i <= pageCount %}
+                        {% if i == currentPageNumber %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ i }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ query ~ i }}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if (currentPageNumber + pageRange) < pageCount %}
+                    {% if (currentPageNumber + pageRange) < (pageCount - 1) %}
+                        <li class="page-item">
+                            <span class="page-link">...</span>
+                        </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ (query ~ pageCount) }}">{{ pageCount }}</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item">
+                    <a class="page-link {% if currentPageNumber == pageCount %}disabled{% endif %}" rel="next" href="{{ (query ~ (currentPageNumber+1)) }}">Suivant »</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endmacro %}

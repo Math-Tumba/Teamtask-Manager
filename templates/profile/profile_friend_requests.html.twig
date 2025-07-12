@@ -7,7 +7,7 @@
 {% block ajaxAPI %}
     <script type="module" src={{ asset('js/ajax/api/users/acceptFriendRequest.js') }}></script>
     <script type="module" src={{ asset('js/ajax/api/users/declineFriendRequest.js') }}></script>
-    <script type="module" src={{ asset('js/ajax/api/users/cancelFriendRequest.js') }}></script>
+    {# <script type="module" src={{ asset('js/ajax/api/users/cancelFriendRequest.js') }}></script> #}
 {% endblock %} 
 
 {% block body %}
@@ -16,11 +16,9 @@
             <div class="row g-3">
                 <div class="col-12">
                     <div class="accordion accordion-no-background" id="accordion-friend-requests">
-                        <div id="friend-requests-received-pagination">
-                            {{ render(path('component_pagination_friend_requests_received')) }}
-                        </div>
+                            {{ component('_accordeon_friend_requests_received') }}
                         <div id="friend-requests-sent-pagination">
-                            {{ render(path('component_pagination_friend_requests_sent')) }}
+                            {# {{ render(path('component_pagination_friend_requests_sent')) }} #}
                         </div>
                     </div>
                 </div>

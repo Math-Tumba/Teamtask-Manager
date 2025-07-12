@@ -1,3 +1,4 @@
+import './bootstrap.js'
 import './js/utils/globalJquery.js'
 import './js/utils/kyManager.js'
 import './js/components/flashMessage.js'

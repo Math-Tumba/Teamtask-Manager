@@ -22,6 +22,9 @@ return [
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
@@ -35,21 +38,21 @@ return [
         'version' => '1.8.0',
     ],
     'api' => [
-        'path' => './assets/js/utils/kyManager.js'
+        'path' => './assets/js/utils/kyManager.js',
     ],
     'components/flashMessage' => [
-        'path' => './assets/js/components/flashMessage.js'
+        'path' => './assets/js/components/flashMessage.js',
     ],
     'ajax/api/acceptFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/acceptFriendRequest.js'
+        'path' => './assets/js/ajax/api/users/acceptFriendRequest.js',
     ],
     'ajax/api/declineFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/declineFriendRequest.js'
+        'path' => './assets/js/ajax/api/users/declineFriendRequest.js',
     ],
     'ajax/api/cancelFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/cancelFriendRequest.js'
+        'path' => './assets/js/ajax/api/users/cancelFriendRequest.js',
     ],
     'ajax/api/sendFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/sendFriendRequest.js'
+        'path' => './assets/js/ajax/api/users/sendFriendRequest.js',
     ],
 ];

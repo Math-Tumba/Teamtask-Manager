@@ -90,22 +90,6 @@ class ProfileController extends AbstractController
 
 
 
-    #[Route('/friend-requests/components/pagination-friend-requests-received', name: 'component_pagination_friend_requests_received')]
-    public function componentPaginationFriendRequestsReceived(
-        Request $request,
-        FriendRequestsService $friendRequestsService,
-    ) : Response {
-
-        $pageFriendRequestReceived = $request->query->getInt('page_fr_received', 1);
-        $friendRequestsReceived = $friendRequestsService->getFriendRequestsReceived($pageFriendRequestReceived);
-
-        return $this->render('components/_pagination_friend_requests_received.html.twig', [
-            'friendRequestsReceived' => $friendRequestsReceived,
-        ]);
-    } 
-
-
-
     #[Route('/friend-requests/components/pagination-friend-requests-sent', name: 'component_pagination_friend_requests_sent')]
     public function componentPaginationFriendRequestsSent(
         Request $request,
