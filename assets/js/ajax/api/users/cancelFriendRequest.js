@@ -1,15 +1,19 @@
 import api from 'api'
 import { FlashMessage } from 'components/flashMessage';
-import { reloadPaginationFriendRequestsSent } from './../../ui/pagination/reloadPaginationFriendRequests.js';
+import { getComponent } from '@symfony/ux-live-component';
 
 $(() => {
-    $('.cancel-friend-request').on('click', async function(event) {
+    $(document).on('click', '.cancel-friend-request', async function(event) {
+        const componentElement = document.getElementById('friend-requests-sent-pagination');
+        const component = await getComponent(componentElement);
+
         event.preventDefault();
         const id = $(this).attr('data-user-id');
-
         try {
             await api.delete(`users/friend-request/${id}`).json();
-            await reloadPaginationFriendRequestsSent()
+            if (component) {
+                await component.render();
+            }
         } catch (error) {
             new FlashMessage(error.message, FlashMessage.Types.ERROR);
         }
