@@ -1,11 +1,13 @@
 {% set state = this.friendshipState %}
 
+{% if state == constant('App\\Enum\\FriendshipState::Friends') %}
+    {% set class, content = 'remove-friend', 'Supprimer' %}
+{% elseif state == constant('App\\Enum\\FriendshipState::Pending') %}
+    {% set class, content = 'cancel-friend-request', 'Annuler la demande'%}
+{% else %}
+    {% set class, content = 'send-friend-request', 'Ajouter' %}
+{% endif %}
+
 <div id="test" {{ attributes }}>
-    {% if state == constant('App\\Enum\\FriendshipState::Friends') %}
-        <button class="btn btn-danger remove-friend" data-user-id={{ this.userId }}>Supprimer</button>
-    {% elseif state == constant('App\\Enum\\FriendshipState::Pending') %}
-        <button class="btn btn-danger cancel-friend-request" data-user-id={{ this.userId }}>Annuler la demande</button>
-    {% else %}
-        <button class="btn send-friend-request" data-user-id={{ this.userId }}>Ajouter</button>
-    {% endif %}
+    <button class="btn btn-danger {{ class }}" data-related-component= data-user-id={{ this.userId }}>{{ content }}</button>
 </div> 
