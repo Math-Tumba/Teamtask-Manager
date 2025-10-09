@@ -3,6 +3,7 @@
 namespace App\Service\Users;
 
 use App\Entity\User;
+use App\Entity\Friendship;
 use App\Entity\FriendRequest;
 use App\Service\Users\UsersService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -182,7 +183,8 @@ class FriendRequestsService {
 
         $friendRequest = $this->get($userSender, $userReceiver);
         if($friendRequest) {
-            $userSender->addFriend($userReceiver);
+            $friendship = new Friendship($userSender, $userReceiver);
+            $this->entityManager->persist($friendship);
             $this->friendRequestRepository->deleteFriendRequestBothSides($userSender, $userReceiver);
             $this->entityManager->persist($userSender);
             $this->entityManager->flush();
@@ -210,5 +212,11 @@ class FriendRequestsService {
             $this->entityManager->remove($friendRequest);
             $this->entityManager->flush();
         }
+    }
+
+
+
+    public function hasPendingFriendRequestWith(User $userSender, User $userReceiver) {
+        return $this->friendRequestRepository->relationExists($userSender, $userReceiver);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Twig\Components;
+namespace App\Twig\Components\Pagination;
 
 use App\Service\Users\FriendRequestsService;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
-#[AsLiveComponent(name: '_accordeon_friend_requests_received')]
-final class AccordeonFriendRequestsReceived
+#[AsLiveComponent(name: '_pagination_friend_requests_received', template: '_components/pagination/_pagination_friend_requests_received.html.twig')]
+final class PaginationFriendRequestsReceived
 {
     use DefaultActionTrait;
 

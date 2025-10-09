@@ -1,10 +1,11 @@
 import api from 'api'
 import { FlashMessage } from 'components/flashMessage';
+import { getTwigComponent } from 'twigComponents';
 import { getComponent } from '@symfony/ux-live-component';
 
 $(() => {
     $(document).on('click', '.cancel-friend-request', async function(event) {
-        const componentElement = document.getElementById('friend-requests-sent-pagination');
+        const componentElement = document.getElementById('friend-requests-received-pagination');
         const component = await getComponent(componentElement);
 
         event.preventDefault();

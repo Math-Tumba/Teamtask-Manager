@@ -1,8 +1,9 @@
 {% import '_macros/_pagination.html.twig' as macros %}
 
 {% set friendRequests = this.friendRequests %}
+{% set componentId = 'friend-requests-received-pagination' %}
 
-<div id="friend-requests-received-pagination" {{ attributes }}>
+<div id={{ componentId }} {{ attributes }}>
     <div class="accordion-item">
         <h2 class="accordion-header" id="friend-requests-received-header">
             <button class="accordion-button h2" type="button" data-bs-toggle="collapse" data-bs-target="#friend-requests-received-body" aria-expanded="true" aria-controls="friend-requests-received-body">
@@ -24,8 +25,8 @@
                                         </div>
                                     </div>
                                     <div class="actions d-flex gap-3">
-                                        <button class="btn btn-success accept-friend-request" type="button" data-user-id={{ friendRequest.id }}>Accepter</button>
-                                        <button class="btn btn-danger decline-friend-request" type="button" data-user-id={{ friendRequest.id }}>Décliner</button>
+                                        <button class="btn btn-success accept-friend-request" type="button" data-user-id={{ friendRequest.id }} data-component={{ componentId }}>Accepter</button>
+                                        <button class="btn btn-danger decline-friend-request" type="button" data-user-id={{ friendRequest.id }} data-component={{ componentId }}>Décliner</button>
                                     </div>
                                 </div>
                             </div>

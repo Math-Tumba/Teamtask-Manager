@@ -40,6 +40,9 @@ return [
     'api' => [
         'path' => './assets/js/utils/kyManager.js',
     ],
+    'twigComponents' => [
+        'path' => './assets/js/utils/twigComponents.js',
+    ],
     'components/flashMessage' => [
         'path' => './assets/js/components/flashMessage.js',
     ],

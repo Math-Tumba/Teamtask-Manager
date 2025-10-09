@@ -100,13 +100,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     /**
      */
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'friendsWithMe')]
-    #[ORM\JoinTable(name: 'user_friend')]
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'user1')]
     private Collection $friends;
 
-    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'friends')]
+    #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'user2')]
     private Collection $friendsWithMe;
-
 
     public function __construct()
     {
@@ -349,21 +347,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFriends(): Collection
     {
         return $this->friends;
-    }
-
-    public function addFriend(self $newFriend) : static 
-    {
-        $this->friends->add($newFriend);
-        $newFriend->friends->add($this);
-        
-        return $this;
-    }
-
-    public function removeFriend(self $removedFriend) : static 
-    {
-        $this->friends->removeElement($removedFriend);
-        $removedFriend->friends->removeElement($this);
-
-        return $this;
     }
 }
