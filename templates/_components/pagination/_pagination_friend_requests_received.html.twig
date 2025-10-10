@@ -25,8 +25,8 @@
                                         </div>
                                     </div>
                                     <div class="actions d-flex gap-3">
-                                        <button class="btn btn-success accept-friend-request" type="button" data-user-id={{ friendRequest.id }} data-component={{ componentId }}>Accepter</button>
-                                        <button class="btn btn-danger decline-friend-request" type="button" data-user-id={{ friendRequest.id }} data-component={{ componentId }}>Décliner</button>
+                                        <button class="btn btn-success accept-friend-request" type="button" data-related-components="{{ componentId }}, friend-requests-sent-pagination" data-user-id={{ friendRequest.id }}>Accepter</button>
+                                        <button class="btn btn-danger decline-friend-request" type="button" data-related-components="{{ componentId }}" data-user-id={{ friendRequest.id }}>Décliner</button>
                                     </div>
                                 </div>
                             </div>

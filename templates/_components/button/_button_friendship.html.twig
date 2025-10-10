@@ -1,4 +1,5 @@
 {% set state = this.friendshipState %}
+{% set componentId = 'btn-relationship' %}
 
 {% if state == constant('App\\Enum\\FriendshipState::Friends') %}
     {% set class, content = 'remove-friend', 'Supprimer' %}
@@ -8,6 +9,6 @@
     {% set class, content = 'send-friend-request', 'Ajouter' %}
 {% endif %}
 
-<div id="test" {{ attributes }}>
-    <button class="btn btn-danger {{ class }}" data-related-component= data-user-id={{ this.userId }}>{{ content }}</button>
-</div> 
+<div id={{ componentId }} {{ attributes }}>
+    <button class="btn btn-danger {{ class }}" type="button" data-related-components="{{ componentId }}" data-user-id={{ this.userId }}>{{ content }}</button>
+</div>
