@@ -9,7 +9,7 @@ $(() => {
         const id = $(this).attr('data-user-id');
 
         try {
-            await api.delete(`users/friend-request/${id}`).json();
+            await api.delete(`users/friend-requests/${id}`).json();
             await Promise.all(components.map(c => c.render()));
         } catch (error) {
             new FlashMessage(error.message, FlashMessage.Types.ERROR);

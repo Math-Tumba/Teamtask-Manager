@@ -55,7 +55,7 @@ class FriendRequestRepository extends ServiceEntityRepository
      * 
      * @return PaginationInterface the items retrieved based on the page given. Retrieves the total item count as well.
      */
-    public function PaginateFriendRequestsReceived(User $userReceiver, int $page) : PaginationInterface {
+    public function paginateFriendRequestsReceived(User $userReceiver, int $page) : PaginationInterface {
         return $this->paginator->paginate(
             $this->createQueryBuilder('ufr')
                 ->innerJoin('ufr.userSender', 'u')
@@ -81,7 +81,7 @@ class FriendRequestRepository extends ServiceEntityRepository
      * 
      * @return PaginationInterface the items retrieved based on the page given. Retrieves the total item count as well.
      */
-    public function PaginateFriendRequestsSent(User $userSender, int $page) : PaginationInterface {
+    public function paginateFriendRequestsSent(User $userSender, int $page) : PaginationInterface {
         return $this->paginator->paginate(
             $this->createQueryBuilder('ufr')
                 ->innerJoin('ufr.userReceiver', 'u')

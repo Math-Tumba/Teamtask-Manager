@@ -1,5 +1,8 @@
 import { getComponent } from '@symfony/ux-live-component';
 
+/**
+ * 
+ */
 export async function getTwigComponent(jQueryElement) {
     const relatedComponentsAttr = jQueryElement.attr('data-related-components');
     const components = [];

@@ -9,7 +9,7 @@ $(() => {
         const id = $(this).attr('data-user-id');
 
         try {
-            await api.put(`users/friend-request/${id}/decline`).json();
+            await api.put(`users/friend-requests/${id}/decline`).json();
             await Promise.all(components.map(c => c.render()));       
         } catch (error) {
             new FlashMessage(error.message, FlashMessage.Types.ERROR);

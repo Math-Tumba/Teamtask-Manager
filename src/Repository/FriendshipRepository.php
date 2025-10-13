@@ -18,6 +18,9 @@ class FriendshipRepository extends ServiceEntityRepository
         parent::__construct($registry, Friendship::class);
     }
 
+    /**
+     * 
+     */
     public function relationExists(User $user1, User $user2) : bool {
         return (bool) $this->createQueryBuilder('uf')
             ->select('1')
@@ -32,6 +35,9 @@ class FriendshipRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * 
+     */
     public function findByIds(User $user1, User $user2) : Friendship {
         return $this->createQueryBuilder('uf')
             ->where('(uf.user1 = :user1 AND uf.user2 = :user2)')
@@ -45,7 +51,10 @@ class FriendshipRepository extends ServiceEntityRepository
         ;
     }
 
-    public function PaginateFriends(User $user, int $page) : PaginationInterface {
+    /**
+     * 
+     */
+    public function paginateFriends(User $user, int $page) : PaginationInterface {
         return $this->paginator->paginate(
             $this->createQueryBuilder('uf')
                 ->innerJoin('uf.user1', 'u')

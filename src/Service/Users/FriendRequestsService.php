@@ -89,13 +89,13 @@ class FriendRequestsService {
      *
      * @return PaginationInterface
      * 
-     * @see FriendRequestRepository::PaginateFriendRequestReceived()
+     * @see FriendRequestRepository::paginateFriendRequestReceived()
      */
     public function getFriendRequestsReceived(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 
-        return $this->friendRequestRepository->PaginateFriendRequestsReceived($user, $page);
+        return $this->friendRequestRepository->paginateFriendRequestsReceived($user, $page);
     }
 
 
@@ -107,13 +107,13 @@ class FriendRequestsService {
      *
      * @return PaginationInterface
      * 
-     * @see FriendRequestRepository::PaginateFriendRequestSent()
+     * @see FriendRequestRepository::paginateFriendRequestSent()
      */
     public function getFriendRequestsSent(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 
-        return $this->friendRequestRepository->PaginateFriendRequestsSent($user, $page);
+        return $this->friendRequestRepository->paginateFriendRequestsSent($user, $page);
     }
 
 
@@ -126,7 +126,7 @@ class FriendRequestsService {
      * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
      *                       if the logged-in user sends a request to himself (from verifyNotSameUsers()).
      */
-    public function sendFriendRequest(int $id) : void {
+    public function send(int $id) : void {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 
 
@@ -151,7 +151,7 @@ class FriendRequestsService {
      * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
      *                       if the friend request doesn't exist (from get())
      */
-    public function cancelFriendRequest(int $id) : void {
+    public function cancel(int $id) : void {
         /** @var User $userSender */
         $userSender = $this->security->getUser(); 
 
@@ -175,7 +175,7 @@ class FriendRequestsService {
      * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
      *                       if the friend request doesn't exist (from get())
      */
-    public function acceptFriendRequest(int $id) : void {
+    public function accept(int $id) : void {
         /** @var User $userSender */
         $userReceiver = $this->security->getUser(); 
 
@@ -201,7 +201,7 @@ class FriendRequestsService {
      * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
      *                       if the friend request doesn't exist (from get())
      */
-    public function declineFriendRequest(int $id) : void {
+    public function decline(int $id) : void {
         /** @var User $userReceiver */
         $userReceiver = $this->security->getUser(); 
 
@@ -216,7 +216,10 @@ class FriendRequestsService {
 
 
 
-    public function hasPendingFriendRequestWith(User $userSender, User $userReceiver) {
+    /**
+     * 
+     */
+    public function hasPendingFriendRequestWith(User $userSender, User $userReceiver) : bool {
         return $this->friendRequestRepository->relationExists($userSender, $userReceiver);
     }
 }

@@ -18,6 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/api/users')]
 class UserController extends AbstractController {
 
+    /**
+     * 
+     */
     #[Route('/register', name: 'api_register_user', methods: ['POST'])]
     public function register(
         SerializerInterface $serializer, 
@@ -37,6 +40,9 @@ class UserController extends AbstractController {
 
 
 
+    /**
+     * 
+     */
     #[Route('/{id}', name: 'api_get_user', methods: ['GET'], requirements: ['id' => Requirement::DIGITS])]
     public function get(
         int $id, 
@@ -52,6 +58,9 @@ class UserController extends AbstractController {
 
 
 
+    /**
+     * 
+     */
     #[Route('/{id}', name: 'api_update_user', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
     public function update(
         int $id, 
@@ -66,6 +75,9 @@ class UserController extends AbstractController {
  
 
 
+    /**
+     * 
+     */
     #[Route('/{id}/upload-profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function uploadProfilePicture(
         int $id, 
@@ -84,8 +96,11 @@ class UserController extends AbstractController {
  
 
 
+    /**
+     * 
+     */
     #[Route(path: '/{id}', name: 'api_delete_user', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
-    public function deleteUser( 
+    public function delete( 
         int $id, 
         UsersService $usersService,
     ) : JsonResponse {

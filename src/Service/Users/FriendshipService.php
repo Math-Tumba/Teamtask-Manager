@@ -23,6 +23,11 @@ class FriendshipService {
     ) {
     }
 
+
+
+    /**
+     * 
+     */
     public function verifyFriendshipExists(User $user1, User $user2) : Friendship {
         $friendship = $this->friendshipRepository->findByIds($user1, $user2);
         if (!$friendship) {
@@ -32,6 +37,11 @@ class FriendshipService {
         return $friendship;
     }
 
+
+
+    /**
+     * 
+     */
     public function verifyNotAlreadyFriends(User $user1, User $user2) : bool {
         $friendship = $this->friendshipRepository->findByIds($user1, $user2);
         if ($friendship) {
@@ -41,17 +51,32 @@ class FriendshipService {
         return true;
     }
 
+
+
+    /**
+     * 
+     */
     public function get(User $user1, User $user2) : Friendship {
         return $this->verifyFriendshipExists($user1, $user2);
     }
 
+
+
+    /**
+     * 
+     */
     public function getFriends(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 
-        return $this->friendshipRepository->PaginateFriends($user, $page);
+        return $this->friendshipRepository->paginateFriends($user, $page);
     }
 
+
+
+    /**
+     * 
+     */
     public function getState(int $id) : FriendshipState {
         /** @var User $loggedInUser */
         $loggedInUser = $this->security->getUser();
@@ -66,16 +91,11 @@ class FriendshipService {
         return FriendshipState::Strangers;
     }
 
-    // public function add(int $id) : void {
-    //     /** @var User $loggedInUser */
-    //     $loggedInUser = $this->security->getUser();
-    //     $targetedUser = $this->usersService->get($id);
 
-    //     $friendship = new Friendship($targetedUser, $loggedInUser);
-    //     $this->entityManager->persist($friendship);
-    //     $this->entityManager->flush();
-    // }
 
+    /**
+     * 
+     */
     public function remove(int $id) : void {
         /** @var User $loggedInUser */
         $loggedInUser = $this->security->getUser();
@@ -86,6 +106,11 @@ class FriendshipService {
         $this->entityManager->flush();
     }
 
+
+
+    /**
+     * 
+     */
     public function areFriends(User $user1, User $user2) : bool {
         return $this->friendshipRepository->relationExists($user1, $user2);
     }

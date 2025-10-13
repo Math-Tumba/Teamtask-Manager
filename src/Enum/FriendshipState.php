@@ -2,6 +2,9 @@
 
 namespace App\Enum;
 
+/**
+ * 
+ */
 enum FriendshipState: string {
     case Strangers = 'Strangers';
     case Friends = 'Friends';

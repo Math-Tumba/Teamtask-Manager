@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/api/users/friends')]
 class FriendController extends AbstractController {
 
+    /**
+     * 
+     */
     #[Route(path: '/{id}', name: 'api_remove_friend', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function remove (
         int $id,
