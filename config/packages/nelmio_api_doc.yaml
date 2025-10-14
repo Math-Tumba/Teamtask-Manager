@@ -18,21 +18,12 @@ nelmio_api_doc:
                                 schema:
                                     $ref: '#/components/schemas/Credentials'
                     responses:
-                        '200':
-                            description: Récupère le token JWT
-                            content:
-                                application/json:
-                                    schema:
-                                        $ref: '#/components/schemas/Token'
+                        '204':
+                            description: Authentification réussie. Stockage du token JWT et du refresh token dans deux cookies distincts (respectivement BEARER et refresh_token).
+                        '401':
+                            description: "Identifiants invalides."
         components:
             schemas:
-                Token:
-                    type: object
-                    properties:
-                        token:
-                            type: string
-                            readOnly: true
-                            example: eyJhbGciOiJIUzI1N.eufhfhsuefseopepfs.rgijsrhiijpo
                 Credentials:
                     type: object
                     properties:
