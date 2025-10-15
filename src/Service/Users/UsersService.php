@@ -86,7 +86,7 @@ class UsersService
      */
     public function verifyNotSameUsers(User $user1, User $user2) : bool {
         if ($user1 === $user2) {
-            throw new HttpException(Response::HTTP_BAD_REQUEST, 'Vous ne pouvez pas effectuer cette action sur vous-même.');
+            throw new HttpException(Response::HTTP_CONFLICT, 'Vous ne pouvez pas effectuer cette action sur vous-même.');
         }
 
         return true;

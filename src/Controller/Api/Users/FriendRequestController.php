@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\Users;
 
+use OpenApi\Attributes as OA;
 use App\Service\Users\FriendRequestsService;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,8 +13,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FriendRequestController extends AbstractController {
 
     /**
-     * 
+     * Send a friend request to another user.
      */
+    #[OA\Response(
+        response: 204,
+        description: 'Friend request successfully sent.'
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'A friend request has already been sent and is still pending.'
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'The user does not exist.'
+    )]
+    #[OA\Response(
+        response: 409,
+        description: 'You cannot perform this action on yourself.'
+    )]
+    #[OA\Parameter(
+        name: 'id',
+        in: 'path',
+        description: 'The ID of the user.',
+        schema: new OA\Schema(type: 'int')
+    )]
     #[Route(path: '/{id}', name: 'api_send_friend_request', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function send (
         int $id,
@@ -27,8 +50,26 @@ class FriendRequestController extends AbstractController {
 
 
     /**
-     * 
+     * Cancel a pending friend request to another user.
      */
+    #[OA\Response(
+        response: 204,
+        description: 'Friend request successfully canceled.'
+    )]
+    #[OA\Response(
+        response: 400,
+        description: 'There is no pending friend request to cancel.'
+    )]
+    #[OA\Response(
+        response: 404,
+        description: 'The user does not exist.'
+    )]
+    #[OA\Parameter(
+        name: 'id',
+        in: 'path',
+        description: 'The ID of the user.',
+        schema: new OA\Schema(type: 'int')
+    )]
     #[Route(path: '/{id}', name: 'api_cancel_friend_request', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function cancel (
         int $id,
@@ -42,7 +83,7 @@ class FriendRequestController extends AbstractController {
 
 
     /**
-     * 
+     * TO-DO : Passer cette route en commun avec 'decline' et ajouter un 'body: status -> accept / decline'
      */
     #[Route(path: '/{id}/accept', name: 'api_accept_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
     public function accept (
@@ -57,7 +98,7 @@ class FriendRequestController extends AbstractController {
 
 
     /**
-     * 
+     * TO-DO : Passer cette route en commun avec 'accept' et ajouter un 'body: status -> accept / decline'
      */
     #[Route(path: '/{id}/decline', name: 'api_decline_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
     public function decline (

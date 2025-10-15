@@ -2,6 +2,7 @@
 
 namespace App\DTO\Users;
 
+use OpenApi\Attributes as OA;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -23,6 +24,7 @@ class UserCreateDTO {
             max: 50,
             maxMessage: 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères.',
         )]
+        #[OA\Property(example: 'JohnDoe')]
         public ?string $username = null,
     
         #[Assert\NotBlank(
@@ -35,6 +37,7 @@ class UserCreateDTO {
             max: 255,
             maxMessage: 'L\'adresse email ne peut pas dépasser {{ limit }} caractères.',
         )]
+        #[OA\Property(example: 'john.doe@gmail.com')]
         public ?string $email = null,
     
         #[Assert\NotBlank(
@@ -46,6 +49,7 @@ class UserCreateDTO {
             max: 4096,
             maxMessage: 'Veuillez entrer un mot de passe de moins de {{ limit }} caractères.',
         )]
+        #[OA\Property(example: 'passW')]
         public ?string $plainPassword = null,
     
         #[Assert\NotBlank(
@@ -55,6 +59,7 @@ class UserCreateDTO {
             max: 127,
             maxMessage: 'Le nom ne peut pas dépasser {{limit}} caractères.',
         )]
+        #[OA\Property(example: 'Doe')]
         public ?string $name = null,
         
         #[Assert\NotBlank(
@@ -64,6 +69,7 @@ class UserCreateDTO {
             max: 127,
             maxMessage: 'Le prénom ne peut pas dépasser {{limit}} caractères.',
         )]
+        #[OA\Property(example: 'John')]
         public ?string $surname = null,
     
         #[Assert\NotBlank(
@@ -72,6 +78,7 @@ class UserCreateDTO {
         #[Assert\Country(
             message: 'Ce code alpha2 ne correspond à aucun pays.',
         )]
+        #[OA\Property(example: 'FR')]
         public ?string $country = null,
     ) {
     }

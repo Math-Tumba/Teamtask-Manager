@@ -2,12 +2,15 @@
 
 namespace App\DTO\Users;
 
+use OpenApi\Attributes as OA;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
+ * TO-DO : Trouver un moyen d'enlever l'ID du DTO
+ * 
  * User DTO used to update an user.
  * 
  * Fields : id, email, name, surname, country, website, github, linkedin
@@ -30,6 +33,7 @@ class UserUpdateDTO {
         max: 255,
         maxMessage: 'L\'adresse email ne peut pas dépasser {{ limit }} caractères.',
     )]
+    #[OA\Property(example: 'john.doe@gmail.com')]
     public ?string $email = null;
 
     #[Assert\NotBlank(
@@ -39,6 +43,7 @@ class UserUpdateDTO {
         max: 127,
         maxMessage: 'Le nom ne peut pas dépasser {{limit}} caractères.',
     )]
+    #[OA\Property(example: 'Doe')]
     public ?string $name = null;
     
     #[Assert\NotBlank(
@@ -48,6 +53,7 @@ class UserUpdateDTO {
         max: 127,
         maxMessage: 'Le prénom ne peut pas dépasser {{limit}} caractères.',
     )]
+    #[OA\Property(example: 'John')]
     public ?string $surname = null;
 
     #[Assert\NotBlank(
@@ -56,6 +62,7 @@ class UserUpdateDTO {
     #[Assert\Country(
         message: 'Ce code alpha2 ne correspond à aucun pays.',
     )]
+    #[OA\Property(example: 'FR')]
     public ?string $country = null;
 
     #[Assert\Length(
@@ -67,6 +74,7 @@ class UserUpdateDTO {
         htmlPattern:"/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]+(\/[a-zA-Z0-9_?%=-]+)*\/?$/",
         message: 'L\'URL doit être correcte (ex : mon-site.fr).',
     )]
+    #[OA\Property(example: 'my-website.com')]
     public ?string $website = null;
 
     #[Assert\Regex(
@@ -74,6 +82,7 @@ class UserUpdateDTO {
         htmlPattern: "/^(https?:\/\/)?(www\.)?github\.com\/.+$/",
         message: 'L\'URL doit être un lien valide vers Github (ex : https://github.com/utilisateur)',
     )]
+    #[OA\Property(example: 'https://github.com/johndoe')]
     public ?string $github = null;
 
     #[Assert\Regex(
@@ -81,6 +90,7 @@ class UserUpdateDTO {
         htmlPattern: "/^(https?:\/\/)?(www\.)?linkedin\.com\/(in)|(company)\/.*$/",
         message: 'L\'URL doit être un lien valide vers LinkedIn (ex : https://www.linkedin.com/in/utilisateur)',
     )]
+    #[OA\Property(example: 'https://www.linkedin.com/in/johndoe')]
     public ?string $linkedin = null;
 
     public function __construct(?User $user = null)
