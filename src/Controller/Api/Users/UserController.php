@@ -172,7 +172,7 @@ class UserController extends AbstractController {
         )
     )
 )]
-    #[Route('/{id}/upload-profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
+    #[Route('/{id}/profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function uploadProfilePicture(
         int $id, 
         Request $request, 

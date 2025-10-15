@@ -201,7 +201,7 @@ class UsersService
         $oldProfilePicture = $user->getProfilePicture();
         if ($oldProfilePicture) {
             $oldFilePath = $this->public . '/' . $oldProfilePicture;
-            if ($this->filesystem->exists($oldFilePath) && $oldFilePath !== User::getDefaultProfilePicturePath()) { 
+            if ($this->filesystem->exists($oldFilePath) && $oldFilePath !== $this->public . User::getDefaultProfilePicturePath()) { 
                 $this->filesystem->remove($oldFilePath);
             }
         }
