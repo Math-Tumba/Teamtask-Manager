@@ -157,21 +157,21 @@ class UserController extends AbstractController {
         schema: new OA\Schema(type: 'int')
     )]
     #[OA\RequestBody(
-    content: new OA\MediaType(
-        mediaType: 'multipart/form-data',
-        schema: new OA\Schema(
-            required: ['profilePicture'],
-            properties: [
-                new OA\Property(
-                    property: 'profilePicture',
-                    description: 'The image file to upload.',
-                    type: 'string',
-                    format: 'binary'
-                )
-            ]
+        content: new OA\MediaType(
+            mediaType: 'multipart/form-data',
+            schema: new OA\Schema(
+                required: ['profilePicture'],
+                properties: [
+                    new OA\Property(
+                        property: 'profilePicture',
+                        description: 'The image file to upload.',
+                        type: 'string',
+                        format: 'binary'
+                    )
+                ]
+            )
         )
-    )
-)]
+    )]
     #[Route('/{id}/profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function uploadProfilePicture(
         int $id, 
