@@ -9,9 +9,12 @@ use App\Service\Users\FriendRequestsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 #[Route('/api/users/friend-requests')]
 class FriendRequestController extends AbstractController {
@@ -145,14 +148,18 @@ class FriendRequestController extends AbstractController {
         int $id,
         FriendRequestsService $friendRequestsService,
         Request $request,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
     ) : JsonResponse {
 
-        $statusData = json_decode($request->getContent(), true);
-        $status = $statusData['status'] ?? null;
-
-        if (!in_array($status, ['accept', 'decline'], true)) {
-            throw new HttpException(JsonResponse::HTTP_BAD_REQUEST, 'Le choix renseigné est incorrect (accept / decline).');
+        $statusDTO = $serializer->deserialize($request->getContent(), FriendRequestStatusDTO::class, 'json');
+        
+        $errors = $validator->validate($statusDTO);
+        if (count($errors) > 0) {
+            throw new ValidationFailedException($statusDTO, $errors);
         }
+
+        $status = $statusDTO->status;
 
         if ($status === 'accept') {
             $friendRequestsService->accept($id);

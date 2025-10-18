@@ -76,7 +76,6 @@ class UserController extends AbstractController {
         description: 'The ID of the user.',
         schema: new OA\Schema(type: 'int')
     )]
-    
     #[Route('/{id}', name: 'api_get_user', methods: ['GET'], requirements: ['id' => Requirement::DIGITS])]
     public function get(
         int $id, 
