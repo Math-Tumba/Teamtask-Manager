@@ -12,7 +12,11 @@ export class FlashMessage {
     };
 
     constructor(message, type = 'success') {
-        this.message = message;
+        if (Array.isArray(message)) {
+            this.message = message[0].message;
+        } else {
+            this.message = message;
+        }
         this.type = type;
         this.generateMessage();
     }

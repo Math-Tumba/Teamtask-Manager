@@ -14,7 +14,7 @@ class FriendRequestStatusDTO {
     public function __construct(
         #[Assert\Choice(
             ['accept', 'decline'],
-            message: '\'{{ value }}\' doesn\'t fit in the available choices : {{ choices }}'
+            message: '\'{{ value }}\' ne fait partie des choix possibles : {{ choices }}',
         )]
         public ?string $status = null
     ) {
