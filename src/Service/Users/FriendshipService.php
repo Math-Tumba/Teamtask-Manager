@@ -4,7 +4,6 @@ namespace App\Service\Users;
 
 use App\Entity\User;
 use App\Entity\Friendship;
-use App\Enum\FriendshipState;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Repository\FriendshipRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,25 +69,6 @@ class FriendshipService {
         $user = $this->security->getUser();
 
         return $this->friendshipRepository->paginateFriends($user, $page);
-    }
-
-
-
-    /**
-     * 
-     */
-    public function getState(int $id) : FriendshipState {
-        /** @var User $loggedInUser */
-        $loggedInUser = $this->security->getUser();
-        $targetedUser = $this->usersService->get($id);
-
-        if ($this->areFriends($loggedInUser, $targetedUser)) {
-            return FriendshipState::Friends;
-        }
-        elseif ($this->friendRequestsService->hasPendingFriendRequestWith($loggedInUser, $targetedUser)) {
-            return FriendshipState::Pending;
-        }
-        return FriendshipState::Strangers;
     }
 
 

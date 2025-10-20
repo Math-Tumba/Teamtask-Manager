@@ -1,9 +1,9 @@
-{% set state = this.friendshipState %}
+{% set state = this.relationshipState %}
 {% set componentId = 'btn-relationship' %}
 
-{% if state == constant('App\\Enum\\FriendshipState::Friends') %}
+{% if state == constant('App\\Enum\\RelationshipState::Friends') %}
     {% set class, content = 'remove-friend', 'Supprimer' %}
-{% elseif state == constant('App\\Enum\\FriendshipState::Pending') %}
+{% elseif state == constant('App\\Enum\\RelationshipState::Pending') %}
     {% set class, content = 'cancel-friend-request', 'Annuler la demande'%}
 {% else %}
     {% set class, content = 'send-friend-request', 'Ajouter' %}

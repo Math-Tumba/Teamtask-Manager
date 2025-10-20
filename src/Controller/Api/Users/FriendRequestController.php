@@ -11,7 +11,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
@@ -86,36 +85,6 @@ class FriendRequestController extends AbstractController {
         $friendRequestsService->cancel($id);
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
-
-
-
-    /**
-     * TO-DO : Passer cette route en commun avec 'decline' et ajouter un 'body: status -> accept / decline'
-     */
-    // #[Route(path: '/{id}/accept', name: 'api_accept_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
-    // public function accept (
-    //     int $id,
-    //     FriendRequestsService $friendRequestsService,
-    // ) : JsonResponse {
-
-    //     $friendRequestsService->accept($id);
-    //     return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
-    // }
-
-
-
-    /**
-     * TO-DO : Passer cette route en commun avec 'accept' et ajouter un 'body: status -> accept / decline'
-     */
-    // #[Route(path: '/{id}/decline', name: 'api_decline_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
-    // public function decline (
-    //     int $id,
-    //     FriendRequestsService $friendRequestsService,
-    // ) : JsonResponse {
-
-    //     $friendRequestsService->decline($id);
-    //     return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
-    // }
 
 
 

@@ -5,7 +5,7 @@ namespace App\Enum;
 /**
  * 
  */
-enum FriendshipState: string {
+enum RelationshipState: string {
     case Strangers = 'Strangers';
     case Friends = 'Friends';
     case Pending = 'Pending';

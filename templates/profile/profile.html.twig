@@ -24,7 +24,7 @@
                             <span class="subtext">{{ user.country }}</span>
                             <div class="d-flex gap-2">
                                 {% if not isSelf %}
-                                    {{ component('_button_friendship', { userId: user.id }) }}
+                                    {{ component('_button_relationship', { userId: user.id }) }}
                                     <button class="btn">Inviter</button>
                                 {% else %}
                                     <a class="btn" href={{ path('app_profile_update') }}>Modifier le profil</a>
