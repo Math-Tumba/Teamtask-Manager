@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: FriendshipRepository::class)]
 #[ORM\Table(name: '`user_friendship`')]
+#[ORM\UniqueConstraint(name: 'unique_friendship', columns: ['user1_id', 'user2_id'])]
 #[UniqueEntity(fields: ['user1', 'user2'], message: 'Ces utilisateurs sont déjà amis.')]
 class Friendship
 {

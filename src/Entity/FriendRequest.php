@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: FriendRequestRepository::class)]
 #[ORM\Table(name: 'user_friend_request')]
+#[ORM\UniqueConstraint(name: 'unique_friend_request', columns: ['user_sender_id', 'user_receiver_id'])]
 #[UniqueEntity(fields: ['userSender', 'userReceiver'], message: 'Une demande existe déjà entre ces deux utilisateurs.')]
 class FriendRequest
 {
