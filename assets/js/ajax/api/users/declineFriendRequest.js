@@ -10,7 +10,7 @@ $(() => {
 
         try {
             await api.put(`users/friend-requests/${id}`, {json: {
-                "status": "declin",
+                "status": "decline",
             }}).json();
             await Promise.all(components.map(c => c.render()));       
         } catch (error) {

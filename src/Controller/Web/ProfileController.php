@@ -90,6 +90,13 @@ class ProfileController extends AbstractController
 
 
 
+    #[Route('/friends', name: 'app_profile_friends')]
+    public function showFriends() : Response {
+        return $this->render('profile/profile_friends.html.twig', []);
+    }
+
+
+
     #[Route('/friend-requests/components/pagination-friend-requests-sent', name: 'component_pagination_friend_requests_sent')]
     public function componentPaginationFriendRequestsSent(
         Request $request,

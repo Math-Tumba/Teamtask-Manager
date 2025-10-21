@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Entity\Friendship;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -13,8 +14,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class FriendshipRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+    ){
         parent::__construct($registry, Friendship::class);
     }
 
@@ -54,17 +57,25 @@ class FriendshipRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function paginateFriends(User $user, int $page) : PaginationInterface {
+    public function paginateFriends(User $user, int $page): PaginationInterface
+    {
+        $qb = $this->createQueryBuilder('uf')
+            ->innerJoin('uf.user1', 'u1')
+            ->innerJoin('uf.user2', 'u2')
+            ->select('NEW App\\DTO\\Users\\UserPreviewDTO(
+                CASE WHEN u1 = :user THEN u2.id ELSE u1.id END,
+                CASE WHEN u1 = :user THEN u2.username ELSE u1.username END,
+                CASE WHEN u1 = :user THEN u2.country ELSE u1.country END,
+                CASE WHEN u1 = :user THEN u2.profilePicture ELSE u1.profilePicture END
+            )')
+            ->where('u1 = :user')
+            ->orWhere('u2 = :user')
+            ->setParameter(':user', $user);
+
         return $this->paginator->paginate(
-            $this->createQueryBuilder('uf')
-                ->innerJoin('uf.user1', 'u')
-                ->select('NEW App\\DTO\\Users\\UserPreviewDTO(u.id, u.username, u.country, u.profilePicture)')
-                ->where('uf.user1 = :user')
-                ->andWhere('uf.user2 = :user')
-                ->getQuery()
-                ->setParameter(':user', $user),
+            $qb->getQuery(),
             $page,
-            10,
+            10
         );
     }
 }
