@@ -16,10 +16,9 @@ class FriendshipService {
     public function __construct(
         private FriendshipRepository $friendshipRepository,
         private UsersService $usersService,
-        private FriendRequestsService $friendRequestsService,
         private Security $security,
         private EntityManagerInterface $entityManager,
-    ) {
+    ) { 
     }
 
 

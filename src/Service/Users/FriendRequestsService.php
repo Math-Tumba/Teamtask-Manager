@@ -19,6 +19,7 @@ class FriendRequestsService {
         private FriendRequestRepository $friendRequestRepository,
         private EntityManagerInterface $entityManager,
         private UsersService $usersService,
+        private FriendshipService $friendshipService,
         private Security $security,
     ) {
     }
@@ -133,7 +134,7 @@ class FriendRequestsService {
         $userReceiver = $this->usersService->verifyUserExists($id);
         $this->usersService->verifyNotSameUsers($userSender, $userReceiver);
 
-        if($this->verifyFriendRequestNotPending($userSender, $userReceiver)) {
+        if($this->verifyFriendRequestNotPending($userSender, $userReceiver) && $this->friendshipService->verifyNotAlreadyFriends($userSender, $userReceiver)) {
             $friendRequest = new FriendRequest($userSender, $userReceiver);
             
             $this->entityManager->persist($friendRequest);
