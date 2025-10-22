@@ -89,6 +89,42 @@ class FriendRequestController extends AbstractController {
 
 
     /**
+     * 
+     */
+    #[Route(path: '/received', name: 'api_get_friend_requests_received', methods: ['GET'])]
+    public function getFriendRequestsReceived (
+        FriendRequestsService $friendRequestsService,
+        SerializerInterface $serializer,
+        Request $request, 
+    ) : JsonResponse {
+
+        $friendRequests = $friendRequestsService->getFriendRequestsReceived($request->query->getInt('page', 1));
+
+        $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
+        return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);
+    }
+
+
+
+    /**
+     * 
+     */
+    #[Route(path: '/sent', name: 'api_get_friend_requests_sent', methods: ['GET'])]
+    public function getFriendRequestsSent (
+        FriendRequestsService $friendRequestsService,
+        SerializerInterface $serializer,
+        Request $request, 
+    ) : JsonResponse {
+
+        $friendRequests = $friendRequestsService->getFriendRequestsSent($request->query->getInt('page', 1));
+
+        $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
+        return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);
+    }
+
+
+
+    /**
      * Update the friend request according to the choice (accept / decline).
      */
     #[OA\Response(

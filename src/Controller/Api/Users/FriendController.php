@@ -4,11 +4,12 @@ namespace App\Controller\Api\Users;
 
 use OpenApi\Attributes as OA;
 use App\Service\Users\FriendshipService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
 
 #[Route('/api/users/friends')]
 class FriendController extends AbstractController {
@@ -38,5 +39,23 @@ class FriendController extends AbstractController {
 
         $friendshipService->remove($id);
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+    }
+
+
+
+    /**
+     * 
+     */
+    #[Route(path: '', name: 'api_get_friends', methods: ['GET'])]
+    public function getFriends (
+        FriendshipService $friendshipService,
+        SerializerInterface $serializer,
+        Request $request, 
+    ) : JsonResponse {
+
+        $friends = $friendshipService->getFriends($request->query->getInt('page', 1));
+
+        $jsonFriends = $serializer->serialize($friends, 'json');
+        return new JsonResponse($jsonFriends, JsonResponse::HTTP_OK, [], true);
     }
 }

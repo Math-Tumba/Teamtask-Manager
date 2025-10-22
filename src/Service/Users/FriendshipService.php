@@ -67,6 +67,10 @@ class FriendshipService {
         /** @var User $user */
         $user = $this->security->getUser();
 
+        if ($page < 1) {
+            $page = 1;
+        }
+
         return $this->friendshipRepository->paginateFriends($user, $page);
     }
 

@@ -96,6 +96,10 @@ class FriendRequestsService {
         /** @var User $user */
         $user = $this->security->getUser();
 
+        if ($page < 1) {
+            $page = 1;
+        }
+
         return $this->friendRequestRepository->paginateFriendRequestsReceived($user, $page);
     }
 
@@ -113,6 +117,10 @@ class FriendRequestsService {
     public function getFriendRequestsSent(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
+
+        if ($page < 1) {
+            $page = 1;
+        }
 
         return $this->friendRequestRepository->paginateFriendRequestsSent($user, $page);
     }
