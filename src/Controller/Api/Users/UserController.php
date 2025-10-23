@@ -28,8 +28,8 @@ class UserController extends AbstractController {
         response: 201,
         description: 'New user successfully registered.',
         content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: User::class, groups: ['users.index', 'users.detail']))
+            type: 'object',
+            ref: new Model(type: UserCreateDTO::class)
         )
     )]
     #[OA\Response(
@@ -62,8 +62,8 @@ class UserController extends AbstractController {
         response: 200,
         description: 'User found.',
         content: new OA\JsonContent(
-            type: 'array',
-            items: new OA\Items(ref: new Model(type: User::class, groups: ['users.index', 'users.detail']))
+            type: 'object',
+            ref: new Model(type: User::class, groups: ['users.index', 'users.detail'])
         )
     )]
     #[OA\Response(
@@ -184,7 +184,7 @@ class UserController extends AbstractController {
         }
 
         $user = $usersService->uploadProfilePicture($id, $file);
-        return new JsonResponse(['success' => 'La photo de profil a été mise à jour.', 'profilePicture' => $user->getProfilePicture()], JsonResponse::HTTP_OK);
+        return new JsonResponse(['profilePicture' => $user->getProfilePicture()], JsonResponse::HTTP_OK);
     }
  
 
