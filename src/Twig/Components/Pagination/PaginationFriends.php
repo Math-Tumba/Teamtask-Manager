@@ -24,6 +24,6 @@ final class PaginationFriends
         if ($this->page <= 0) {
             $this->page = 1;
         }
-        return $this->friendshipService->getFriends($this->page);
+        return $this->friendshipService->getAllPagination($this->page);
     }
 }

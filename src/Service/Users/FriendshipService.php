@@ -63,7 +63,7 @@ class FriendshipService {
     /**
      * 
      */
-    public function getFriends(int $page) : PaginationInterface {
+    public function getAllPagination(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 

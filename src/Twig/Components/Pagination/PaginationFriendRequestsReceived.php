@@ -24,6 +24,6 @@ final class PaginationFriendRequestsReceived
         if ($this->page_fr_received <= 0) {
             $this->page_fr_received = 1;
         }
-        return $this->friendRequestsService->getFriendRequestsReceived($this->page_fr_received);
+        return $this->friendRequestsService->getAllReceivedPagination($this->page_fr_received);
     }
 }

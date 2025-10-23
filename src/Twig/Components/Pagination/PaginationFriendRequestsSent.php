@@ -24,6 +24,6 @@ final class PaginationFriendRequestsSent
         if ($this->page_fr_sent <= 0) {
             $this->page_fr_sent = 1;
         }
-        return $this->friendRequestsService->getFriendRequestsSent($this->page_fr_sent);
+        return $this->friendRequestsService->getAllSentPagination($this->page_fr_sent);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\Api\Users;
 use OpenApi\Attributes as OA;
 use Nelmio\ApiDocBundle\Attribute\Model;
 use App\DTO\Users\FriendRequestStatusDTO;
+use App\DTO\Users\UserPreviewDTO;
 use App\Service\Users\FriendRequestsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -89,16 +90,50 @@ class FriendRequestController extends AbstractController {
 
 
     /**
-     * 
+     * Get users who sent you a friend request.
      */
+    #[OA\Response(
+        response: 200,
+        description: 'List of users successfully found.',
+        content: new OA\JsonContent(
+            type: 'object',
+            properties: [
+                new OA\Property(
+                    property: 'items',
+                    type: 'array',
+                    items: new OA\Items(ref: new Model(type: UserPreviewDTO::class))
+                ),
+                new OA\Property(
+                    property: 'total',
+                    type: 'int',
+                    example: 120,
+                ),
+                new OA\Property(
+                    property: 'page',
+                    type: 'int',
+                    example: 3,
+                ),
+                new OA\Property(
+                    property: 'lastPage',
+                    type: 'int',
+                    example: 12,
+                ),
+            ]
+        )
+    )]
+    #[OA\Parameter(
+        name: 'page',
+        in: 'query',
+        schema: new OA\Schema(type: 'int')
+    )]
     #[Route(path: '/received', name: 'api_get_friend_requests_received', methods: ['GET'])]
-    public function getFriendRequestsReceived (
+    public function getAllReceivedPagination (
         FriendRequestsService $friendRequestsService,
         SerializerInterface $serializer,
         Request $request, 
     ) : JsonResponse {
 
-        $friendRequests = $friendRequestsService->getFriendRequestsReceived($request->query->getInt('page', 1));
+        $friendRequests = $friendRequestsService->getAllReceivedPagination($request->query->getInt('page', 1));
 
         $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
         return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);
@@ -107,16 +142,50 @@ class FriendRequestController extends AbstractController {
 
 
     /**
-     * 
+     * Get users who received a friend request from you.
      */
+    #[OA\Response(
+        response: 200,
+        description: 'List of users successfully found.',
+        content: new OA\JsonContent(
+            type: 'object',
+            properties: [
+                new OA\Property(
+                    property: 'items',
+                    type: 'array',
+                    items: new OA\Items(ref: new Model(type: UserPreviewDTO::class))
+                ),
+                new OA\Property(
+                    property: 'total',
+                    type: 'int',
+                    example: 120,
+                ),
+                new OA\Property(
+                    property: 'page',
+                    type: 'int',
+                    example: 3,
+                ),
+                new OA\Property(
+                    property: 'lastPage',
+                    type: 'int',
+                    example: 12,
+                ),
+            ]
+        )
+    )]
+    #[OA\Parameter(
+        name: 'page',
+        in: 'query',
+        schema: new OA\Schema(type: 'int')
+    )]
     #[Route(path: '/sent', name: 'api_get_friend_requests_sent', methods: ['GET'])]
-    public function getFriendRequestsSent (
+    public function getAllSentPagination (
         FriendRequestsService $friendRequestsService,
         SerializerInterface $serializer,
         Request $request, 
     ) : JsonResponse {
 
-        $friendRequests = $friendRequestsService->getFriendRequestsSent($request->query->getInt('page', 1));
+        $friendRequests = $friendRequestsService->getAllSentPagination($request->query->getInt('page', 1));
 
         $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
         return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);

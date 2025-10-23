@@ -92,7 +92,7 @@ class FriendRequestsService {
      * 
      * @see FriendRequestRepository::paginateFriendRequestReceived()
      */
-    public function getFriendRequestsReceived(int $page) : PaginationInterface {
+    public function getAllReceivedPagination(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 
@@ -114,7 +114,7 @@ class FriendRequestsService {
      * 
      * @see FriendRequestRepository::paginateFriendRequestSent()
      */
-    public function getFriendRequestsSent(int $page) : PaginationInterface {
+    public function getAllSentPagination(int $page) : PaginationInterface {
         /** @var User $user */
         $user = $this->security->getUser();
 

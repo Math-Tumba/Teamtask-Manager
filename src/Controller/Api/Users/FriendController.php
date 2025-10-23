@@ -3,7 +3,9 @@
 namespace App\Controller\Api\Users;
 
 use OpenApi\Attributes as OA;
+use App\DTO\Users\UserPreviewDTO;
 use App\Service\Users\FriendshipService;
+use Nelmio\ApiDocBundle\Attribute\Model;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,16 +46,50 @@ class FriendController extends AbstractController {
 
 
     /**
-     * 
+     * Get users who are friends with you.
      */
+    #[OA\Response(
+        response: 200,
+        description: 'List of users successfully found.',
+        content: new OA\JsonContent(
+            type: 'object',
+            properties: [
+                new OA\Property(
+                    property: 'items',
+                    type: 'array',
+                    items: new OA\Items(ref: new Model(type: UserPreviewDTO::class))
+                ),
+                new OA\Property(
+                    property: 'total',
+                    type: 'int',
+                    example: 120,
+                ),
+                new OA\Property(
+                    property: 'page',
+                    type: 'int',
+                    example: 3,
+                ),
+                new OA\Property(
+                    property: 'lastPage',
+                    type: 'int',
+                    example: 12,
+                ),
+            ]
+        )
+    )]
+    #[OA\Parameter(
+        name: 'page',
+        in: 'query',
+        schema: new OA\Schema(type: 'int')
+    )]
     #[Route(path: '', name: 'api_get_friends', methods: ['GET'])]
-    public function getFriends (
+    public function getAllPagination (
         FriendshipService $friendshipService,
         SerializerInterface $serializer,
         Request $request, 
     ) : JsonResponse {
 
-        $friends = $friendshipService->getFriends($request->query->getInt('page', 1));
+        $friends = $friendshipService->getAllPagination($request->query->getInt('page', 1));
 
         $jsonFriends = $serializer->serialize($friends, 'json');
         return new JsonResponse($jsonFriends, JsonResponse::HTTP_OK, [], true);
