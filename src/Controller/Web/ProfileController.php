@@ -7,7 +7,7 @@ use App\Service\UrlHelper;
 use App\Service\ArrayHelper;
 use App\Form\EditProfileFormType;
 use App\DTO\Users\UserUpdateDTO;
-use App\Service\Users\FriendRequestsService;
+// use App\Service\Users\FriendRequestsService;
 use App\Service\Users\UsersService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,17 +97,17 @@ class ProfileController extends AbstractController
 
 
 
-    #[Route('/friend-requests/components/pagination-friend-requests-sent', name: 'component_pagination_friend_requests_sent')]
-    public function componentPaginationFriendRequestsSent(
-        Request $request,
-        FriendRequestsService $friendRequestsService,
-    ) : Response {
+    // #[Route('/friend-requests/components/pagination-friend-requests-sent', name: 'component_pagination_friend_requests_sent')]
+    // public function componentPaginationFriendRequestsSent(
+    //     Request $request,
+    //     FriendRequestsService $friendRequestsService,
+    // ) : Response {
 
-        $pageFriendRequestSent = $request->query->getInt('page_fr_sent', 1);
-        $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($pageFriendRequestSent);
+    //     $pageFriendRequestSent = $request->query->getInt('page_fr_sent', 1);
+    //     $friendRequestsSent = $friendRequestsService->getFriendRequestsSent($pageFriendRequestSent);
 
-        return $this->render('components/_pagination_friend_requests_sent.html.twig', [
-            'friendRequestsSent' => $friendRequestsSent,
-        ]);
-    } 
+    //     return $this->render('components/_pagination_friend_requests_sent.html.twig', [
+    //         'friendRequestsSent' => $friendRequestsSent,
+    //     ]);
+    // } 
 }

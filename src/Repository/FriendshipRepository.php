@@ -41,7 +41,7 @@ class FriendshipRepository extends ServiceEntityRepository
     /**
      * 
      */
-    public function findByIds(User $user1, User $user2) : Friendship {
+    public function findByIds(User $user1, User $user2) : ?Friendship {
         return $this->createQueryBuilder('uf')
             ->where('(uf.user1 = :user1 AND uf.user2 = :user2)')
             ->orWhere('(uf.user1 = :user2 AND uf.user2 = :user1)')

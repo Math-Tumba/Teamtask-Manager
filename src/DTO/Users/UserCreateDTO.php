@@ -6,6 +6,7 @@ use OpenApi\Attributes as OA;
 use App\Entity\User;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\Validator\Constraints\User as AppAssert;
 
 /**
  * User DTO used to create a new user.
@@ -17,67 +18,28 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class UserCreateDTO {
 
     public function __construct(
-        #[Assert\NotBlank(
-            message: 'Le nom d\'utilisateur ne peut pas être vide.',
-        )]
-        #[Assert\Length(
-            max: 50,
-            maxMessage: 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères.',
-        )]
+        
+        #[AppAssert\UsernameRequirements()]
         #[OA\Property(example: 'JohnDoe')]
         public ?string $username = null,
     
-        #[Assert\NotBlank(
-            message: 'L\'adresse email ne peut pas être vide.',
-        )]
-        #[Assert\Email(
-            message: 'L\'adresse email {{ value }} n\'est pas une adresse valide.',
-        )]
-        #[Assert\Length(
-            max: 255,
-            maxMessage: 'L\'adresse email ne peut pas dépasser {{ limit }} caractères.',
-        )]
+        #[AppAssert\EmailRequirements()]
         #[OA\Property(example: 'john.doe@gmail.com')]
         public ?string $email = null,
     
-        #[Assert\NotBlank(
-            message: 'Veuillez entrer un mot de passe.', 
-        )]
-        #[Assert\Length(
-            min: 6,
-            minMessage: 'Veuillez entrer un mot de passe d\'au moins {{ limit }} caractères.',
-            max: 4096,
-            maxMessage: 'Veuillez entrer un mot de passe de moins de {{ limit }} caractères.',
-        )]
+        #[AppAssert\PlainPasswordRequirements()]
         #[OA\Property(example: 'passW')]
         public ?string $plainPassword = null,
     
-        #[Assert\NotBlank(
-            message: 'Le nom ne peut pas être vide.', 
-        )]
-        #[Assert\Length(
-            max: 127,
-            maxMessage: 'Le nom ne peut pas dépasser {{limit}} caractères.',
-        )]
+        #[AppAssert\NameRequirements()]
         #[OA\Property(example: 'Doe')]
         public ?string $name = null,
         
-        #[Assert\NotBlank(
-            message: 'Le prénom ne peut pas être vide.',
-        )]
-        #[Assert\Length(
-            max: 127,
-            maxMessage: 'Le prénom ne peut pas dépasser {{limit}} caractères.',
-        )]
+        #[AppAssert\SurnameRequirements()]
         #[OA\Property(example: 'John')]
         public ?string $surname = null,
     
-        #[Assert\NotBlank(
-            message: 'La nationalité doit être renseignée.',
-        )]
-        #[Assert\Country(
-            message: 'Ce code alpha2 ne correspond à aucun pays.',
-        )]
+        #[AppAssert\CountryRequirements()]
         #[OA\Property(example: 'FR')]
         public ?string $country = null,
     ) {
