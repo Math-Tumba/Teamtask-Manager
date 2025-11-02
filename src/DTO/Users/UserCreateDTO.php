@@ -4,7 +4,6 @@ namespace App\DTO\Users;
 
 use OpenApi\Attributes as OA;
 use App\Entity\User;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator\Constraints\User as AppAssert;
 

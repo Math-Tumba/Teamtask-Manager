@@ -4,7 +4,6 @@ namespace App\DTO\Users;
 
 use OpenApi\Attributes as OA;
 use App\Entity\User;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator\Constraints\User as AppAssert;
 
@@ -21,7 +20,7 @@ class UserUpdateDTO {
     #[AppAssert\IdRequirements()]
     public ?int $id = null;
 
-    #[Assert\Email(message: 'L\'adresse email {{ value }} n\'est pas une adresse valide.',)]
+    #[AppAssert\EmailRequirements()]
     #[OA\Property(example: 'john.doe@gmail.com')]
     public ?string $email = null;
 

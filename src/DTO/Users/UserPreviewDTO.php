@@ -9,20 +9,20 @@ use OpenApi\Attributes as OA;
  * 
  * Fields : id, username, country, profilePicture
  */
-class UserPreviewDTO {
+readonly class UserPreviewDTO {
 
     public function __construct(
         #[OA\Property(example: 15)]
-        public readonly int $id,
+        public int $id,
 
         #[OA\Property(example: "JohnDoe")]
-        public readonly string $username,
+        public string $username,
 
         #[OA\Property(example: "FR")]
-        public readonly string $country,
+        public string $country,
 
         #[OA\Property(example: "/uploads/profile-pictures/15.png")]
-        public readonly string $profilePicture,
+        public string $profilePicture,
     ) {
     }
 }

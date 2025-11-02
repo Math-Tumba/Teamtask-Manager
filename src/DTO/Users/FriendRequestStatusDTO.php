@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Friend request DTO used to get main data that permit to easily identify users.
  * 
- * Fields : id, username, country, profilePicture
+ * Fields : status
  */
 class FriendRequestStatusDTO {
 
