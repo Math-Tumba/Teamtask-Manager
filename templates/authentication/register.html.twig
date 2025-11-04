@@ -9,7 +9,12 @@
                 <h1>Inscription</h1>
                 {{ form_errors(registrationForm) }}
                 
-                {{ form_start(registrationForm) }}
+                {{ form_start(registrationForm, {
+                    'attr': {
+                        'data-turbo': 'false',
+                        }
+                    }) 
+                }}
                     {{ form_row(registrationForm.email) }}
                     <div class="row">
                         <div class="col-12 col-md-6">

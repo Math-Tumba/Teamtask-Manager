@@ -55,7 +55,7 @@ if (StoredFlashMessage) {
  */
 FLASHMESSAGES.children().each(function () {
     const flashText = $(this).text().trim();
-    const className = $(this).attr('class'); 
+    const className = $(this).attr('class');
     const match = className.match(/alert-([\w-]+)/);
     $(this).remove();
     new FlashMessage(flashText, match[1]);

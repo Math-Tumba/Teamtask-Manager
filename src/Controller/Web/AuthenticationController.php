@@ -29,6 +29,7 @@ class AuthenticationController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $usersService->register($userDTO);
+            $this->addFlash('success', 'Votre profil a été créé avec succès.');
             return $security->login($user, 'form_login', 'main');
         }
     

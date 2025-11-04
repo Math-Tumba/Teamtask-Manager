@@ -7,7 +7,13 @@
     <section>
         <div class="container col-12 col-lg-8 col-xl-6">
 
-            {{ form_start(editProfileForm, {'attr': {'class': 'd-flex flex-column gap-4'}}) }}
+            {{ form_start(editProfileForm, {
+                'attr': {
+                    'class': 'd-flex flex-column gap-4', 
+                    'data-turbo': 'false'
+                    }
+                }) 
+            }}
                 <div class="card card-full">
                     <h2 class="text-center">Informations personnelles</h2>
                     {{ form_row(editProfileForm.profilePicture) }}
