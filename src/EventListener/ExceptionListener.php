@@ -47,8 +47,8 @@ final class ExceptionListener
             $data['message'] = $exception->getMessage();
         } else {
             $data['status'] = JsonResponse::HTTP_INTERNAL_SERVER_ERROR;
-            // $data['message'] = $exception->getMessage(); // DEBUG
-            $data['message'] = 'Une erreur est survenue. Veuillez contacter le support si elle persiste.';
+            $data['message'] = $exception->getMessage(); // DEBUG
+            // $data['message'] = 'Une erreur est survenue. Veuillez contacter le support si elle persiste.';
         }
 
         $event->setResponse(new JsonResponse($data, $data['status']));

@@ -3,46 +3,40 @@
 namespace App\Controller\Api\Users;
 
 use OpenApi\Attributes as OA;
-use Nelmio\ApiDocBundle\Attribute\Model;
-use App\DTO\Users\FriendRequestStatusDTO;
 use App\DTO\Users\UserPreviewDTO;
+use App\OpenApi\Parameter\IdParameter;
+use App\OpenApi\Response\NotFoundResponse;
+use App\OpenApi\Response\BadRequestResponse;
+use App\DTO\Users\FriendRequestStatusDTO;
+use App\OpenApi\JsonRequestBody;
 use App\Service\Users\FriendRequestsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
+use App\OpenApi\Model\Pagination\Parameter\PageParameter;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\OpenApi\Model\Pagination\Response\PaginationSuccessResponse;
+use App\OpenApi\Response\SuccessNoContentResponse;
+use App\OpenApi\Response\ConflictResponse;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 #[Route('/api/users/friend-requests')]
 class FriendRequestController extends AbstractController {
 
-    /**
-     * Send a friend request to another user.
-     */
-    #[OA\Response(
-        response: 204,
-        description: 'Friend request successfully sent.'
-    )]
-    #[OA\Response(
-        response: 400,
-        description: 'A friend request has already been sent and is still pending.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Response(
-        response: 409,
-        description: 'You cannot perform this action on yourself.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Post(
+        summary: 'Send a friend request to another user.',
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessNoContentResponse('Friend request successfully sent.'),
+            new BadRequestResponse('A friend request has already been sent and is still pending.'),
+            new NotFoundResponse('User'),
+            new ConflictResponse('You cannot perform this action on yourself.'),
+        ]
     )]
     #[Route(path: '/{id}', name: 'api_send_friend_request', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function send (
@@ -56,26 +50,16 @@ class FriendRequestController extends AbstractController {
 
 
 
-    /**
-     * Cancel a pending friend request to another user.
-     */
-    #[OA\Response(
-        response: 204,
-        description: 'Friend request successfully canceled.'
-    )]
-    #[OA\Response(
-        response: 400,
-        description: 'There is no pending friend request to cancel.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Delete(
+        summary: 'Cancel a pending friend request to another user.',
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessNoContentResponse('Friend request successfully canceled.'),
+            new BadRequestResponse('There is no pending friend request to cancel.'),
+            new NotFoundResponse('User'),
+        ]
     )]
     #[Route(path: '/{id}', name: 'api_cancel_friend_request', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function cancel (
@@ -89,42 +73,14 @@ class FriendRequestController extends AbstractController {
 
 
 
-    /**
-     * Get users who sent you a friend request.
-     */
-    #[OA\Response(
-        response: 200,
-        description: 'List of users successfully found.',
-        content: new OA\JsonContent(
-            type: 'object',
-            properties: [
-                new OA\Property(
-                    property: 'items',
-                    type: 'array',
-                    items: new OA\Items(ref: new Model(type: UserPreviewDTO::class))
-                ),
-                new OA\Property(
-                    property: 'total',
-                    type: 'int',
-                    example: 120,
-                ),
-                new OA\Property(
-                    property: 'page',
-                    type: 'int',
-                    example: 3,
-                ),
-                new OA\Property(
-                    property: 'lastPage',
-                    type: 'int',
-                    example: 12,
-                ),
-            ]
-        )
-    )]
-    #[OA\Parameter(
-        name: 'page',
-        in: 'query',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Get(
+        summary: 'Get users who sent you a friend request.',
+        parameters: [
+            new PageParameter(),
+        ],
+        responses: [
+            new PaginationSuccessResponse(UserPreviewDTO::class),
+        ],
     )]
     #[Route(path: '/received', name: 'api_get_friend_requests_received', methods: ['GET'])]
     public function getAllReceivedPagination (
@@ -141,42 +97,14 @@ class FriendRequestController extends AbstractController {
 
 
 
-    /**
-     * Get users who received a friend request from you.
-     */
-    #[OA\Response(
-        response: 200,
-        description: 'List of users successfully found.',
-        content: new OA\JsonContent(
-            type: 'object',
-            properties: [
-                new OA\Property(
-                    property: 'items',
-                    type: 'array',
-                    items: new OA\Items(ref: new Model(type: UserPreviewDTO::class))
-                ),
-                new OA\Property(
-                    property: 'total',
-                    type: 'int',
-                    example: 120,
-                ),
-                new OA\Property(
-                    property: 'page',
-                    type: 'int',
-                    example: 3,
-                ),
-                new OA\Property(
-                    property: 'lastPage',
-                    type: 'int',
-                    example: 12,
-                ),
-            ]
-        )
-    )]
-    #[OA\Parameter(
-        name: 'page',
-        in: 'query',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Get(
+        summary: 'Get users who received a friend request from you.',
+        parameters: [
+            new PageParameter(),
+        ],
+        responses: [
+            new PaginationSuccessResponse(UserPreviewDTO::class),
+        ],
     )]
     #[Route(path: '/sent', name: 'api_get_friend_requests_sent', methods: ['GET'])]
     public function getAllSentPagination (
@@ -193,29 +121,17 @@ class FriendRequestController extends AbstractController {
 
 
 
-    /**
-     * Update the friend request according to the choice (accept / decline).
-     */
-    #[OA\Response(
-        response: 204,
-        description: 'Friend request successfully handled.'
-    )]
-    #[OA\Response(
-        response: 400,
-        description: 'Either no status was written in the request\'s body, or it doesn\'t respect the enabled choices.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
-    )]
-    #[OA\RequestBody(
-        content: new Model(type: FriendRequestStatusDTO::class)
+    #[OA\Put(
+        summary: 'Update the friend request according to the choice (accept / decline).',
+        requestBody: new JsonRequestBody(FriendRequestStatusDTO::class),
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessNoContentResponse('Friend request successfully handled.'),
+            new BadRequestResponse('Either no status was written in the request\'s body, or it doesn\'t respect the enabled choices.'),
+            new NotFoundResponse('User'),
+        ],
     )]
     #[Route(path: '/{id}', name: 'api_update_status_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
     public function status (
