@@ -2,15 +2,24 @@
 
 namespace App\Controller\Api\Users;
 
-use App\Entity\User;
 use OpenApi\Attributes as OA;
 use App\DTO\Users\UserCreateDTO;
+use App\DTO\Users\UserDetailDTO;
+use App\DTO\Users\UserProfilePictureDTO;
 use App\DTO\Users\UserUpdateDTO;
 use App\Service\Users\UsersService;
-use Nelmio\ApiDocBundle\Attribute\Model;
+use App\OpenApi\Parameter\IdParameter;
+use App\OpenApi\Response\SuccessResponse;
+use App\OpenApi\Response\NotFoundResponse;
+use App\OpenApi\Response\ForbiddenResponse;
+use App\OpenApi\Response\BadRequestResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use App\OpenApi\Response\SuccessCreatedResponse;
+use App\OpenApi\Response\ValidationErrorResponse;
+use App\OpenApi\Response\SuccessNoContentResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\OpenApi\JsonRequestBody\JsonRequestBodyFile;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -21,20 +30,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/api/users')]
 class UserController extends AbstractController {
 
-    /**
-     * Register a new user to the database.
-     */
-    #[OA\Response(
-        response: 201,
-        description: 'New user successfully registered.',
-        content: new OA\JsonContent(
-            type: 'object',
-            ref: new Model(type: UserCreateDTO::class)
-        )
-    )]
-    #[OA\Response(
-        response: 422,
-        description: 'One or more required fields are empty, already used or are not the expected types.'
+    #[OA\Post(
+        summary: 'Register a new user to the database.',
+        responses: [
+            new SuccessCreatedResponse(UserDetailDTO::class),
+            new ValidationErrorResponse(),
+        ],
     )]
     #[Route('/register', name: 'api_register_user', methods: ['POST'])]
     public function register(
@@ -55,26 +56,15 @@ class UserController extends AbstractController {
 
 
 
-    /**
-     * Get user's detailed data.
-     */
-    #[OA\Response(
-        response: 200,
-        description: 'User found.',
-        content: new OA\JsonContent(
-            type: 'object',
-            ref: new Model(type: User::class, groups: ['users.index', 'users.detail'])
-        )
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Get(
+        summary: 'Get user\'s detailed data.',
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessResponse(userDetailDto::class),
+            new NotFoundResponse('User'),
+        ],
     )]
     #[Route('/{id}', name: 'api_get_user', methods: ['GET'], requirements: ['id' => Requirement::DIGITS])]
     public function get(
@@ -91,30 +81,17 @@ class UserController extends AbstractController {
 
 
 
-    /**
-     * Edit user's data.
-     */
-    #[OA\Response(
-        response: 204,
-        description: 'Edited informations has been saved.'
-    )]
-    #[OA\Response(
-        response: 403,
-        description: 'It is not allowed to perform this action on another user.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Response(
-        response: 422,
-        description: 'One or more required fields are empty, already used or are not the expected types.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Put(
+        summary: 'Edit user\'s data.',
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessNoContentResponse('Edited data has been saved.'),
+            new ForbiddenResponse('Not allowed to perform this action on another user.'),
+            new NotFoundResponse('User'),
+            new ValidationErrorResponse(),
+        ],
     )]
     #[Route('/{id}', name: 'api_update_user', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
     public function update(
@@ -130,47 +107,20 @@ class UserController extends AbstractController {
  
 
 
-    /**
-     * Edit user's profile picture.
-     */
-    #[OA\Response(
-        response: 200,
-        description: 'New profile picture has been saved and replaced.'
+    #[OA\Post(
+        summary: 'Edit user\'s profile picture.',
+        requestBody: new JsonRequestBodyFile('profilePicture'),
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessResponse(UserProfilePictureDTO::class, 'New profile picture has been saved and replaced.'),
+            new BadRequestResponse('Either no file was uploaded, or the file doesn\'t respect the constraints.'),
+            new ForbiddenResponse('Not allowed to perform this action on another user.'),
+            new NotFoundResponse('User'),
+        ],
     )]
-    #[OA\Response(
-        response: 400,
-        description: 'Either no file was uploaded, or the file doesn\'t respect the constraints.'
-    )]
-    #[OA\Response(
-        response: 403,
-        description: 'It is not allowed to perform this action on another user.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
-    )]
-    #[OA\RequestBody(
-        content: new OA\MediaType(
-            mediaType: 'multipart/form-data',
-            schema: new OA\Schema(
-                required: ['profilePicture'],
-                properties: [
-                    new OA\Property(
-                        property: 'profilePicture',
-                        description: 'The image file to upload.',
-                        type: 'string',
-                        format: 'binary'
-                    )
-                ]
-            )
-        )
-    )]
+    
     #[Route('/{id}/profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
     public function uploadProfilePicture(
         int $id, 
@@ -179,36 +129,27 @@ class UserController extends AbstractController {
     ): JsonResponse {
 
         $file = $request->files->get('profilePicture');
+        $size = $file->getSize();
         if (!$file) {
             throw new HttpException(JsonResponse::HTTP_BAD_REQUEST, 'Aucun fichier n\'a été envoyé.');
         }
 
         $user = $usersService->uploadProfilePicture($id, $file);
-        return new JsonResponse(['profilePicture' => $user->getProfilePicture()], JsonResponse::HTTP_OK);
+        return new JsonResponse(['profilePicture' => $user->getProfilePicture(), 'size' => $size], JsonResponse::HTTP_OK);
     }
  
 
 
-    /**
-     * Delete the user, including linked files.
-     */
-    #[OA\Response(
-        response: 204,
-        description: 'User successfully deleted.'
-    )]
-    #[OA\Response(
-        response: 403,
-        description: 'It is not allowed to perform this action on another user.'
-    )]
-    #[OA\Response(
-        response: 404,
-        description: 'The user does not exist.'
-    )]
-    #[OA\Parameter(
-        name: 'id',
-        in: 'path',
-        description: 'The ID of the user.',
-        schema: new OA\Schema(type: 'int')
+    #[OA\Delete(
+        summary: 'Delete the user, including linked files.',
+        parameters: [
+            new IdParameter(),
+        ],
+        responses: [
+            new SuccessNoContentResponse('User successfully deleted.'),
+            new ForbiddenResponse('Not allowed to perform this action on another user.'),
+            new NotFoundResponse('User'),
+        ],
     )]
     #[Route(path: '/{id}', name: 'api_delete_user', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function delete( 

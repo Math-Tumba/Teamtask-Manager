@@ -1,6 +1,6 @@
 <?php
 
-namespace App\OpenApi;
+namespace App\OpenApi\JsonRequestBody;
 
 use Attribute;
 use OpenApi\Attributes as OA;
@@ -16,7 +16,7 @@ final class JsonRequestBody extends OA\RequestBody
     public function __construct(
         string $modelClass,
         string $description = 'Request payload',
-        bool $required = false
+        bool $required = true
     ) {
         parent::__construct(
             required: $required,

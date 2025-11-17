@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 class UsersService
 {
@@ -191,11 +192,7 @@ class UsersService
 
         $violations = $this->validator->validate($file, new FilePicture());
         if (count($violations) > 0) {
-            $errors = [];
-            foreach ($violations as $violation) {
-                $errors[] = $violation->getMessage();
-            }
-            throw new HttpException(Response::HTTP_BAD_REQUEST, implode(' ', $errors));
+            throw new ValidationFailedException($file, $violations);
         }
 
         $oldProfilePicture = $user->getProfilePicture();

@@ -8,7 +8,7 @@ use App\OpenApi\Parameter\IdParameter;
 use App\OpenApi\Response\NotFoundResponse;
 use App\OpenApi\Response\BadRequestResponse;
 use App\DTO\Users\FriendRequestStatusDTO;
-use App\OpenApi\JsonRequestBody;
+use App\OpenApi\JsonRequestBody\JsonRequestBody;
 use App\Service\Users\FriendRequestsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
