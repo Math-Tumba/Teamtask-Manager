@@ -28,6 +28,9 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[OA\Tag(
+    name: 'Users',
+)]
 #[Route('/api/users')]
 class UserController extends AbstractController {
 

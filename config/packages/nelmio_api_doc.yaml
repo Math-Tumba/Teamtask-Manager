@@ -2,7 +2,7 @@ nelmio_api_doc:
     documentation:
         info:
             title: TeamtaskAPI
-            description: L'API de l'application web TeamTask 
+            description: TeamTask WebApp's API. 
             version: 1.0.0
         paths:
             /api/users/login_check:
@@ -10,18 +10,26 @@ nelmio_api_doc:
                     operationId: postCredentialsItem
                     tags:
                         - Token
-                    summary: Permet d'obtenir le token JWT pour se logger.
+                    summary: Login to the Teamtask API.
                     requestBody:
-                        description: Crée un nouveau token JWT
+                        description: Create a new JWT token.
                         content:
                             application/json:
                                 schema:
                                     $ref: '#/components/schemas/Credentials'
                     responses:
                         '204':
-                            description: Authentification réussie. Stockage du token JWT et du refresh token dans deux cookies distincts (respectivement BEARER et refresh_token).
+                            description: Authentication successfull. Store the JWT token and the refresh token in two separate cookies (BEARER and refresh_token respectively).
                         '401':
-                            description: "Identifiants invalides."
+                            description: "Invalid credentials."
+        tags: 
+            - name: Token
+            - name: Users
+              description: 'Endpoints related to main actions on users (including yourself).'
+            - name: Friend requests
+              description: 'Endpoints related to friend requests between users.'
+            - name: Friends
+              description: 'Endpoints related to user friendships.'
         components:
             schemas:
                 Credentials:

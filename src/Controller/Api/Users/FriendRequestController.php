@@ -24,6 +24,9 @@ use App\OpenApi\Response\ConflictResponse;
 use App\OpenApi\Response\ValidationErrorResponse;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
+#[OA\Tag(
+    name: 'Friend requests',
+)]
 #[Route('/api/users/friend-requests')]
 class FriendRequestController extends AbstractController {
 
