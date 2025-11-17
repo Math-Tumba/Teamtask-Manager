@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\OpenApi\Model\Pagination\Response\PaginationSuccessResponse;
 use App\OpenApi\Response\SuccessNoContentResponse;
 use App\OpenApi\Response\ConflictResponse;
+use App\OpenApi\Response\ValidationErrorResponse;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 #[Route('/api/users/friend-requests')]
@@ -129,8 +130,8 @@ class FriendRequestController extends AbstractController {
         ],
         responses: [
             new SuccessNoContentResponse('Friend request successfully handled.'),
-            new BadRequestResponse('Either no status was written in the request\'s body, or it doesn\'t respect the enabled choices.'),
             new NotFoundResponse('User'),
+            new ValidationErrorResponse()
         ],
     )]
     #[Route(path: '/{id}', name: 'api_update_status_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]

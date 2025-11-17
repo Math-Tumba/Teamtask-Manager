@@ -5,13 +5,13 @@ namespace App\Controller\Api\Users;
 use OpenApi\Attributes as OA;
 use App\DTO\Users\UserCreateDTO;
 use App\DTO\Users\UserDetailDTO;
-use App\DTO\Users\UserProfilePictureDTO;
 use App\DTO\Users\UserUpdateDTO;
 use App\Service\Users\UsersService;
 use App\OpenApi\Parameter\IdParameter;
+use App\DTO\Users\UserProfilePictureDTO;
 use App\OpenApi\Response\SuccessResponse;
 use App\OpenApi\Response\NotFoundResponse;
-use App\OpenApi\Response\ForbiddenResponse;
+use Symfony\Bundle\SecurityBundle\Security;
 use App\OpenApi\Response\BadRequestResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,6 +20,7 @@ use App\OpenApi\Response\ValidationErrorResponse;
 use App\OpenApi\Response\SuccessNoContentResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\OpenApi\JsonRequestBody\JsonRequestBodyFile;
+use App\Service\CookieHelper;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -81,25 +82,49 @@ class UserController extends AbstractController {
 
 
 
-    #[OA\Put(
-        summary: 'Edit user\'s data.',
-        parameters: [
-            new IdParameter(),
+    #[OA\Get(
+        summary: 'Get your user\'s data.',
+        responses: [
+            new SuccessResponse(userDetailDto::class),
+            new NotFoundResponse('User'),
         ],
+    )]
+    #[Route('/me', name: 'api_get_me', methods: ['GET'])]
+    public function getMe( 
+        UsersService $usersService,
+        SerializerInterface $serializer,
+        Security $security,
+    ) : JsonResponse {
+
+        /** @var User $user */
+        $loggedInUser = $security->getUser();
+        $user = $usersService->get($loggedInUser->getId());
+        
+        $jsonUser = $serializer->serialize($user, 'json', ['groups' => ['users.index', 'users.detail']]);
+        return new JsonResponse($jsonUser, JsonResponse::HTTP_OK, [], true);
+    }
+
+
+
+    #[OA\Put(
+        summary: 'Edit your user\'s data.',
         responses: [
             new SuccessNoContentResponse('Edited data has been saved.'),
-            new ForbiddenResponse('Not allowed to perform this action on another user.'),
             new NotFoundResponse('User'),
             new ValidationErrorResponse(),
         ],
     )]
-    #[Route('/{id}', name: 'api_update_user', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
+    #[Route('/me', name: 'api_update_me', methods: ['PUT'])]
     public function update(
-        int $id, 
         UsersService $usersService,
+        Security $security,
         #[MapRequestPayload(acceptFormat: 'json')]
         UserUpdateDTO $userDTO,
     ) : JsonResponse {
+
+        /** @var User $user */
+        $loggedInUser = $security->getUser();
+        $id = $loggedInUser->getId();
 
         $usersService->update($id, $userDTO);
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
@@ -108,25 +133,25 @@ class UserController extends AbstractController {
 
 
     #[OA\Post(
-        summary: 'Edit user\'s profile picture.',
+        summary: 'Edit your profile picture.',
         requestBody: new JsonRequestBodyFile('profilePicture'),
-        parameters: [
-            new IdParameter(),
-        ],
         responses: [
             new SuccessResponse(UserProfilePictureDTO::class, 'New profile picture has been saved and replaced.'),
-            new BadRequestResponse('Either no file was uploaded, or the file doesn\'t respect the constraints.'),
-            new ForbiddenResponse('Not allowed to perform this action on another user.'),
+            new BadRequestResponse('No file was uploaded.'),
             new NotFoundResponse('User'),
+            new ValidationErrorResponse()
         ],
     )]
-    
-    #[Route('/{id}/profile-picture', name: 'api_upload_profile_picture', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
+    #[Route('/me/profile-picture', name: 'api_upload_profile_picture', methods: ['POST'])]
     public function uploadProfilePicture(
-        int $id, 
         Request $request, 
         UsersService $usersService,
+        Security $security,
     ): JsonResponse {
+
+        /** @var User $user */
+        $loggedInUser = $security->getUser();
+        $id = $loggedInUser->getId();
 
         $file = $request->files->get('profilePicture');
         $size = $file->getSize();
@@ -141,23 +166,28 @@ class UserController extends AbstractController {
 
 
     #[OA\Delete(
-        summary: 'Delete the user, including linked files.',
-        parameters: [
-            new IdParameter(),
-        ],
+        summary: 'Delete your account, including linked files.',
         responses: [
             new SuccessNoContentResponse('User successfully deleted.'),
-            new ForbiddenResponse('Not allowed to perform this action on another user.'),
             new NotFoundResponse('User'),
         ],
     )]
-    #[Route(path: '/{id}', name: 'api_delete_user', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
+    #[Route(path: '/me', name: 'api_delete_me', methods: ['DELETE'])]
     public function delete( 
-        int $id, 
         UsersService $usersService,
+        Security $security,
+        Request $request,
+        CookieHelper $cookieHelper,
     ) : JsonResponse {
+
+        /** @var User $user */
+        $loggedInUser = $security->getUser();
+        $id = $loggedInUser->getId();
         
-        $usersService->delete($id); 
-        return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+        $usersService->delete($id);
+        
+        $response = new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
+        $cookieHelper->clearJwtCookies($response, $request->cookies->all());
+        return $response;
     }
 }
