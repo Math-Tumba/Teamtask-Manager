@@ -22,6 +22,23 @@ nelmio_api_doc:
                             description: Authentication successfull. Store the JWT token and the refresh token in two separate cookies (BEARER and refresh_token respectively).
                         '401':
                             description: "Invalid credentials."
+            /api/token/refresh:
+                post:
+                    tags:
+                        - Token
+                    summary: Refresh token mechanism.
+                    parameters:
+                        refresh_token:
+                            in: query
+                            name: refresh_token
+                            description: 'Value of refresh_token' 
+                            schema: 
+                                type: 'string'
+                    responses:
+                        '204':
+                            description: Refresh token found, new JWT token generated.
+                        '401':
+                            description: "Refresh token not found."
         tags: 
             - name: Token
             - name: Users
@@ -42,10 +59,10 @@ nelmio_api_doc:
                             type: string
                             default: testAPI
             securitySchemes:
-                bearerAuth:
-                    type: apiKey
-                    in: header
-                    name: Authorization # or another header name
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
         security:
             - bearerAuth: []
     areas: # to filter documented areas
