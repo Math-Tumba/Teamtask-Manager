@@ -164,6 +164,11 @@ class UsersService
             ->setGithub($userDTO->github)
             ->setLinkedin($userDTO->linkedin);
 
+        $violations = $this->validator->validate($user);
+        if (count($violations) > 0) {
+            throw new ValidationFailedException($user, $violations); // Validation on entity to handle uniqueEntity constraints
+        }
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }

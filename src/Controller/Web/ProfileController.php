@@ -5,13 +5,16 @@ namespace App\Controller\Web;
 use App\Entity\User;
 use App\Service\UrlHelper;
 use App\Service\ArrayHelper;
-use App\Form\EditProfileFormType;
 use App\DTO\Users\UserUpdateDTO;
+use App\Form\EditProfileFormType;
 use App\Service\Users\UsersService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/user/profile')] 
 class ProfileController extends AbstractController
@@ -53,6 +56,8 @@ class ProfileController extends AbstractController
     public function edit(
         Request $request,
         UsersService $usersService,
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator,
     ): Response {
 
         /** @var User $user */
@@ -63,16 +68,39 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userId = $user->getId();
-            $usersService->update($userId, $userDTO);
 
-            $file = $form->get('profilePicture')->getData();            
-            if ($file) {
-                $usersService->uploadProfilePicture($userId, $file);
-                $this->addFlash('success', 'La photo de profil a été mise à jour.');
-            } 
+            $user
+                ->setEmail($userDTO->email)
+                ->setName($userDTO->name)
+                ->setSurname($userDTO->surname)
+                ->setCountry($userDTO->country)
+                ->setWebsite($userDTO->website)
+                ->setGithub($userDTO->github)
+                ->setLinkedin($userDTO->linkedin);
 
-            $this->addFlash('success', 'Votre profil a été mis à jour.');            
-            return $this->redirectToRoute('app_profile', ['id' => $userId]);
+            $violations = $validator->validate($user);
+            if (count($violations) > 0) {
+                foreach ($violations as $violation) {
+                    $property = $violation->getPropertyPath();
+                    if ($form->has($property)) {
+                        $form->get($property)->addError(new FormError($violation->getMessage()));
+                    } else {
+                        $form->addError(new FormError($violation->getMessage()));
+                    }
+                }
+            } else {
+                $file = $form->get('profilePicture')->getData();            
+                if ($file) {
+                    $usersService->uploadProfilePicture($userId, $file);
+                    $this->addFlash('success', 'La photo de profil a été mise à jour.');
+                }
+    
+                $entityManager->persist($user);
+                $entityManager->flush();
+    
+                $this->addFlash('success', 'Votre profil a été mis à jour.');            
+                return $this->redirectToRoute('app_profile', ['id' => $userId]);
+            }
         }
 
         return $this->render('profile/profile_update.html.twig', [

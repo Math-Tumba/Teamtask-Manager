@@ -7,18 +7,12 @@ use App\Entity\User;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator\Constraints\User as AppAssert;
 
-/**
- * TO-DO : Trouver un moyen d'enlever l'ID du DTO
- * 
+/** 
  * User DTO used to update an user.
  * 
- * Fields : id, email, name, surname, country, website, github, linkedin
+ * Fields : email, name, surname, country, website, github, linkedin
  */
-#[UniqueEntity(fields: ['email'], entityClass: User::class, message: 'Cet email est déjà utilisé.', identifierFieldNames: ['id' => 'id'],)]
 class UserUpdateDTO {
-
-    #[AppAssert\IdRequirements()]
-    public ?int $id = null;
 
     #[AppAssert\EmailRequirements()]
     #[OA\Property(example: 'john.doe@gmail.com')]
@@ -51,7 +45,6 @@ class UserUpdateDTO {
     public function __construct(?User $user = null)
     {
         if ($user) {
-            $this->id = $user->getId();
             $this->email = $user->getEmail();
             $this->name = $user->getName();
             $this->surname = $user->getSurname();
