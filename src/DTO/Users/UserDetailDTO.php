@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
  *
  * Fields : id, username, email, name, surname, country, website, github, linkedin, profilePicture
  */
-readonly class UserDetailDTO
+final readonly class UserDetailDTO
 {
     public function __construct(
         #[OA\Property(example: 15)]

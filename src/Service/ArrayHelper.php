@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class ArrayHelper
+final class ArrayHelper
 {
     /**
      * Verifies recursively if an array and its subarrays contain only null values.

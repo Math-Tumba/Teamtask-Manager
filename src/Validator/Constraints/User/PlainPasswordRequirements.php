@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
-class PlainPasswordRequirements extends Compound
+final class PlainPasswordRequirements extends Compound
 {
     protected function getConstraints(array $options): array
     {

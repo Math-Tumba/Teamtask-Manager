@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
-class LinkedInRequirements extends Compound
+final class LinkedInRequirements extends Compound
 {
     protected function getConstraints(array $options): array
     {

@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
-class GithubRequirements extends Compound
+final class GithubRequirements extends Compound
 {
     protected function getConstraints(array $options): array
     {

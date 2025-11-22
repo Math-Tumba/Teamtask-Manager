@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
     name: 'Friend requests',
 )]
 #[Route('/api/users/friend-requests')]
-class FriendRequestController extends AbstractController
+final class FriendRequestController extends AbstractController
 {
     #[OA\Post(
         summary: 'Send a friend request to another user.',

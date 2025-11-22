@@ -5,7 +5,7 @@ namespace App\Normalizer;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class PaginationNormalizer implements NormalizerInterface
+final class PaginationNormalizer implements NormalizerInterface
 {
     public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {

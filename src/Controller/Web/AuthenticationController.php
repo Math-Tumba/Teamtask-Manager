@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 #[Route('/user')]
-class AuthenticationController extends AbstractController
+final class AuthenticationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
     public function register(

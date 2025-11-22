@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
  * Reusable 200 success response attribute for paginated items.
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-class PaginationSuccessResponse extends OA\Response
+final class PaginationSuccessResponse extends OA\Response
 {
     public function __construct(string $itemClass, string $description = 'Items successfully found.')
     {

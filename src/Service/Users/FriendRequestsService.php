@@ -12,7 +12,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class FriendRequestsService
+final class FriendRequestsService
 {
     public function __construct(
         private FriendRequestRepository $friendRequestRepository,

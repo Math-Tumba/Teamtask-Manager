@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-class UrlHelper
+final class UrlHelper
 {
     /**
      * Gets the host name of an URL.

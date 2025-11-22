@@ -32,7 +32,7 @@ use Symfony\Component\Serializer\SerializerInterface;
     name: 'Users',
 )]
 #[Route('/api/users')]
-class UserController extends AbstractController
+final class UserController extends AbstractController
 {
     #[OA\Post(
         summary: 'Register a new user to the database.',

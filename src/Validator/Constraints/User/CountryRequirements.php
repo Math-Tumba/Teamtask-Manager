@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
-class CountryRequirements extends Compound
+final class CountryRequirements extends Compound
 {
     protected function getConstraints(array $options): array
     {

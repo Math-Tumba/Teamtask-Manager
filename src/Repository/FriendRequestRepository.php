@@ -15,7 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 /**
  * @extends ServiceEntityRepository<FriendRequests>
  */
-class FriendRequestRepository extends ServiceEntityRepository
+final class FriendRequestRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $registry,

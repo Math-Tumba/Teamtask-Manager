@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\SerializerInterface;
     name: 'Friends',
 )]
 #[Route('/api/users/friends')]
-class FriendController extends AbstractController
+final class FriendController extends AbstractController
 {
     #[OA\Delete(
         summary: 'Remove the friendship with another user.',

@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 #[UniqueEntity(fields: ['username'], entityClass: User::class, message: 'Ce nom d\'utilisateur est déjà utilisé.')]
 #[UniqueEntity(fields: ['email'], entityClass: User::class, message: 'Cet email est déjà utilisé.')]
-class UserCreateDTO
+final class UserCreateDTO
 {
     public function __construct(
         #[AppAssert\UsernameRequirements()]

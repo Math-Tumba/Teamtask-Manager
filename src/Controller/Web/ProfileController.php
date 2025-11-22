@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/user/profile')]
-class ProfileController extends AbstractController
+final class ProfileController extends AbstractController
 {
     #[Route('/{id}', name: 'app_profile', requirements: ['id' => '\d+'])]
     public function show(

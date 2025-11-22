@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Reusable 403 forbidden response attribute.
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
-class ForbiddenResponse extends OA\Response
+final class ForbiddenResponse extends OA\Response
 {
     public function __construct(string $description = 'Not allowed to perform this action.')
     {

@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
-class UsernameRequirements extends Compound
+final class UsernameRequirements extends Compound
 {
     protected function getConstraints(array $options): array
     {

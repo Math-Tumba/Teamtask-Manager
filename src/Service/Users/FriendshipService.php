@@ -11,7 +11,7 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class FriendshipService
+final class FriendshipService
 {
     public function __construct(
         private FriendshipRepository $friendshipRepository,

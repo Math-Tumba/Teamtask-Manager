@@ -7,10 +7,9 @@ use App\Enum\RelationshipState;
 use App\Repository\FriendshipRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class RelationshipService
+final class RelationshipService
 {
     public function __construct(
-        private FriendshipRepository $friendshipRepository,
         private UsersService $usersService,
         private FriendRequestsService $friendRequestsService,
         private FriendshipService $friendshipService,

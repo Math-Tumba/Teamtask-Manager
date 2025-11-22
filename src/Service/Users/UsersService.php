@@ -20,11 +20,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class UsersService
+final class UsersService
 {
     public function __construct(
         private UserRepository $userRepository,
-        private FriendRequestRepository $friendRequestRepository,
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $userPasswordHasher,
         private ValidatorInterface $validator,

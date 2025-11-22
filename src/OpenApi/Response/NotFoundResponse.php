@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Reusable 404 not found response attribute.
  */
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
-class NotFoundResponse extends OA\Response
+final class NotFoundResponse extends OA\Response
 {
     public function __construct(string $resource = 'Resource')
     {

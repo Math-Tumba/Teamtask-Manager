@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
  *
  * Fields : id, username, country, profilePicture
  */
-readonly class UserProfilePictureDTO
+final readonly class UserProfilePictureDTO
 {
     public function __construct(
         #[OA\Property(example: '/uploads/profile-pictures/15.png')]

@@ -11,7 +11,7 @@ use OpenApi\Attributes as OA;
  *
  * Fields : email, name, surname, country, website, github, linkedin
  */
-class UserUpdateDTO
+final class UserUpdateDTO
 {
     #[AppAssert\EmailRequirements()]
     #[OA\Property(example: 'john.doe@gmail.com')]

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * Fields : status
  */
-class FriendRequestStatusDTO
+final class FriendRequestStatusDTO
 {
     public function __construct(
         #[Assert\Choice(
