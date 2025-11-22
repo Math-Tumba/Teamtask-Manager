@@ -15,10 +15,7 @@ final class FilePictureValidator extends ConstraintValidator
 
     /**
      * Validate uploaded files based on FilePicture constraint.
-     * 
-     * @param mixed $value
-     * @param Constraint $constraint
-     * 
+     *
      * @throws HttpException if the function is called with a different constraint type than FilePicture
      *                       if $value is not an UploadedFile
      */
@@ -27,7 +24,7 @@ final class FilePictureValidator extends ConstraintValidator
         if (!$constraint instanceof FilePicture) {
             throw new UnexpectedTypeException($constraint, FilePicture::class);
         }
-        
+
         if (null === $value || '' === $value) {
             return;
         }
@@ -37,9 +34,9 @@ final class FilePictureValidator extends ConstraintValidator
         }
 
         $mimeTypes = [
-            'png' => 'image/png',  
-            'jpeg' => 'image/jpeg', 
-            'webp' => 'image/webp'
+            'png' => 'image/png',
+            'jpeg' => 'image/jpeg',
+            'webp' => 'image/webp',
         ];
         if (!in_array($value->getMimeType(), $mimeTypes)) {
             $this->context->buildViolation($constraint->messageAllowedMimesTypes)
@@ -47,7 +44,7 @@ final class FilePictureValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if (($value->getSize()) > self::MAX_SIZE_BYTES) {
+        if ($value->getSize() > self::MAX_SIZE_BYTES) {
             $this->context->buildViolation($constraint->messageMaxSize)
                 ->setParameter('{{ limit }}', self::MAX_SIZE_MO)
                 ->addViolation();

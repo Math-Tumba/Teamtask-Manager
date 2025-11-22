@@ -32,7 +32,7 @@ class EditProfileFormType extends AbstractType
                             'image/webp',
                         ],
                         'mimeTypesMessage' => 'Veuillez télécharger une image valide (formats acceptés : .jpg, .png, .webp).',
-                    ])
+                    ]),
                 ],
             ])
             ->add('name', TextType::class, [
@@ -65,7 +65,7 @@ class EditProfileFormType extends AbstractType
                 'default_protocol' => null,
                 'attr' => ['placeholder' => 'https://github.com/utilisateur/'],
                 'row_attr' => ['class' => 'form-group'],
-            ]) 
+            ])
             ->add('linkedin', UrlType::class, [
                 'label' => 'LinkedIn',
                 'required' => false,
@@ -74,12 +74,18 @@ class EditProfileFormType extends AbstractType
                 'row_attr' => ['class' => 'form-group'],
             ])
         ;
+
+        return;
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => UserUpdateDTO::class,
         ]);
+
+        return;
     }
 }

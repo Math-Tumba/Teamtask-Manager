@@ -2,8 +2,8 @@
 
 namespace App\Validator\Constraints\User;
 
-use Symfony\Component\Validator\Constraints\Compound;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
 class UsernameRequirements extends Compound

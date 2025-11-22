@@ -2,34 +2,34 @@
 
 namespace App\Controller\Api\Users;
 
-use OpenApi\Attributes as OA;
-use App\DTO\Users\UserPreviewDTO;
-use App\OpenApi\Parameter\IdParameter;
-use App\OpenApi\Response\NotFoundResponse;
-use App\OpenApi\Response\BadRequestResponse;
 use App\DTO\Users\FriendRequestStatusDTO;
+use App\DTO\Users\UserPreviewDTO;
 use App\OpenApi\JsonRequestBody\JsonRequestBody;
+use App\OpenApi\Model\Pagination\Parameter\PageParameter;
+use App\OpenApi\Model\Pagination\Response\PaginationSuccessResponse;
+use App\OpenApi\Parameter\IdParameter;
+use App\OpenApi\Response\BadRequestResponse;
+use App\OpenApi\Response\ConflictResponse;
+use App\OpenApi\Response\NotFoundResponse;
+use App\OpenApi\Response\SuccessNoContentResponse;
+use App\OpenApi\Response\ValidationErrorResponse;
 use App\Service\Users\FriendRequestsService;
+use OpenApi\Attributes as OA;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
-use App\OpenApi\Model\Pagination\Parameter\PageParameter;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\OpenApi\Model\Pagination\Response\PaginationSuccessResponse;
-use App\OpenApi\Response\SuccessNoContentResponse;
-use App\OpenApi\Response\ConflictResponse;
-use App\OpenApi\Response\ValidationErrorResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[OA\Tag(
     name: 'Friend requests',
 )]
 #[Route('/api/users/friend-requests')]
-class FriendRequestController extends AbstractController {
-
+class FriendRequestController extends AbstractController
+{
     #[OA\Post(
         summary: 'Send a friend request to another user.',
         parameters: [
@@ -43,12 +43,12 @@ class FriendRequestController extends AbstractController {
         ]
     )]
     #[Route(path: '/{id}', name: 'api_send_friend_request', methods: ['POST'], requirements: ['id' => Requirement::DIGITS])]
-    public function send (
+    public function send(
         int $id,
-        FriendRequestsService $friendRequestsService, 
-    ) : JsonResponse {
-
+        FriendRequestsService $friendRequestsService,
+    ): JsonResponse {
         $friendRequestsService->send($id);
+
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 
@@ -66,12 +66,12 @@ class FriendRequestController extends AbstractController {
         ]
     )]
     #[Route(path: '/{id}', name: 'api_cancel_friend_request', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
-    public function cancel (
+    public function cancel(
         int $id,
         FriendRequestsService $friendRequestsService,
-    ) : JsonResponse {
-
+    ): JsonResponse {
         $friendRequestsService->cancel($id);
+
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 
@@ -87,15 +87,15 @@ class FriendRequestController extends AbstractController {
         ],
     )]
     #[Route(path: '/received', name: 'api_get_friend_requests_received', methods: ['GET'])]
-    public function getAllReceivedPagination (
+    public function getAllReceivedPagination(
         FriendRequestsService $friendRequestsService,
         SerializerInterface $serializer,
-        Request $request, 
-    ) : JsonResponse {
-
+        Request $request,
+    ): JsonResponse {
         $friendRequests = $friendRequestsService->getAllReceivedPagination($request->query->getInt('page', 1));
 
         $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
+
         return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);
     }
 
@@ -111,15 +111,15 @@ class FriendRequestController extends AbstractController {
         ],
     )]
     #[Route(path: '/sent', name: 'api_get_friend_requests_sent', methods: ['GET'])]
-    public function getAllSentPagination (
+    public function getAllSentPagination(
         FriendRequestsService $friendRequestsService,
         SerializerInterface $serializer,
-        Request $request, 
-    ) : JsonResponse {
-
+        Request $request,
+    ): JsonResponse {
         $friendRequests = $friendRequestsService->getAllSentPagination($request->query->getInt('page', 1));
 
         $jsonFriendRequests = $serializer->serialize($friendRequests, 'json');
+
         return new JsonResponse($jsonFriendRequests, JsonResponse::HTTP_OK, [], true);
     }
 
@@ -134,20 +134,19 @@ class FriendRequestController extends AbstractController {
         responses: [
             new SuccessNoContentResponse('Friend request successfully handled.'),
             new NotFoundResponse('User'),
-            new ValidationErrorResponse()
+            new ValidationErrorResponse(),
         ],
     )]
     #[Route(path: '/{id}', name: 'api_update_status_friend_request', methods: ['PUT'], requirements: ['id' => Requirement::DIGITS])]
-    public function status (
+    public function status(
         int $id,
         FriendRequestsService $friendRequestsService,
         Request $request,
         SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ) : JsonResponse {
-
+        ValidatorInterface $validator,
+    ): JsonResponse {
         $statusDTO = $serializer->deserialize($request->getContent(), FriendRequestStatusDTO::class, 'json');
-        
+
         $errors = $validator->validate($statusDTO);
         if (count($errors) > 0) {
             throw new ValidationFailedException($statusDTO, $errors);
@@ -155,11 +154,12 @@ class FriendRequestController extends AbstractController {
 
         $status = $statusDTO->status;
 
-        if ($status === 'accept') {
+        if ('accept' === $status) {
             $friendRequestsService->accept($id);
-        } elseif ($status === 'decline') {
+        } elseif ('decline' === $status) {
             $friendRequestsService->decline($id);
         }
+
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
     }
 }

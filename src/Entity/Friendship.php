@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FriendshipRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: FriendshipRepository::class)]
@@ -25,22 +25,29 @@ class Friendship
     #[ORM\JoinColumn(nullable: false, onDelete: 'Cascade')]
     private ?User $user2 = null;
 
-    public function __construct(User $user1, User $user2) {
+    public function __construct(User $user1, User $user2)
+    {
         $this->user1 = $user1;
         $this->user2 = $user2;
     }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser1() : ?User
+
+
+    public function getUser1(): ?User
     {
         return $this->user1;
     }
 
-    public function getUser2() : ?User
+
+
+    public function getUser2(): ?User
     {
         return $this->user2;
     }

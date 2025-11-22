@@ -3,20 +3,19 @@
 namespace App\OpenApi\JsonRequestBody;
 
 use Attribute;
-use OpenApi\Attributes as OA;
 use Nelmio\ApiDocBundle\Attribute\Model;
+use OpenApi\Attributes as OA;
 
 /**
  * Reusable request body attribute.
  */
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 final class JsonRequestBody extends OA\RequestBody
 {
-
     public function __construct(
         string $modelClass,
         string $description = 'Request payload',
-        bool $required = true
+        bool $required = true,
     ) {
         parent::__construct(
             required: $required,

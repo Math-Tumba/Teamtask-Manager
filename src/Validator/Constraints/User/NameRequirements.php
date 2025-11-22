@@ -2,8 +2,8 @@
 
 namespace App\Validator\Constraints\User;
 
-use Symfony\Component\Validator\Constraints\Compound;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Compound;
 
 #[\Attribute]
 class NameRequirements extends Compound
@@ -12,7 +12,7 @@ class NameRequirements extends Compound
     {
         return [
             new Assert\NotBlank(
-                message: 'Le nom ne peut pas être vide.', 
+                message: 'Le nom ne peut pas être vide.',
             ),
             new Assert\Length(
                 max: 127,

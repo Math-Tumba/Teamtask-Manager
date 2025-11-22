@@ -1,27 +1,24 @@
-<?php 
+<?php
 
 namespace App\Service;
 
-class ArrayHelper {
-    
+class ArrayHelper
+{
     /**
-     * Verifies recursively if an array and its subarrays contain only null values
-     * 
-     * @param array $array
-     * 
-     * @return bool 
+     * Verifies recursively if an array and its subarrays contain only null values.
      */
-    public function allValuesAreNull(Array $array): bool {
+    public function allValuesAreNull(array $array): bool
+    {
         foreach ($array as $value) {
             if (is_array($value)) {
                 if (!$this->allValuesAreNull($value)) {
                     return false;
                 }
-            }
-            else if (!is_null($value)) {
+            } elseif (!is_null($value)) {
                 return false;
             }
         }
+
         return true;
     }
 }

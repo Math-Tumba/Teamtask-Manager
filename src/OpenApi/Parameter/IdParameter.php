@@ -2,17 +2,15 @@
 
 namespace App\OpenApi\Parameter;
 
-use Attribute;
 use OpenApi\Attributes as OA;
 
 /**
  * Reusable id path parameter.
  */
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 final class IdParameter extends OA\Parameter
 {
-    
-    public function __construct(string $description = 'Resource identifier') 
+    public function __construct(string $description = 'Resource identifier')
     {
         parent::__construct(
             name: 'id',

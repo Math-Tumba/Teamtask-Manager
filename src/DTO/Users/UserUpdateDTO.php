@@ -2,18 +2,17 @@
 
 namespace App\DTO\Users;
 
-use OpenApi\Attributes as OA;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Validator\Constraints\User as AppAssert;
+use OpenApi\Attributes as OA;
 
-/** 
+/**
  * User DTO used to update an user.
- * 
+ *
  * Fields : email, name, surname, country, website, github, linkedin
  */
-class UserUpdateDTO {
-
+class UserUpdateDTO
+{
     #[AppAssert\EmailRequirements()]
     #[OA\Property(example: 'john.doe@gmail.com')]
     public ?string $email = null;
@@ -21,7 +20,7 @@ class UserUpdateDTO {
     #[AppAssert\NameRequirements()]
     #[OA\Property(example: 'Doe')]
     public ?string $name = null;
-    
+
     #[AppAssert\SurnameRequirements()]
     #[OA\Property(example: 'John')]
     public ?string $surname = null;

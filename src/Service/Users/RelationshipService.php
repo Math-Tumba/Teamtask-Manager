@@ -7,8 +7,8 @@ use App\Enum\RelationshipState;
 use App\Repository\FriendshipRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
-class RelationshipService {
-
+class RelationshipService
+{
     public function __construct(
         private FriendshipRepository $friendshipRepository,
         private UsersService $usersService,
@@ -18,20 +18,22 @@ class RelationshipService {
     ) {
     }
 
-    /**
-     * 
-     */
-    public function getState(int $id) : RelationshipState {
+
+
+    public function getState(int $id): RelationshipState
+    {
         /** @var User $loggedInUser */
         $loggedInUser = $this->security->getUser();
         $targetedUser = $this->usersService->get($id);
-    
+
         if ($this->friendshipService->areFriends($loggedInUser, $targetedUser)) {
             return RelationshipState::Friends;
         }
-        elseif ($this->friendRequestsService->hasPendingFriendRequestWith($loggedInUser, $targetedUser)) {
+
+        if ($this->friendRequestsService->hasPendingFriendRequestWith($loggedInUser, $targetedUser)) {
             return RelationshipState::Pending;
         }
+
         return RelationshipState::Strangers;
     }
 }

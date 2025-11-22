@@ -34,15 +34,21 @@ class Team
         $this->usersInTeam = new ArrayCollection();
     }
 
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
+
     public function getName(): ?string
     {
         return $this->name;
     }
+
+
 
     public function setName(string $name): static
     {
@@ -51,10 +57,14 @@ class Team
         return $this;
     }
 
+
+
     public function getHostId(): ?int
     {
         return $this->hostId;
     }
+
+
 
     public function setHostId(int $hostId): static
     {
@@ -63,6 +73,8 @@ class Team
         return $this;
     }
 
+
+
     /**
      * @return Collection<int, UserInTeam>
      */
@@ -70,6 +82,8 @@ class Team
     {
         return $this->usersInTeam;
     }
+
+
 
     public function addUsersInTeam(UserInTeam $usersInTeam): static
     {
@@ -80,6 +94,8 @@ class Team
 
         return $this;
     }
+
+
 
     public function removeUsersInTeam(UserInTeam $usersInTeam): static
     {

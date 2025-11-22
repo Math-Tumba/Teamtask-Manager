@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\User;
 use App\Entity\Friendship;
-use Doctrine\Persistence\ManagerRegistry;
-use Knp\Component\Pager\PaginatorInterface;
-use Knp\Component\Pager\Pagination\PaginationInterface;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Friendship>
@@ -16,47 +16,46 @@ class FriendshipRepository extends ServiceEntityRepository
 {
     public function __construct(
         ManagerRegistry $registry,
-        private PaginatorInterface $paginator
-    ){
+        private PaginatorInterface $paginator,
+    ) {
         parent::__construct($registry, Friendship::class);
     }
 
-    /**
-     * 
-     */
-    public function relationExists(User $user1, User $user2) : bool {
+
+
+    public function relationExists(User $user1, User $user2): bool
+    {
         return (bool) $this->createQueryBuilder('uf')
             ->select('1')
             ->where('(uf.user1 = :user1 AND uf.user2 = :user2)')
             ->orWhere('(uf.user1 = :user2 AND uf.user2 = :user1)')
-            ->getQuery() 
+            ->getQuery()
             ->setParameters([
                 ':user1' => $user1,
-                ':user2' => $user2
+                ':user2' => $user2,
             ])
             ->getResult()
         ;
     }
 
-    /**
-     * 
-     */
-    public function findByIds(User $user1, User $user2) : ?Friendship {
+
+
+    public function findByIds(User $user1, User $user2): ?Friendship
+    {
         return $this->createQueryBuilder('uf')
             ->where('(uf.user1 = :user1 AND uf.user2 = :user2)')
             ->orWhere('(uf.user1 = :user2 AND uf.user2 = :user1)')
-            ->getQuery() 
+            ->getQuery()
             ->setParameters([
                 ':user1' => $user1,
-                ':user2' => $user2
+                ':user2' => $user2,
             ])
             ->getOneOrNullResult()
         ;
     }
 
-    /**
-     * 
-     */
+
+
     public function paginateFriends(User $user, int $page): PaginationInterface
     {
         $qb = $this->createQueryBuilder('uf')

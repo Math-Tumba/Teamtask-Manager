@@ -21,18 +21,18 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         private ParameterBagInterface $params,
         private RefreshTokenGeneratorInterface $refreshTokenGenerator,
         private RefreshTokenManagerInterface $refreshTokenManager,
-    ){
+    ) {
     }
+
+
 
     /**
      * Handle success authentication event.
-     * 
+     *
      * Creates JWT cookies (BEARER and refresh_token) and saves the newly created refresh token
      * in database.
-     * @param Request $request
-     * @param TokenInterface $token
-     * 
-     * @return RedirectResponse $response including JWT cookies.
+     *
+     * @return RedirectResponse $response including JWT cookies
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
     {
@@ -48,7 +48,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $response->headers->setCookie(
             Cookie::create('BEARER')
                 ->withValue($jwt)
-                ->withExpires(time()+900) // 15 minutes
+                ->withExpires(time() + 900) // 15 minutes
                 ->withSameSite('strict')
                 ->withPath('/')
                 ->withDomain(null)
@@ -59,7 +59,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $response->headers->setCookie(
             Cookie::create('refresh_token')
                 ->withValue($refreshToken)
-                ->withExpires(time()+$ttl)
+                ->withExpires(time() + $ttl)
                 ->withSameSite('strict')
                 ->withPath('/')
                 ->withDomain(null)

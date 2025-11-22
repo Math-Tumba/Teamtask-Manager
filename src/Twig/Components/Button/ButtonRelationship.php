@@ -3,9 +3,9 @@
 namespace App\Twig\Components\Button;
 
 use App\Service\Users\RelationshipService;
+use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 
 #[AsLiveComponent(name: '_button_relationship', template: '_components/button/_button_relationship.html.twig')]
 final class ButtonRelationship
@@ -20,7 +20,8 @@ final class ButtonRelationship
     ) {
     }
 
-    public function getRelationshipState() {
+    public function getRelationshipState()
+    {
         return $this->relationshipService->getState($this->userId);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\Response;
 use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final class CookieHelper
 {
@@ -12,10 +12,10 @@ final class CookieHelper
     ) {
     }
 
-    /**
-     * 
-     */
-    public function clearJwtCookies(Response $response, array $cookies): void {
+
+
+    public function clearJwtCookies(Response $response, array $cookies): void
+    {
         $response->headers->clearCookie('BEARER', '/', null, true, true, 'strict');
 
         $refreshTokenCookie = $cookies['refresh_token'];

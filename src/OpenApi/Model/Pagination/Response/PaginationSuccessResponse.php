@@ -1,19 +1,18 @@
-<?php 
+<?php
 
 namespace App\OpenApi\Model\Pagination\Response;
 
 use Attribute;
-use OpenApi\Attributes as OA;
 use Nelmio\ApiDocBundle\Attribute\Model;
+use OpenApi\Attributes as OA;
 
 /**
  * Reusable 200 success response attribute for paginated items.
  */
-#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_METHOD)]
+#[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
 class PaginationSuccessResponse extends OA\Response
 {
-    
-    public function __construct(string $itemClass, string $description = 'Items successfully found.') 
+    public function __construct(string $itemClass, string $description = 'Items successfully found.')
     {
         parent::__construct(
             response: 200,

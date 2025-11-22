@@ -2,22 +2,21 @@
 
 namespace App\EventListener;
 
-use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final class ExceptionListener
 {
     /**
-     * API Exception listener
-     * 
+     * API Exception listener.
+     *
      * Intercept exceptions and set both status and message based on exception's data
      * if it is a HTTP exception or a failed validation. It sets a default message if not.
-     * @param ExceptionEvent $event
      */
     #[AsEventListener(event: KernelEvents::EXCEPTION)]
     public function onKernelException(ExceptionEvent $event): void
@@ -31,16 +30,14 @@ final class ExceptionListener
 
         $data = [];
 
-        if ($exception instanceof UnprocessableEntityHttpException) { 
+        if ($exception instanceof UnprocessableEntityHttpException) {
             $previousException = $exception->getPrevious(); // Handle MapRequestPayload validation errors
             if ($previousException instanceof ValidationFailedException) {
                 $data = $this->mapValidationErrorsMessage($previousException->getViolations());
             }
-        }
-        elseif ($exception instanceof ValidationFailedException) {
-            $data = $this->mapValidationErrorsMessage($exception->getViolations()); 
-        }
-        elseif ($exception instanceof HttpException) {
+        } elseif ($exception instanceof ValidationFailedException) {
+            $data = $this->mapValidationErrorsMessage($exception->getViolations());
+        } elseif ($exception instanceof HttpException) {
             $data['status'] = $exception->getStatusCode();
             $data['message'] = $exception->getMessage();
         } else {
@@ -50,14 +47,19 @@ final class ExceptionListener
         }
 
         $event->setResponse(new JsonResponse($data, $data['status']));
+
+        return;
     }
 
-    private function mapValidationErrorsMessage(mixed $violations) : array {
+
+
+    private function mapValidationErrorsMessage(mixed $violations): array
+    {
         $errors = [];
         foreach ($violations as $violation) {
             array_push($errors, [
                 'field' => $violation->getPropertyPath(),
-                'message' => $violation->getMessage()
+                'message' => $violation->getMessage(),
             ]);
         }
 

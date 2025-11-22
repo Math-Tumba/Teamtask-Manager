@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private const PROFILE_PICTURES_PATH = '/uploads/profile-pictures';
-    private const DEFAULT_PROFILE_PICTURE_PATH = self::PROFILE_PICTURES_PATH . '/default.png';
+    private const DEFAULT_PROFILE_PICTURE_PATH = self::PROFILE_PICTURES_PATH.'/default.png';
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
@@ -97,9 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: FriendRequest::class, mappedBy: 'userReceiver')]
     private Collection $friendRequestReceived;
-    
-    /**
-     */
+
     #[ORM\OneToMany(targetEntity: Friendship::class, mappedBy: 'user1')]
     private Collection $friends;
 
@@ -118,23 +116,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->friendsWithMe = new ArrayCollection();
     }
 
-    public static function getDefaultProfilePicturePath() {
+
+
+    public static function getDefaultProfilePicturePath()
+    {
         return self::DEFAULT_PROFILE_PICTURE_PATH;
     }
 
-    public static function getProfilePicturesPath() {
+
+
+    public static function getProfilePicturesPath()
+    {
         return self::PROFILE_PICTURES_PATH;
     }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
+
     public function getName(): ?string
     {
         return $this->name;
     }
+
+
 
     public function setName(?string $name): static
     {
@@ -143,10 +153,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getSurname(): ?string
     {
         return $this->surname;
     }
+
+
 
     public function setSurname(string $surname): static
     {
@@ -154,11 +168,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
+
+
     public function getCountry(): ?string
     {
         return $this->country;
     }
+
+
 
     public function setCountry(string $country): static
     {
@@ -167,10 +185,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getUsername(): ?string
     {
         return $this->username;
     }
+
+
 
     public function setUsername(string $username): static
     {
@@ -179,10 +201,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
+
 
     public function setEmail(string $email): static
     {
@@ -191,10 +217,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getWebsite(): ?string
     {
         return $this->website;
     }
+
+
 
     public function setWebsite(?string $website): static
     {
@@ -203,10 +233,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getGithub(): ?string
     {
         return $this->github;
     }
+
+
 
     public function setGithub(?string $github): static
     {
@@ -215,10 +249,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getLinkedin(): ?string
     {
         return $this->linkedin;
     }
+
+
 
     public function setLinkedin(?string $linkedin): static
     {
@@ -227,10 +265,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getProfilePicture(): ?string
     {
         return $this->profilePicture;
     }
+
+
 
     public function setProfilePicture(string $profilePicture): static
     {
@@ -238,6 +280,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 
     /**
      * A visual identifier that represents this user.
@@ -248,6 +292,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string) $this->username;
     }
+
+
 
     /**
      * @see UserInterface
@@ -263,6 +309,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+
+
     /**
      * @param list<string> $roles
      */
@@ -273,10 +321,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     public function getUserInTeams(): Collection
     {
         return $this->userInTeams;
     }
+
+
 
     public function addUserInTeam(UserInTeam $userInTeam): static
     {
@@ -287,6 +339,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 
     public function removeUserInTeam(UserInTeam $userInTeam): static
     {
@@ -301,6 +355,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -309,12 +365,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
+
+
     public function setPassword(string $password): static
     {
         $this->password = $password;
 
         return $this;
     }
+
+
 
     /**
      * @see UserInterface
@@ -325,6 +385,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+
+
     /**
      * @return Collection<int, self>
      */
@@ -333,6 +395,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->friendRequestSent;
     }
 
+
+
     /**
      * @return Collection<int, self>
      */
@@ -340,6 +404,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->friendRequestReceived;
     }
+
+
 
     /**
      * @return Collection<int, self>

@@ -35,6 +35,8 @@ class UserInTeam
         return $this->teamId;
     }
 
+
+
     public function setTeamId(int $teamId)
     {
         $this->teamId = $teamId;
@@ -42,22 +44,30 @@ class UserInTeam
         return $this;
     }
 
+
+
     public function getUserId(): ?int
     {
         return $this->userId;
     }
 
+
+
     public function setUserId(int $teamId)
     {
-        $this->teamId = $teamId ;
+        $this->teamId = $teamId;
 
         return $this;
     }
+
+
 
     public function getRunningTasks(): ?int
     {
         return $this->runningTasks;
     }
+
+
 
     public function setRunningTasks(int $runningTasks): static
     {
@@ -66,10 +76,14 @@ class UserInTeam
         return $this;
     }
 
+
+
     public function getCompletedTasks(): ?int
     {
         return $this->completedTasks;
     }
+
+
 
     public function setCompletedTasks(int $completedTasks): static
     {
@@ -78,10 +92,14 @@ class UserInTeam
         return $this;
     }
 
+
+
     public function getTeamRole(): ?TeamRole
     {
         return $this->teamRole;
     }
+
+
 
     public function setTeamRole(TeamRole $teamRole): static
     {
