@@ -20,6 +20,8 @@ final class ButtonRelationship
     ) {
     }
 
+
+
     public function getRelationshipState()
     {
         return $this->relationshipService->getState($this->userId);

@@ -4,7 +4,6 @@ namespace App\Service\Users;
 
 use App\Entity\User;
 use App\Enum\RelationshipState;
-use App\Repository\FriendshipRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 
 final class RelationshipService
@@ -17,8 +16,13 @@ final class RelationshipService
     ) {
     }
 
+    
 
-
+    /**
+     * Get state of the relationship between the logged-in user and the targeted one.
+     * 
+     * @throws HttpException if the user doesn't exist.
+     */
     public function getState(int $id): RelationshipState
     {
         /** @var User $loggedInUser */

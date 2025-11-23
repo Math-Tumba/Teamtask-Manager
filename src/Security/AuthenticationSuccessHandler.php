@@ -25,7 +25,7 @@ final class AuthenticationSuccessHandler implements AuthenticationSuccessHandler
 
 
     /**
-     * Handle success authentication event.
+     * Handle success authentication event (WebApp).
      *
      * Creates JWT cookies (BEARER and refresh_token) and saves the newly created refresh token
      * in database.

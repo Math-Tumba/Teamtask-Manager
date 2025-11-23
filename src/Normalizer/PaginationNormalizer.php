@@ -5,6 +5,9 @@ namespace App\Normalizer;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
+/**
+ * Cette classe normalise les données pour les requêtes API impliquant une pagination.
+ */
 final class PaginationNormalizer implements NormalizerInterface
 {
     public function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null

@@ -5,7 +5,7 @@ namespace App\DTO\Users;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Friend request DTO used to get main data that permit to easily identify users.
+ * Friend request DTO useful when handling friend request state.
  *
  * Fields : status
  */

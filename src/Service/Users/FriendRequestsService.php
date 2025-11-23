@@ -30,7 +30,7 @@ final class FriendRequestsService
      *
      * @return FriendRequest [sender - receiver]
      *
-     * @throws HttpException if no friend request exists between each others
+     * @throws HttpException if friend request doesn't exist.
      */
     public function verifyFriendRequestExists(User $userSender, User $userReceiver): FriendRequest
     {
@@ -48,7 +48,9 @@ final class FriendRequestsService
 
 
     /**
-     * @throws HttpException if a friend request exists already and is pending
+     * Verify that a friend request is not already pending.
+     * 
+     * * @throws HttpException if a friend request is pending
      */
     public function verifyFriendRequestNotPending(User $userSender, User $userReceiver): bool
     {
@@ -64,7 +66,7 @@ final class FriendRequestsService
     /**
      * Get friendRequest by ID.
      *
-     * @throws HttpException if the user doesn't exist (from verifyFriendRequestExists())
+     * @throws HttpException if the friend request doesn't exist.
      */
     public function get(User $userSender, User $userReceiver): FriendRequest
     {
@@ -73,10 +75,8 @@ final class FriendRequestsService
 
 
 
-    /**
-     * Get a few friend request received page.
-     *
-     * @see FriendRequestRepository::paginateFriendRequestReceived()
+     /**
+     * Get paginated friend requests received.
      */
     public function getAllReceivedPagination(int $page): PaginationInterface
     {
@@ -93,9 +93,7 @@ final class FriendRequestsService
 
 
     /**
-     * Get a few friend request sent based page.
-     *
-     * @see FriendRequestRepository::paginateFriendRequestSent()
+     * Get paginated friend requests sent.
      */
     public function getAllSentPagination(int $page): PaginationInterface
     {
@@ -116,8 +114,10 @@ final class FriendRequestsService
      *
      * @param int $id the id of the receiver
      *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user sends a request to himself (from verifyNotSameUsers()).
+     * @throws HttpException if the user doesn't exist (from verifyUserExists()).
+     *                       if the logged-in user tried to send a request to himself.
+     *                       if the users are already friends.
+     *                       if the logged in user tries to send a friend request that already exists.
      */
     public function send(int $id): void
     {
@@ -144,8 +144,8 @@ final class FriendRequestsService
      *
      * @param int $id the id of the receiver
      *
-     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
-     *                       if the friend request doesn't exist (from get())
+     * @throws HttpException if the targeted user doesn't exist.
+     *                       if the friend request doesn't exist.
      */
     public function cancel(int $id): void
     {
@@ -171,8 +171,8 @@ final class FriendRequestsService
      *
      * @param int $id the id of the sender
      *
-     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
-     *                       if the friend request doesn't exist (from get())
+     * @throws HttpException if the targeted user doesn't exist.
+     *                       if the friend request doesn't exist.
      */
     public function accept(int $id): void
     {
@@ -200,8 +200,8 @@ final class FriendRequestsService
      *
      * @param int $id the id of the sender
      *
-     * @throws HttpException if the targeted user doesn't exist (from usersService->get()).
-     *                       if the friend request doesn't exist (from get())
+     * @throws HttpException if the targeted user doesn't exist.
+     *                       if the friend request doesn't exist.
      */
     public function decline(int $id): void
     {
@@ -221,6 +221,9 @@ final class FriendRequestsService
 
 
 
+    /**
+     * Check if the sender has already sent a friend request to the targeted user.
+     */
     public function hasPendingFriendRequestWith(User $userSender, User $userReceiver): bool
     {
         return $this->friendRequestRepository->relationExists($userSender, $userReceiver);

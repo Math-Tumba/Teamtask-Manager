@@ -53,6 +53,9 @@ final class ExceptionListener
 
 
 
+    /**
+     * Transform validation violations into a standardized error response array.
+     */
     private function mapValidationErrorsMessage(mixed $violations): array
     {
         $errors = [];

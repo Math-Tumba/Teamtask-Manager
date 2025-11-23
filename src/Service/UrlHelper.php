@@ -8,10 +8,8 @@ final class UrlHelper
      * Gets the host name of an URL.
      *
      * Allowing null value since parse_url(null, ?) is deprecated.
-     *
-     * @return string
      */
-    public function getDomainName(?string $url)
+    public function getDomainName(?string $url): ?string
     {
         if (null === $url) {
             return null;

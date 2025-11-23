@@ -2,6 +2,9 @@
 
 namespace App\Enum;
 
+/**
+ * Represent the state of the relationship two users can have.
+ */
 enum RelationshipState: string
 {
     case Strangers = 'Strangers';

@@ -20,6 +20,8 @@ final class PaginationFriendRequestsSent
     ) {
     }
 
+
+    
     public function getFriendRequests()
     {
         if ($this->page_fr_sent <= 0) {

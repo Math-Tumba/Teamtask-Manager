@@ -27,7 +27,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
 
 
     /**
-     * Verify if a friend request is already pending between two users.
+     * Verify unilaterally if a friend request is already pending between two users.
      */
     public function relationExists(User $userSender, User $userReceiver): bool
     {
@@ -52,7 +52,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
      * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending
      * friend requests received.
      *
-     * @return PaginationInterface the items retrieved based on the page given. Retrieves the total item count as well.
+     * @return PaginationInterface the items retrieved based on the page given.
      */
     public function paginateFriendRequestsReceived(User $userReceiver, int $page): PaginationInterface
     {
@@ -79,7 +79,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
      * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending
      * friend requests sent.
      *
-     * @return PaginationInterface the items retrieved based on the page given. Retrieves the total item count as well.
+     * @return PaginationInterface the items retrieved based on the page given.
      */
     public function paginateFriendRequestsSent(User $userSender, int $page): PaginationInterface
     {

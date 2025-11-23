@@ -5,7 +5,6 @@ namespace App\Service\Users;
 use App\DTO\Users\UserCreateDTO;
 use App\DTO\Users\UserUpdateDTO;
 use App\Entity\User;
-use App\Repository\FriendRequestRepository;
 use App\Repository\UserRepository;
 use App\Validator\FilePicture\FilePicture;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,9 +39,9 @@ final class UsersService
 
 
     /**
-     * Return user if exists.
+     * Get user if exists.
      *
-     * @throws HttpException if the targeted user doesn't exist
+     * @throws HttpException if the targeted user doesn't exist.
      */
     public function verifyUserExists(int $id): User
     {
@@ -57,7 +56,12 @@ final class UsersService
 
 
     /**
-     * @throws HttpException if the logged-in user is not the targeted one, unless he has admin permissions
+     * Verify that the user initiating the action is the logged-in user.
+     * 
+     * Useful when wanting to restrict access to specific actions that he is not allowed to do 
+     * (exemple : trying to update another user).
+     * 
+     * @throws HttpException if the access is denied.
      */
     public function verifySameUsers(User $targetedUser, User $loggedInUser): bool
     {
@@ -71,7 +75,12 @@ final class UsersService
 
 
     /**
-     * @throws HttpException if user1 and user2 are the same user
+     * Verify that the user initiating the action is not the logged-in user.
+     * 
+     * Useful to prevent conflictual behavior. 
+     * (exemple : sending a friend request to himself)
+     * 
+     * @throws HttpException if user1 and user2 are the same user.
      */
     public function verifyNotSameUsers(User $user1, User $user2): bool
     {
@@ -87,7 +96,7 @@ final class UsersService
     /**
      * Register a user based on UserCreateDTO data.
      *
-     * @return User the user registered
+     * @return User the user registered.
      */
     public function register(UserCreateDTO $userDTO): User
     {
@@ -116,7 +125,7 @@ final class UsersService
     /**
      * Get user by ID.
      *
-     * @throws HttpException if the user doesn't exist (from verifyUserExists())
+     * @throws HttpException if the user doesn't exist.
      */
     public function get(int $id): User
     {
@@ -126,10 +135,11 @@ final class UsersService
 
 
     /**
-     * Update targeted user by id based on UserUpdateDTO data.
+     * Update user by id based on UserUpdateDTO data.
      *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
+     * @throws HttpException if the user doesn't exist.
+     *                       if the access is denied.
+     * @throws ValidationFailedException if data is invalid.
      */
     public function update(int $id, UserUpdateDTO $userDTO): void
     {
@@ -162,16 +172,16 @@ final class UsersService
 
 
     /**
-     * Upload profile picture and updates targeted user by id.
+     * Upload and update new user's profile picture by id.
      *
      * This function handles profile picture uploads by deleting the old one if it exists, saving the new one and updating
      * profile picture path from $user data.
      *
      * @param UploadedFile $file the new profile picture
      *
-     * @throws HttpException if the targeted user doesn't exist (from verifyUserExists()).
-     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
-     *                       if the uploaded file fails the validation constraints.
+     * @throws HttpException if the user doesn't exist.
+     *                       if the access is denied.
+     * @throws ValidationFailedException if data is invalid.
      */
     public function uploadProfilePicture(int $id, UploadedFile $file): User
     {
@@ -207,8 +217,8 @@ final class UsersService
     /**
      * Delete targeted user by id and his data, linked files included.
      *
-     * @throws HttpException if the targeted user doesn't exist (from get()).
-     *                       if the logged-in user is not the targeted one, unless he has admin permissions (from verifySameUsers()).
+     * @throws HttpException if the user doesn't exist.
+     *                       if the access is denied.
      */
     public function delete(int $id): void
     {

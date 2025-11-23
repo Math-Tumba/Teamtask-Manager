@@ -23,6 +23,9 @@ final class FriendshipRepository extends ServiceEntityRepository
 
 
 
+    /**
+     * Verify if two users are friends.
+     */
     public function relationExists(User $user1, User $user2): bool
     {
         return (bool) $this->createQueryBuilder('uf')
@@ -40,6 +43,9 @@ final class FriendshipRepository extends ServiceEntityRepository
 
 
 
+    /**
+     * Retrieve, if exists, the friendship between two users.
+     */
     public function findByIds(User $user1, User $user2): ?Friendship
     {
         return $this->createQueryBuilder('uf')
@@ -56,6 +62,13 @@ final class FriendshipRepository extends ServiceEntityRepository
 
 
 
+    /**
+     * Retrieve paginated user's friends.
+     *
+     * This query selects data based on the UserPreviewDTO.
+     *
+     * @return PaginationInterface the items retrieved based on the page given.
+     */
     public function paginateFriends(User $user, int $page): PaginationInterface
     {
         $qb = $this->createQueryBuilder('uf')

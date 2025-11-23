@@ -14,6 +14,9 @@ final class CookieHelper
 
 
 
+    /**
+     * Clear the bearer and the refresh_token cookies, and delete the refresh_token from database.
+     */
     public function clearJwtCookies(Response $response, array $cookies): void
     {
         $response->headers->clearCookie('BEARER', '/', null, true, true, 'strict');

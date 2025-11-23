@@ -7,7 +7,7 @@ use OpenApi\Attributes as OA;
 /**
  * User DTO used to get data of profile picture.
  *
- * Fields : id, username, country, profilePicture
+ * Fields : profilePicture, size
  */
 final readonly class UserProfilePictureDTO
 {

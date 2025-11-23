@@ -4,7 +4,7 @@ namespace App\Enum;
 
 /**
  * Represent the role a user can be linked to in a team.
- * /!\ This has nothing to do with the general user roles.
+ * /!\ This has nothing to do with the symfony native user roles.
  */
 enum TeamRole: string
 {

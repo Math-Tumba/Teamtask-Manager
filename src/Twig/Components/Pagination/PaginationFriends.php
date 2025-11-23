@@ -20,6 +20,9 @@ final class PaginationFriends
     ) {
     }
 
+
+
+    
     public function getFriends()
     {
         if ($this->page <= 0) {
