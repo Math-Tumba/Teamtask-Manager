@@ -46,16 +46,7 @@ return [
     'components/flashMessage' => [
         'path' => './assets/js/components/flashMessage.js',
     ],
-    'ajax/api/acceptFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/acceptFriendRequest.js',
-    ],
-    'ajax/api/declineFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/declineFriendRequest.js',
-    ],
-    'ajax/api/cancelFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/cancelFriendRequest.js',
-    ],
-    'ajax/api/sendFriendRequest' => [
-        'path' => './assets/js/ajax/api/users/sendFriendRequest.js',
+    'ajax/ui/modal/modalConfirmation' => [
+        'path' => './assets/js/ajax/ui/modal/modalConfirmation.js',
     ],
 ];

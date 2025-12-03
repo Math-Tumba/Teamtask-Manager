@@ -1,0 +1,54 @@
+.body .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1000;
+    .overlay {
+        position: absolute;
+        top: inherit;
+        left: inherit;
+        width: inherit;
+        height: inherit;
+        background-color: transparentize($background_color_dark, 0.5);
+        z-index: 1001;
+    }
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+        width: fit-content;
+        max-width: 90vw;
+        min-height: 10vh;
+        padding: 40px 25px;
+        text-align: center;
+        z-index: 1002;
+        @include max767 {
+            padding: 30px 15px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px;
+            transition: .4s ease-in-out;
+            cursor: pointer;
+            &:hover {
+                color: $red;
+            }
+            @include max767 {
+                top: 5px;
+                right: 5px;
+            }
+        }
+        .actions {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
