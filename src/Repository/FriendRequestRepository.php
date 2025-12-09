@@ -7,7 +7,6 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -52,7 +51,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
      * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending
      * friend requests received.
      *
-     * @return PaginationInterface the items retrieved based on the page given.
+     * @return PaginationInterface the items retrieved based on the page given
      */
     public function paginateFriendRequestsReceived(User $userReceiver, int $page): PaginationInterface
     {
@@ -79,7 +78,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
      * This query selects data based on the UserPreviewDTO. It is useful for displaying the pending
      * friend requests sent.
      *
-     * @return PaginationInterface the items retrieved based on the page given.
+     * @return PaginationInterface the items retrieved based on the page given
      */
     public function paginateFriendRequestsSent(User $userSender, int $page): PaginationInterface
     {
@@ -103,7 +102,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
     /**
      * Delete mutual friend requests between 2 users.
      */
-    public function deleteFriendRequestBothSides(User $user1, User $user2): QueryBuilder
+    public function deleteFriendRequestBothSides(User $user1, User $user2): int
     {
         return $this->createQueryBuilder('ufr')
             ->delete()
