@@ -4,3 +4,7 @@ framework:
         paths:
             - assets/
             - vendor/twbs/bootstrap/dist
+            - assets/vendor/ky
+            
+sensiolabs_typescript:
+    source_dir: ['%kernel.project_dir%/assets/ts']

@@ -24,7 +24,7 @@
                 {% for label, messages in app.flashes %}
                     {% set flashClass = flashTypes[label] | default('success') %}
                     {% for message in messages %}
-                        <div class="flash-message alert alert-{{ flashClass }} mb-0">
+                        <div class="flash-message alert alert-{{ flashClass }} mb-0 hide">
                             {{ message }}
                         </div>
                     {% endfor %}

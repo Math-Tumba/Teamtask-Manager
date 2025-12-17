@@ -13,11 +13,8 @@
  */
 return [
     'app' => [
-        'path' => './assets/app.js',
+        'path' => './assets/ts/app.ts',
         'entrypoint' => true,
-    ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
     ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
@@ -25,28 +22,34 @@ return [
     '@symfony/ux-live-component' => [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
+    'ky' => [
+        'path' => './assets/vendor/ky/ky.index.js',
+    ],
+    'api' => [
+        'path' => './assets/ts/utils/kyManager.ts',
+    ],
+    'utils/dom' => [
+        'path' => './assets/ts/utils/dom.ts',
+    ],
+    'utils/twigComponents' => [
+        'path' => './assets/ts/utils/twigComponents.ts',
+    ],
+    'components/flashMessage' => [
+        'path' => './assets/ts/components/flashMessage.ts',
+    ],
+    'ajax/ui/modal/modalConfirmation' => [
+        'path' => './assets/js/ajax/ui/modal/modalConfirmation.js',
+    ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.20',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
     'jquery' => [
         'version' => '3.7.1',
-    ],
-    'ky' => [
-        'version' => '1.8.0',
-    ],
-    'api' => [
-        'path' => './assets/js/utils/kyManager.js',
-    ],
-    'twigComponents' => [
-        'path' => './assets/js/utils/twigComponents.js',
-    ],
-    'components/flashMessage' => [
-        'path' => './assets/js/components/flashMessage.js',
-    ],
-    'ajax/ui/modal/modalConfirmation' => [
-        'path' => './assets/js/ajax/ui/modal/modalConfirmation.js',
     ],
 ];

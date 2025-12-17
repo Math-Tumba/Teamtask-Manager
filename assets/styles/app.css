@@ -11885,6 +11885,18 @@ path {
   fill: inherit;
 }
 
+.hide, .show {
+  transition: opacity 0.5s;
+}
+
+.hide {
+  opacity: 0 !important;
+}
+
+.show {
+  opacity: 1 !important;
+}
+
 body {
   font-size: 17px;
   font-family: "montserrat";
@@ -12421,7 +12433,6 @@ img.avatar-3 {
   margin: 0 15px;
 }
 #flash-messages .flash-messages-container .flash-message {
-  display: none;
   position: relative;
   margin: 10px 15px;
   overflow: hidden;
