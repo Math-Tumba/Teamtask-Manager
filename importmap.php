@@ -38,7 +38,7 @@ return [
         'path' => './assets/ts/components/flashMessage.ts',
     ],
     'ajax/ui/modal/modalConfirmation' => [
-        'path' => './assets/js/ajax/ui/modal/modalConfirmation.js',
+        'path' => './assets/ts/ajax/ui/modal/modalConfirmation.ts',
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
@@ -48,8 +48,5 @@ return [
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
-    ],
-    'jquery' => [
-        'version' => '3.7.1',
     ],
 ];

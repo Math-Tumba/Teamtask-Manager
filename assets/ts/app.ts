@@ -5,9 +5,8 @@
  * which should already be in your base.html.twig.
  */
 
-import '../bootstrap.js'
-import '../js/utils/globalJquery.js'
-import './utils/kyManager.ts'
-import './components/flashMessage.ts'
-import '../../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js'
-import '../styles/app.css'
+import '../bootstrap.js';
+import './utils/kyManager.ts';
+import './components/flashMessage.ts';
+import '../../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js';
+import '../styles/app.css';
