@@ -97,7 +97,7 @@ final class UserController extends AbstractController
         SerializerInterface $serializer,
         Security $security,
     ): JsonResponse {
-        /** @var User $user */
+        /** @var User $loggedInUser */
         $loggedInUser = $security->getUser();
         $user = $usersService->get($loggedInUser->getId());
 
@@ -123,7 +123,7 @@ final class UserController extends AbstractController
         #[MapRequestPayload(acceptFormat: 'json')]
         UserUpdateDTO $userDTO,
     ): JsonResponse {
-        /** @var User $user */
+        /** @var User $loggedInUser */
         $loggedInUser = $security->getUser();
         $id = $loggedInUser->getId();
 
@@ -150,7 +150,7 @@ final class UserController extends AbstractController
         UsersService $usersService,
         Security $security,
     ): JsonResponse {
-        /** @var User $user */
+        /** @var User $loggedInUser */
         $loggedInUser = $security->getUser();
         $id = $loggedInUser->getId();
 
@@ -181,7 +181,7 @@ final class UserController extends AbstractController
         Request $request,
         CookieHelper $cookieHelper,
     ): JsonResponse {
-        /** @var User $user */
+        /** @var User $loggedInUser */
         $loggedInUser = $security->getUser();
         $id = $loggedInUser->getId();
 
