@@ -30,10 +30,11 @@ final class FriendRequestsService
      *
      * @return FriendRequest [sender - receiver]
      *
-     * @throws HttpException if friend request doesn't exist.
+     * @throws HttpException if friend request doesn't exist
      */
     public function verifyFriendRequestExists(User $userSender, User $userReceiver): FriendRequest
     {
+        /** @var FriendRequest|null $friendRequest */
         $friendRequest = $this->friendRequestRepository->findOneBy([
             'userSender' => $userSender,
             'userReceiver' => $userReceiver,
@@ -49,7 +50,7 @@ final class FriendRequestsService
 
     /**
      * Verify that a friend request is not already pending.
-     * 
+     *
      * * @throws HttpException if a friend request is pending
      */
     public function verifyFriendRequestNotPending(User $userSender, User $userReceiver): bool
@@ -66,7 +67,7 @@ final class FriendRequestsService
     /**
      * Get friendRequest by ID.
      *
-     * @throws HttpException if the friend request doesn't exist.
+     * @throws HttpException if the friend request doesn't exist
      */
     public function get(User $userSender, User $userReceiver): FriendRequest
     {
@@ -75,7 +76,7 @@ final class FriendRequestsService
 
 
 
-     /**
+    /**
      * Get paginated friend requests received.
      */
     public function getAllReceivedPagination(int $page): PaginationInterface
