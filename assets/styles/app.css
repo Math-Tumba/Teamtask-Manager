@@ -12102,6 +12102,9 @@ body > .navbar .navbar-brand img {
     background-color: rgb(255, 255, 255);
   }
 }
+body > .navbar .navbar-collapse .nav-item li {
+  position: relative;
+}
 body > .navbar .navbar-collapse .nav-item .nav-link {
   flex-direction: column;
   justify-content: center;
@@ -12268,6 +12271,21 @@ body.home #team::before {
 }
 .body .accordion .accordion-body {
   padding: 10px;
+}
+
+.body .badge {
+  position: absolute;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  padding: 5px;
+  border-radius: 100%;
+  transform: translate(-30%, -30%);
+}
+.body .badge-notification {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #dc3545;
 }
 
 .body :is(button, a):focus, .body :is(button, a):hover {

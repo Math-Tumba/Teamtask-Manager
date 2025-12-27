@@ -1,0 +1,14 @@
+.body .badge {
+    position: absolute;
+    font-size: 13px;
+    color: $white;
+    padding: 5px;
+    border-radius: 100%;
+    transform: translate(-30%, -30%);
+    &-notification {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $red;
+    }
+}

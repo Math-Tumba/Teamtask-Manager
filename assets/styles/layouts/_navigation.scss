@@ -28,12 +28,16 @@ body > .navbar {
             background-color: $white;
         }
         .nav-item {
+            li {
+                    position: relative;
+                }
             .nav-link {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
                 color: $black;
+                
             }
             &#nav-menu-desktop {
                 .dropdown-menu {
