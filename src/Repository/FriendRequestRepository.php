@@ -72,6 +72,18 @@ final class FriendRequestRepository extends ServiceEntityRepository
 
 
 
+    public function countFriendRequestsReceived(User $userReceiver): int
+    {
+        return $this->createQueryBuilder('ufr')
+            ->select('COUNT(ufr.id)')
+            ->where('ufr.userReceiver = :userReceiver')
+            ->getQuery()
+            ->setParameter(':userReceiver', $userReceiver)
+            ->getSingleScalarResult();
+    }
+
+
+
     /**
      * Retrieve users who received a friend request from a specific user.
      *

@@ -177,7 +177,7 @@ final class FriendRequestsService
      */
     public function accept(int $id): void
     {
-        /** @var User $userSender */
+        /** @var User $userReceiver */
         $userReceiver = $this->security->getUser();
 
         $userSender = $this->usersService->get($id);
@@ -228,5 +228,19 @@ final class FriendRequestsService
     public function hasPendingFriendRequestWith(User $userSender, User $userReceiver): bool
     {
         return $this->friendRequestRepository->relationExists($userSender, $userReceiver);
+    }
+
+
+
+    public function countFriendRequestsReceived(): int
+    {
+        if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return 0;
+        }
+
+        /** @var User $userReceiver */
+        $userReceiver = $this->security->getUser();
+
+        return $this->friendRequestRepository->countFriendRequestsReceived($userReceiver);
     }
 }
