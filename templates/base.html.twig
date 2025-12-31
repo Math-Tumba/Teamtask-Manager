@@ -15,9 +15,26 @@
             {% block ajaxAPI %}{% endblock %}
         {% endblock %}
 
+        {% if app.user %}
+            <script>
+                const eventSource = new EventSource(
+                    "{{ mercure('/user/' ~ app.user.id ~ '/friend-requests', { subscribe: '/user/' ~ app.user.id ~ '/friend-requests' })|escape('js') }}",
+                    { withCredentials: true }
+                );
+
+                eventSource.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    const badge = document.getElementById('friend-request-count-badge');
+                    if (badge) {
+                        badge.textContent = data.count;
+                    }
+                };
+            </script>
+        {% endif %}
+        
     </head>
     
-    <body class="body {% block classBody %}{% endblock %}">
+    <body class="body {% block classBody %}{% endblock %}" data-user-id={{ app.user ? app.user.id : '' }}>
         <aside id="flash-messages">
             <div class="flash-messages-container">
                 {% set flashTypes = {'success': 'success', 'error': 'danger', 'warning': 'warning', 'info': 'info'} %}

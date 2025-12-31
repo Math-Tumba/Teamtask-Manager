@@ -72,6 +72,9 @@ final class FriendRequestRepository extends ServiceEntityRepository
 
 
 
+    /**
+     * 
+     */
     public function countFriendRequestsReceived(User $userReceiver): int
     {
         return $this->createQueryBuilder('ufr')

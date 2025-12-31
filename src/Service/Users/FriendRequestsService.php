@@ -11,6 +11,8 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 final class FriendRequestsService
 {
@@ -20,6 +22,7 @@ final class FriendRequestsService
         private UsersService $usersService,
         private FriendshipService $friendshipService,
         private Security $security,
+        private HubInterface $hub,
     ) {
     }
 
@@ -133,6 +136,8 @@ final class FriendRequestsService
 
             $this->entityManager->persist($friendRequest);
             $this->entityManager->flush();
+
+            $this->publishCountFriendRequestsReceived($userReceiver);
         }
 
         return;
@@ -162,6 +167,8 @@ final class FriendRequestsService
             $this->entityManager->flush();
         }
 
+        $this->publishCountFriendRequestsReceived($userReceiver);
+
         return;
     }
 
@@ -189,6 +196,8 @@ final class FriendRequestsService
             $this->friendRequestRepository->deleteFriendRequestBothSides($userSender, $userReceiver);
             $this->entityManager->persist($userSender);
             $this->entityManager->flush();
+
+            $this->publishCountFriendRequestsReceived($userReceiver);
         }
 
         return;
@@ -215,6 +224,8 @@ final class FriendRequestsService
         if ($friendRequest) {
             $this->entityManager->remove($friendRequest);
             $this->entityManager->flush();
+
+            $this->publishCountFriendRequestsReceived($userReceiver);
         }
 
         return;
@@ -242,5 +253,24 @@ final class FriendRequestsService
         $userReceiver = $this->security->getUser();
 
         return $this->friendRequestRepository->countFriendRequestsReceived($userReceiver);
+    }
+
+
+
+    public function publishCountFriendRequestsReceived(User $user): void
+    {
+        $count = $this->friendRequestRepository->countFriendRequestsReceived($user);
+
+        $update = new Update(
+            '/user/'.$user->getId().'/friend-requests',
+            json_encode([
+                'count' => $count,
+            ]),
+            true,
+        );
+
+        $this->hub->publish($update);
+
+        return;
     }
 }
