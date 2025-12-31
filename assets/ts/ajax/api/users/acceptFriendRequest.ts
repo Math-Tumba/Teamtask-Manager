@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const target = e.target as HTMLElement
         const components = await getTwigComponent(target);
-        const id = target.getAttribute('data-user-id');
+        const id = target.dataset.userId;
         if (!id) return;
 
         try {

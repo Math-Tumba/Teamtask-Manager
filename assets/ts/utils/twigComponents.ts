@@ -4,7 +4,7 @@ import { getComponent } from '@symfony/ux-live-component';
  * 
  */
 export async function getTwigComponent(element: HTMLElement) {
-    const relatedComponentsAttr = element.getAttribute('data-related-components')!;
+    const relatedComponentsAttr = element.dataset.relatedComponents;
     const components = [];
     
     if (typeof relatedComponentsAttr !== 'undefined') {

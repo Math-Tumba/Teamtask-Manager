@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmed = await modalConfirmation("Voulez-vous vraiment supprimer cet ami ?");
         if (confirmed) {
             const components = await getTwigComponent(target)
-            const id = target.getAttribute('data-user-id');
+            const id = target.dataset.userId;
             if (!id) return;
             
             try {
