@@ -20,7 +20,7 @@
                                     <div class="infos d-flex gap-4">
                                         <img class="avatar avatar-2" src={{ friendRequest.profilePicture }} alt="">
                                         <div class="text-cut-container">
-                                            <p class="h3">{{ friendRequest.username }}</p>
+                                            <a href={{ path('app_profile', { id: friendRequest.id }) }} class="h3 h3-link">{{ friendRequest.username }}</a>
                                             <span class="subtext">{{ friendRequest.country }}</span>
                                         </div>
                                     </div>

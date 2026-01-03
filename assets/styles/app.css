@@ -11917,6 +11917,16 @@ body {
   }
 }
 
+h1, .h1, h2, .h2, h3, .h3 {
+  display: block;
+}
+h1-link, .h1-link, h2-link, .h2-link, h3-link, .h3-link {
+  transition: 0.4s ease-in-out;
+}
+h1-link:hover, .h1-link:hover, h2-link:hover, .h2-link:hover, h3-link:hover, .h3-link:hover {
+  color: #dd5661;
+}
+
 h1, .h1 {
   margin-bottom: 0;
   text-align: center;

@@ -31,7 +31,6 @@
                 };
             </script>
         {% endif %}
-        
     </head>
     
     <body class="body {% block classBody %}{% endblock %}" data-user-id={{ app.user ? app.user.id : '' }}>
@@ -102,7 +101,7 @@
                                     {% else %}
                                         <li><a class="nav-link nav-link-child" href={{ path('app_profile', { id: app.user.id }) }}>Voir mon profil</a></li>
                                         <li><a class="nav-link nav-link-child" href={{ path('app_profile_update')}}>Modifier mon profil</a></li>
-                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile', { id: app.user.id }) }}>Contact</a></li>
+                                        <li><a class="nav-link nav-link-child" href={{ path('app_profile_friends') }}>Contact</a></li>
                                         <li><a class="nav-link nav-link-child" href={{ path('app_profile_friend_requests') }}>Demandes</a></li>
                                         <li><a class="nav-link nav-link-child" href={{ path('app_logout') }}>Se déconnecter</a></li>
                                     {% endif %}
