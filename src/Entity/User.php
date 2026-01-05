@@ -21,7 +21,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private const DEFAULT_PROFILE_PICTURE_PATH = self::PROFILE_PICTURES_PATH.'/default.png';
 
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\GeneratedValue()]
     #[ORM\Column()]
     #[Groups(['users.index'])]
     private ?int $id = null;

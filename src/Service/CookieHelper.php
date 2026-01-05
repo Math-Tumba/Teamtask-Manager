@@ -21,7 +21,7 @@ final class CookieHelper
     {
         $response->headers->clearCookie('BEARER', '/', null, true, true, 'strict');
 
-        $refreshTokenCookie = $cookies['refresh_token'];
+        $refreshTokenCookie = $cookies['refresh_token'] ?? null;
         if ($refreshTokenCookie) {
             $response->headers->clearCookie('refresh_token', '/', null, true, true, 'strict');
 
