@@ -1,18 +1,12 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
     #esi: true
     #fragments: true
-
-    http_client:
-        default_options: # Enlever si certificat SSL non autosigné. (erreur -> SSL certificate problem: self-signed certificate)
-            verify_peer: false
-            verify_host: false
 
 when@test:
     framework:
