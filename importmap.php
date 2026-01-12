@@ -23,7 +23,7 @@ return [
         'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
     ],
     'ky' => [
-        'path' => './assets/vendor/ky/ky.index.js',
+        'version' => '1.14.2',
     ],
     'api' => [
         'path' => './assets/ts/utils/kyManager.ts',
