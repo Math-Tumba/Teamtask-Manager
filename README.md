@@ -14,8 +14,8 @@ Découverte de Symfony via le développement de cette application web collaborat
   - Documentation avec Nelmio. :white_check_mark:
     
 - Mise à jour en temps réel de certaines données (tâches, demandes d'amis, ...)
-  - Configuration de WebSockets
-  - Système de notifications (réception d'une demande d'ami)
+  - Ajout d'un système de SSE (Mercure) :white_check_mark: 
+  - Système de notifications (réception d'une demande d'ami) :white_check_mark:
     
 - Création d'un système d'équipes
   - Gestion des droits des membres de l'équipe en fonction du rôle attribué par le chef d'équipe
@@ -27,8 +27,42 @@ Découverte de Symfony via le développement de cette application web collaborat
   - Tests unitaires
   - Tests fonctionnels
 
-- Dockerisation de l'application
+- Dockerisation de l'application pour l'environnement prod (Basé sur la solution de [dunglas/symfony-docker](https://github.com/dunglas/symfony-docker)) :white_check_mark:
 
-## Configuration
+## Objectifs derrière la création de cette application
 
-### À venir
+- Découvrir un framework populaire et moderne via de façon expérimentale, en passant par de multiples moments de refactoring causés par la découverte de features ou de meilleures solutions.
+- Apprendre à créer une API et à la sécuriser (auth JWT avec refresh token)
+- Expérimenter les mises à jour en temps réel avec le SSE (Mercure)
+- Apprendre à déployer une application (en local via Docker)
+
+## Déploiement en production via Docker 
+
+### Récupération et lancement de l'application
+```
+git clone https://github.com/Math-Tumba/Teamtask-Manager.git
+cd teamtask-manager
+docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
+docker compose -f compose.yaml -f compose.prod.yaml up --wait
+```
+
+### Génération des clés JWT privée et publique 
+Ne le faire que :
+- Au premier lancement
+- Si la passphrase a été modifiée
+- Si le contenu de ./config/jwt a été modifié / effacé
+```
+docker compose exec php bin/console lexik:jwt:generate-keypair --overwrite
+```
+
+### État de l'application
+
+Lancer les conteneurs dockers
+```
+docker compose -f compose.yaml -f compose.prod.yaml up --wait
+```
+
+Stopper les conteneurs dockers
+```
+docker compose down --remove-orphans
+```
