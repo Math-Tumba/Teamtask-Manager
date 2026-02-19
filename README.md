@@ -66,3 +66,10 @@ Stopper les conteneurs dockers
 ```
 docker compose down --remove-orphans
 ```
+
+### Génération d'un environnement testable avec des utilisateurs fictifs
+
+Lance la génération de l'environnement. Cette action **entraîne la regénération de la base de données**.
+```
+docker compose exec php bin/console foundry:load-fixtures main
+```
