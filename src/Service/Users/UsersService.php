@@ -41,7 +41,7 @@ final class UsersService
     /**
      * Get user if exists.
      *
-     * @throws HttpException if the targeted user doesn't exist.
+     * @throws HttpException if the targeted user doesn't exist
      */
     public function verifyUserExists(int $id): User
     {
@@ -57,11 +57,11 @@ final class UsersService
 
     /**
      * Verify that the user initiating the action is the logged-in user.
-     * 
-     * Useful when wanting to restrict access to specific actions that he is not allowed to do 
+     *
+     * Useful when wanting to restrict access to specific actions that he is not allowed to do
      * (exemple : trying to update another user).
-     * 
-     * @throws HttpException if the access is denied.
+     *
+     * @throws HttpException if the access is denied
      */
     public function verifySameUsers(User $targetedUser, User $loggedInUser): bool
     {
@@ -76,11 +76,11 @@ final class UsersService
 
     /**
      * Verify that the user initiating the action is not the logged-in user.
-     * 
-     * Useful to prevent conflictual behavior. 
+     *
+     * Useful to prevent conflictual behavior.
      * (exemple : sending a friend request to himself)
-     * 
-     * @throws HttpException if user1 and user2 are the same user.
+     *
+     * @throws HttpException if user1 and user2 are the same user
      */
     public function verifyNotSameUsers(User $user1, User $user2): bool
     {
@@ -96,7 +96,7 @@ final class UsersService
     /**
      * Register a user based on UserCreateDTO data.
      *
-     * @return User the user registered.
+     * @return User the user registered
      */
     public function register(UserCreateDTO $userDTO): User
     {
@@ -125,7 +125,7 @@ final class UsersService
     /**
      * Get user by ID.
      *
-     * @throws HttpException if the user doesn't exist.
+     * @throws HttpException if the user doesn't exist
      */
     public function get(int $id): User
     {
@@ -137,9 +137,9 @@ final class UsersService
     /**
      * Update user by id based on UserUpdateDTO data.
      *
-     * @throws HttpException if the user doesn't exist.
-     *                       if the access is denied.
-     * @throws ValidationFailedException if data is invalid.
+     * @throws HttpException             if the user doesn't exist.
+     *                                   if the access is denied.
+     * @throws ValidationFailedException if data is invalid
      */
     public function update(int $id, UserUpdateDTO $userDTO): void
     {
@@ -179,9 +179,9 @@ final class UsersService
      *
      * @param UploadedFile $file the new profile picture
      *
-     * @throws HttpException if the user doesn't exist.
-     *                       if the access is denied.
-     * @throws ValidationFailedException if data is invalid.
+     * @throws HttpException             if the user doesn't exist.
+     *                                   if the access is denied.
+     * @throws ValidationFailedException if data is invalid
      */
     public function uploadProfilePicture(int $id, UploadedFile $file): User
     {

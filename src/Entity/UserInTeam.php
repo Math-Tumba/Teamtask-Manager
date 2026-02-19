@@ -13,12 +13,12 @@ class UserInTeam
 {
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'userInTeams')]
-    #[ORM\JoinColumn(nullable: false)]
+    // #[ORM\JoinColumn(nullable: false)]
     private ?User $userId = null;
 
     #[ORM\Id]
     #[ORM\ManyToOne(inversedBy: 'usersInTeam')]
-    #[ORM\JoinColumn(nullable: false)]
+    // #[ORM\JoinColumn(nullable: false)]
     private ?Team $teamId = null;
 
     #[ORM\Column]
