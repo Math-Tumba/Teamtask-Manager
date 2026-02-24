@@ -1,7 +1,15 @@
 import { generateElements, fadeIn, fadeOut, addEventListener } from "utils/dom";
 
-const FLASHMESSAGES = document.querySelector('.flash-messages-container') as HTMLElement;
 const DELAY = 5000;
+
+function getFlashContainer(): HTMLElement {
+    const flashMessagesContainer = document.querySelector('.flash-messages-container');
+    if (!flashMessagesContainer) {
+        throw new Error('Flash container not found');
+    }
+    
+    return flashMessagesContainer as HTMLElement;
+}
 
 export enum FlashMessageType {
     SUCCESS = 'success',
@@ -33,7 +41,7 @@ export class FlashMessage {
                 <p>${this.message}</p>
             </div>
         `);
-        FLASHMESSAGES.append(this.element);
+        getFlashContainer().append(this.element);
         requestAnimationFrame(() => fadeIn(this.element));
 
         addEventListener(this.element, 'click', () => fadeOut(this.element));
@@ -57,7 +65,7 @@ if (StoredFlashMessage) {
 /**
  * Displays all flash messages that come from PHP code.
  */
-for (const child of FLASHMESSAGES.children) {
+for (const child of getFlashContainer().children) {
     const flashText = child.textContent;
     const className = child.className;
     const match = className.match(/alert-([\w-]+)/)!; // Can't be null : Symfony flash message can't be instanciated without type and alerts are normalized in base.html.twig.

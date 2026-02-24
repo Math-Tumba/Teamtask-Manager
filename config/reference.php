@@ -1855,6 +1855,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     nelmio_api_doc?: NelmioApiDocConfig,
  *     sensiolabs_typescript?: SensiolabsTypescriptConfig,
  *     mercure?: MercureConfig,
+ *     zenstruck_foundry?: ZenstruckFoundryConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1904,6 +1905,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         nelmio_api_doc?: NelmioApiDocConfig,
  *         sensiolabs_typescript?: SensiolabsTypescriptConfig,
  *         mercure?: MercureConfig,
+ *         zenstruck_foundry?: ZenstruckFoundryConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
