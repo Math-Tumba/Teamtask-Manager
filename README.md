@@ -46,6 +46,8 @@ docker compose -f compose.yaml -f compose.prod.yaml build --pull --no-cache
 docker compose -f compose.yaml -f compose.prod.yaml up --wait
 ```
 
+Ouvrir un nouvel onglet avec cette URL : https://teamtask-manager.local
+
 ### Génération des clés JWT privée et publique 
 Ne le faire que :
 - Au premier lancement
@@ -69,7 +71,12 @@ docker compose down --remove-orphans
 
 ### Génération d'un environnement testable avec des utilisateurs fictifs
 
-Lance la génération de l'environnement. Cette action **entraîne la regénération de la base de données**.
+Lance la génération d'utilisateurs fictifs. Cette action **entraîne la regénération de la base de données**.
 ```
 docker compose exec php bin/console foundry:load-fixtures main
 ```
+
+Un utilisateur spécifique avec des relations existantes entre lui et d'autres utilisateurs fictifs est instancié.
+Sur la page de connexion, se connecter avec ces identifiants :
+Nom d'utilisateur : toto
+Mot de passe : password
