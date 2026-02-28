@@ -243,6 +243,9 @@ final class FriendRequestsService
 
 
 
+    /**
+     * Retrieve the number of friend requests received from other users.
+     */
     public function countFriendRequestsReceived(): int
     {
         if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -257,6 +260,12 @@ final class FriendRequestsService
 
 
 
+    /**
+     * Dynamically update the number of friend request received.
+     * Triggers when another user sends a request.
+     *
+     * @param User $user The user who receives a request
+     */
     public function publishCountFriendRequestsReceived(User $user): void
     {
         $count = $this->friendRequestRepository->countFriendRequestsReceived($user);

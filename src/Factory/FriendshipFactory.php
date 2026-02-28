@@ -18,17 +18,27 @@ final class FriendshipFactory extends PersistentProxyObjectFactory
     {
     }
 
+
+
     public static function class(): string
     {
         return Friendship::class;
     }
 
-    public static function friendshipBetween(User $user1, User $user2) {
+
+
+    /**
+     * Instanciate a friendship between two users.
+     */
+    public static function friendshipBetween(User $user1, User $user2)
+    {
         return self::new([
             'user1' => $user1,
-            'user2' => $user2
+            'user2' => $user2,
         ]);
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
@@ -40,6 +50,8 @@ final class FriendshipFactory extends PersistentProxyObjectFactory
             'user2' => UserFactory::new(),
         ];
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization

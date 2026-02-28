@@ -19,10 +19,14 @@ final class UserFactory extends PersistentProxyObjectFactory
     ) {
     }
 
+
+
     public static function class(): string
     {
         return User::class;
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
@@ -37,6 +41,8 @@ final class UserFactory extends PersistentProxyObjectFactory
             'country' => self::faker()->unique()->countryCode(),
         ];
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization

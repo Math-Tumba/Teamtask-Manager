@@ -73,7 +73,7 @@ final class FriendRequestRepository extends ServiceEntityRepository
 
 
     /**
-     * 
+     * Retrieve the number of friend requests $userReceiver received.
      */
     public function countFriendRequestsReceived(User $userReceiver): int
     {

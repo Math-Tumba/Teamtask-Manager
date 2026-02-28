@@ -21,10 +21,13 @@ export function toggle(element: HTMLElement): void {
     if (element.style.display === 'none') {
         element.style.display = '';
     } else {
-        element.style.display = '';
+        element.style.display = 'none';
     }
 }
 
+/**
+ * Custom event listener usable with a delegated element.
+ */
 export function addEventListener(element: HTMLElement | Document | Window, eventName: string, eventHandler: EventHandler, selector?: string) : EventListener {
     let wrappedHandler: EventListener;
 
@@ -32,13 +35,13 @@ export function addEventListener(element: HTMLElement | Document | Window, event
         wrappedHandler = (e: Event) => {
             if (!e.target) return;
 
-            const delegatedElement: HTMLElement | null = (e.target as HTMLElement).closest(selector);
+            const delegatedElement: HTMLElement | null = (e.target as HTMLElement).closest(selector); // Find the closest html element corresponding to the element identifier passed in parameters
             if (delegatedElement) {
-                eventHandler.call(delegatedElement, e);
-            }
+                eventHandler.call(delegatedElement, e); // Force the delegated element to be considered as 'this'
+            }  
         };
     } else {
-        wrappedHandler = (e) => {
+        wrappedHandler = (e: Event) => {
             eventHandler.call(element, e);
         };
     }

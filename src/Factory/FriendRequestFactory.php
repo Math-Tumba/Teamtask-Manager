@@ -18,18 +18,27 @@ final class FriendRequestFactory extends PersistentProxyObjectFactory
     {
     }
 
+
+
     public static function class(): string
     {
         return FriendRequest::class;
     }
 
-    public static function requestFromTo(User $userSender, User $userReceiver)
+
+
+    /**
+     * Instanciate a friend request between the sender and the receiver.
+     */
+    public static function requestFromTo(User $userSender, User $userReceiver): FriendRequestFactory
     {
         return self::new([
             'userSender' => $userSender,
             'userReceiver' => $userReceiver,
         ]);
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
@@ -41,6 +50,8 @@ final class FriendRequestFactory extends PersistentProxyObjectFactory
             'userSender' => UserFactory::new(),
         ];
     }
+
+
 
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization

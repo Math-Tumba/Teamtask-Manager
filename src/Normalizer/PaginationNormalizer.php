@@ -6,7 +6,7 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
- * Cette classe normalise les données pour les requêtes API impliquant une pagination.
+ * Normalize data for API requests using a pagination system.
  */
 final class PaginationNormalizer implements NormalizerInterface
 {

@@ -1,5 +1,5 @@
 import ky, { HTTPError } from 'ky';
-import { FlashMessage, FlashMessageType } from 'components/flashMessage';
+import { FlashMessageType } from 'components/flashMessage';
 
 /**
  * Ky variable acting as an interceptor.

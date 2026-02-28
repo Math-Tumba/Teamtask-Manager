@@ -1,6 +1,26 @@
-﻿# teamtask-manager
+﻿![PHP](https://img.shields.io/badge/PHP-8.2-green)
+![Symfony](https://img.shields.io/badge/Symfony-7.4-green)
+![Docker](https://img.shields.io/badge/Docker-ready-green)
+
+# TeamTask-Manager
 
 Découverte de Symfony via le développement de cette application web collaborative de gestion de projets (gestion des tâches en équipe) soutenue par une API REST dont l'authentification est basée sur le système de JWT + refresh token.
+
+## Stack
+Backend :
+- Symfony 7.4
+- PHP 8.2
+- Doctrine
+- SSE (Mercure)
+- JWT (LexikJWTAuthenticationBundle)
+- PostgreSQL
+
+Frontend :
+- Twig
+- Typescript
+- SASS
+- Bootstrap
+
 
 ## Fonctionnalités prévues et objectifs de développement
 
@@ -78,5 +98,5 @@ docker compose exec php bin/console foundry:load-fixtures main
 
 Un utilisateur spécifique avec des relations existantes entre lui et d'autres utilisateurs fictifs est instancié.
 Sur la page de connexion, se connecter avec ces identifiants :
-Nom d'utilisateur : toto
-Mot de passe : password
+- Nom d'utilisateur : toto
+- Mot de passe : password

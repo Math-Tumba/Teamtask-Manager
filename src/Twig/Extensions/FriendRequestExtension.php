@@ -13,6 +13,11 @@ class FriendRequestExtension extends AbstractExtension
     ) {
     }
 
+
+
+    /**
+     * Enable the function that retrieves friend requests received in Twig files.
+     */
     public function getFunctions(): array
     {
         return [
