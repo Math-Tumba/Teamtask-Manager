@@ -37,6 +37,9 @@ return [
     'components/flashMessage' => [
         'path' => './assets/ts/components/flashMessage.ts',
     ],
+    'ajax/utils/friendshipActionHandler' => [
+        'path' => './assets/ts/ajax/utils/friendshipActionHandler.ts',
+    ],
     'ajax/ui/modal/modalConfirmation' => [
         'path' => './assets/ts/ajax/ui/modal/modalConfirmation.ts',
     ],

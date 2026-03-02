@@ -1,22 +1,15 @@
 import api from 'api'
-import { FlashMessage, FlashMessageType } from 'components/flashMessage';
 import { addEventListener } from 'utils/dom';
-import { getTwigComponent } from 'utils/twigComponents';
+import { handleFriendshipAction } from 'ajax/utils/friendshipActionHandler';
 
 addEventListener(document, 'click', async function(e: Event) {
     e.preventDefault();
     const target = this as HTMLElement;
-    const id = target.dataset.userId;
-    if (!id) return;
 
-    const components = await getTwigComponent(target);
-
-    try {
-        await api.put(`users/friend-requests/${id}`, {json: {
+    handleFriendshipAction(
+        target,
+        () => api.put(`users/friend-requests/${target.dataset.userId}`, {json: {
             "status": "accept",
-        }}).json();
-        await Promise.all(components.map(c => c.render()));
-    } catch (err) {
-        new FlashMessage(err.message, FlashMessageType.ERROR)
-    }
-}, '.accept-friend-request');
+        }}).json(),
+    )
+}, '.accept-friend-request')
