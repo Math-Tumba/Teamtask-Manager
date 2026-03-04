@@ -36,7 +36,8 @@ class UserTest extends TestCase
     }
 
 
-    #[DataProvider('rolesForUser')]
+
+    #[DataProvider('UserRolesProvider')]
     public function testUserHasAlwaysRoleUser(array $input, array $expected): void
     {
         $user = new User();
@@ -46,7 +47,7 @@ class UserTest extends TestCase
 
         return;
     }
-    public static function rolesForUser(): array
+    public static function UserRolesProvider(): array
     {
         return [
             'No role' => [[], ['ROLE_USER']],
